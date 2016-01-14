@@ -78,7 +78,7 @@ class MEnseignant
      * @return Enseignant
      * @throws Exception
      */
-    public function getEnseignantByName($name,$prenom)
+    static public function getEnseignantByName($name,$prenom)
     {
         try
         {

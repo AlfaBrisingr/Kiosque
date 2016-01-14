@@ -104,9 +104,9 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<a onclick="document.location.href = '/JP/?submit=1'"><button class="btn btn-primary btn-lg">Confirmer la demande</button></a>
-			<a onclick="document.location.href = '/controller/c_DestroySession.php'" class="btn btn-default btn-lg">Réinitialiser</a>
-			<a <?php if($_SESSION['choix3'] == 'non' && $_SESSION['choix2'] == 'non'){ ?> href="/JP/?etapeJP=4" <?php } else { ?> href="/JP/?etapeJP=5" <?php } ?><button class="btn btn-primary btn-lg">Retour</button></a>
+			<a onclick="document.location.href = '?uc=jp&action=valider'"><button class="btn btn-primary btn-lg">Confirmer la demande</button></a>
+			<a onclick="document.location.href = '?uc=connection&action=logout'" class="btn btn-default btn-lg">Réinitialiser</a>
+			<a <?php if($_SESSION['choix3'] == 'non' && $_SESSION['choix2'] == 'non'){ ?> href="?uc=jp&action=etape5" <?php } else { ?> href="?uc=jp&action=etape6" <?php } ?><button class="btn btn-primary btn-lg">Retour</button></a>
 			<br><br>
 		</div>
 	</div>

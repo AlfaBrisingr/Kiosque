@@ -70,7 +70,7 @@
 			<div class="col-md-12 row">
 				<a href="?uc=jp&action=etape4" class="btn btn-link">Retour</a>
 				<a href="?uc=jp&action=choisirTypeEcole" class="btn btn-link">Revenir au début du formulaire</a>
-				<a onclick="document.location.href = '/controller/c_DestroySession.php'" class="btn btn-link">Réinitialiser</a>
+				<a onclick="document.location.href = '?uc=connection&action=logout'" class="btn btn-link">Réinitialiser</a>
 				<a href="?uc=index" class="btn btn-link">Revenir à l'accueil</a>
 			</div>
 		</form>

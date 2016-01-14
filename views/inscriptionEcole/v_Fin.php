@@ -1,5 +1,3 @@
-<?php ob_start();
-?>
 <div class="container">
 	<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
 		<?php if($passe == true){ ?>
@@ -19,6 +17,4 @@
 		<a href="/JP/" class="btn btn-link">Revenir à l'accueil</a>
 	</div>
 </div>
-<?php
-$contenu = ob_get_clean(); if(isset($_SESSION['error'])){ unset($_SESSION['error']); }
-?>
+
