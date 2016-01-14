@@ -1,0 +1,72 @@
+.clear {
+	clear: both;
+}
+.error {
+	color: #D80000;
+}
+.error_label {
+	border: 1px solid #EEA236;
+	border-radius: 5px;
+	padding: 10px;
+	color: #D80000;
+	background-color: #F0AD4E;
+}
+.require {
+	color:#D80000;
+
+}
+.col-centered {
+	float:none;
+	margin: 0 auto;
+}
+.jumbotron {
+	min-height: 300px;
+}
+.vertical-align {
+	vertical-align: middle;
+}
+.table th, .table td {
+	text-align: center;
+	vertical-align: middle;
+}
+legend {
+	text-align: center;
+}
+.float-right {
+	float: right;
+}
+.overflow-scroll-table {
+	max-height: 420px;
+	overflow-y: auto;
+}
+.overflow-scroll-table-lg {
+	max-height: 80vh;
+	overflow-y: auto;
+}
+
+.content {
+	font-size: 2em;
+}
+#days {
+	margin-left: 5px;
+}
+#hours {
+	margin-left: 15px;
+}
+#minutes {
+	margin-left: 25px;
+}
+#seconds {
+	margin-left: 35px;
+}
+
+.borderthin {
+	border: 1px solid black;
+	text-align: center;
+}
+body, html {
+	height: 100%;
+}
+.taille {
+	min-height: 85%;
+}
