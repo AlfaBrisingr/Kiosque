@@ -1,4 +1,3 @@
-<?php ob_start(); ?>
 <?php $jour = array('1' => 'Lundi','2' => 'Mardi','3' => 'Mercredi', '4' => 'Jeudi', '5' => 'Vendredi', '6' => 'Samedi', '7' => 'Dimanche'); ?>
 <script src="/JP/js/css_cond.js"></script>
 <div class="container">
@@ -40,27 +39,27 @@
 						</tr>
 					</thead>
 					<tbody>
-						<?php foreach ($listIns as $key) { ?>
+						<?php foreach ($listIns as $inscription) { ?>
 						<tr>
-							<td><?= $key['idInscription'] ?></td>
-							<td id="etat"><?php if($key['validationInscription'] == '1') { echo 'Validée'; } else { echo 'Non validée'; } ?></td>
-							<td><?= $key['nomEcole'] ?></td>
-							<td><?= $key['nomEns'].' '.$key['prenomEns'] ?></td>
-							<td><?php if(empty($key['diversInscription'])){ echo '<strong><em>Vide</em></strong>'; } else { echo $key['diversInscription']; } ?></td>
-							<td><?php if(empty($key['impoInscription']) || $key['impoInscription'] == ' - - ' || $key['impoInscription'] == '- -' || $key['impoInscription'] == ' -  - ') { echo '<strong><em>Vide</em></strong>'; } else { echo $key['impoInscription']; } ?></td>
-							<td><?= $key['nbEnfantsInscription'] ?></td>
-							<td><?= $key['nbAdultesInscription'] ?></td>
-							<td><?php $d = new DateTime($key['dateInscription']);
+							<td><?= $inscription->getId() ?></td>
+							<td id="etat"><?php if($inscription->isValidated() == '1') { echo 'Validée'; } else { echo 'Non validée'; } ?></td>
+							<td><?= $inscription->getEnseignant()->getEcole()->getNom() ?></td>
+							<td><?= $inscription->getEnseignant()->getNom().' '.$inscription->getEnseignant()->getPrenom() ?></td>
+							<td><?php if(empty($inscription->getDivers())){ echo '<strong><em>Vide</em></strong>'; } else { echo $inscription->getDivers(); } ?></td>
+							<td><?php if(empty($inscription->getImpo()) || $inscription->getImpo() == ' - - ' || $inscription->getImpo() == '- -' || $inscription->getImpo() == ' -  - ') { echo '<strong><em>Vide</em></strong>'; } else { echo $inscription->getImpo(); } ?></td>
+							<td><?= $inscription->getNbEnfants() ?></td>
+							<td><?= $inscription->getNbAdultes() ?></td>
+							<td><?php $d = new DateTime($inscription->getDate);
 								echo date_format($d, 'd/m/Y H:i'); ?>
 							</td>
 							<td>
-								<a href="/JP/kiosqueadmin/?ins=<?= $key['idInscription'] ?>&valid=1" title="Planifier l'inscription n° <?= $key['idInscription'] ?>">
+								<a href="/JP/kiosqueadmin/?ins=<?= $inscription->getId()  ?>&valid=1" title="Planifier l'inscription n° <?= $inscription->getId()  ?>">
 									<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
 								</a>
-								<a href="/JP/kiosqueadmin/?ins=<?= $key['idInscription'] ?>&edit=1" title="Modifier l'inscription n° <?= $key['idInscription'] ?>">
+								<a href="/JP/kiosqueadmin/?ins=<?= $inscription->getId()  ?>&edit=1" title="Modifier l'inscription n° <?= $inscription->getId()  ?>">
 									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 								</a>
-								<a onclick="return sure()" href="/JP/kiosqueadmin/?ins=<?= $key['idInscription'] ?>&suppr=1" title="Supprimer l'inscription n° <?= $key['idInscription'] ?>">
+								<a onclick="return sure()" href="/JP/kiosqueadmin/?ins=<?= $inscription->getId()  ?>&suppr=1" title="Supprimer l'inscription n° <?= $inscription->getId()  ?>">
 									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 								</a>
 							</td>
@@ -220,10 +219,10 @@
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<a href="/JP/kiosqueadmin/" class="btn btn-primary">Retour</a>
+			<a href="?uc=admin&action=voirAdmin" class="btn btn-primary">Retour</a>
 		</div>
 	</div>
 </div>
 <br>
-<?php $contenu = ob_get_clean(); if(isset($_SESSION['error'])){ unset($_SESSION['error']); }
+<?php if(isset($_SESSION['error'])){ unset($_SESSION['error']); }
 if(isset($_SESSION['valid'])){ unset($_SESSION['valid']); } ?>

@@ -1,4 +1,3 @@
-<?php ob_start(); ?>
 <script src="/JP/js/focus.js" type="text/javascript"></script>
 <div class="container">
 	<div class="row">
@@ -10,7 +9,7 @@
 				<?= $_SESSION['error'] ?>
 			</div>
 			<?php } ?>
-			<form action="/JP/controller/kiosqueadmin/click.php" method="POST" autocomplete="off">
+			<form action="?uc=admin&action=voirAdmin" method="POST" autocomplete="off">
 				<div class="form-group">
 					<label for="login">Identifiant</label>
 					<input class="form-control" type="text" name="login" id="login" placeholder="Identifiant...">
@@ -27,4 +26,4 @@
 		</div>
 	</div>
 </div>
-<?php $contenu = ob_get_clean(); if(isset($_SESSION['error'])) { unset($_SESSION['error']); } ?>
+<?php if(isset($_SESSION['error'])) { unset($_SESSION['error']); } ?>
