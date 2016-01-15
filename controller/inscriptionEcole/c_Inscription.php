@@ -1,7 +1,6 @@
 <?php
 require_once ('models/m_Admin.php');
 require_once ('classes/Utilisateur.php');
-
 if(isset($_GET['action']))
 {
     $action = $_GET['action'];
@@ -10,7 +9,6 @@ else
 {
     $action = "login";
 }
-
 switch ($action) {
     case 'login' :
         header("Location:?uc=index&action=login");
@@ -52,7 +50,6 @@ switch ($action) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
-
     case 'etape2':
         try {
             if (isset($_SESSION['ecole'])) {
@@ -60,14 +57,10 @@ switch ($action) {
                 $_SESSION['enseignant'] = $enseignant;
                 $_SESSION['facture'] = $_POST['facture'];
                 $_SESSION['divers'] = $_POST['divers'];
-
             } else {
                 header("Location:?uc=jp&action=choisirTypeEcole");
             }
-
             // NE PAS OUBLIER DE FAIRE LA MODIFICATION
-
-<<<<<<< HEAD
             /*  if(isset($_POST['civEns'])||isset($_POST['nomEns'])||isset($_POST['prenomEns'])||isset($_POST['telEns'])||isset($_POST['mailEns'])){
                   $unEnseignant = new Enseignant($_SESSION['enseignant']->getId(), $_POST['civEns'],$_POST['nomEns'],$_POST['prenomEns'],$_POST['mailEns'],$_POST['telEns']);
                   MEnseignant::editEnseignant($unEnseignant);
@@ -77,21 +70,6 @@ switch ($action) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
-=======
-        // NE PAS OUBLIER DE FAIRE LA MODIFICATION 
-
-      /*  if(isset($_POST['civEns'])||isset($_POST['nomEns'])||isset($_POST['prenomEns'])||isset($_POST['telEns'])||isset($_POST['mailEns'])){
-            $unEnseignant = new Enseignant($_SESSION['enseignant']->getId(), $_POST['civEns'],$_POST['nomEns'],$_POST['prenomEns'],$_POST['mailEns'],$_POST['telEns']);
-            MEnseignant::editEnseignant($unEnseignant);
-        } */
-        include("views/inscriptionEcole/v_Etape2.php");
-    }
-    catch (Exception $e)
-    {
-        Main::setFlashMessage($e->getMessage(), "error");
-    } break;
->>>>>>> 7812e1afe048b9800e1145e184c5c3144ec71962
-
     case 'etape3' :
         try {
             $lesSpectacles = MSpectacle::getSpectaclesSaisonCourante();
@@ -101,54 +79,41 @@ switch ($action) {
             $_SESSION['nbrEleve'] = $nbrEleve;
             $_SESSION['nbrAccom'] = $nbrAccom;
             $_SESSION['classe'] = $classe;
-
             include("views/inscriptionEcole/v_Etape3.php");
-
         } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
-
     case 'etape4':
         try {
-
             $lesSpectacles = MSpectacle::getSpectaclesSaisonCourante();
-
             $_SESSION['choix1'] = $_POST['choix1'];
             $_SESSION['impo1'] = $_POST['impo1'];
-
             include("views/inscriptionEcole/v_Etape4.php");
         } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
-
     case 'etape5':
         try {
             $lesSpectacles = MSpectacle::getSpectaclesSaisonCourante();
-
             $_SESSION['choix2'] = $_POST['choix2'];
             $_SESSION['impo2'] = $_POST['impo2'];
-
             if ($_SESSION['choix1'] == $_SESSION['choix2']) {
                 $_SESSION['choix2'] == 'non';
             }
-
             if ($_SESSION['choix2'] == 'non') {
                 $_SESSION['choix3'] = 'non';
                 $_SESSION['impo3'] = null;
             }
             include("views/inscriptionEcole/v_Etape5.php");
-
         } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
-
     case 'etape6':
         try {
             $lesSpectacles = MSpectacle::getSpectaclesSaisonCourante();
-
             if (!isset($_POST['choix3'])) {
                 $_SESSION['choix3'] = 'non';
                 $_SESSION['impo3'] = null;
@@ -156,18 +121,15 @@ switch ($action) {
                 $_SESSION['choix3'] = $_POST['choix3'];
                 $_SESSION['impo3'] = $_POST['impo3'];
             }
-
             if ($_SESSION['choix3'] == $_SESSION['choix1']) {
                 $_SESSION['choix3'] = 'non';
             }
-
             if ($_SESSION['choix3'] == $_SESSION['choix2']) {
                 $_SESSION['choix3'] = 'non';
             }
             if ($_SESSION['choix2'] == $_SESSION['choix1']) {
                 $_SESSION['choix2'] = 'non';
             }
-
             $Ent = array($_SESSION['ecole']->getType(), $_SESSION['ecole']->getNom(), 'Adresse 1' => $_SESSION['ecole']->getAdresse(), $_SESSION['ecole']->getAdresse2(),
                 $_SESSION['ecole']->getCp(), $_SESSION['ecole']->getVille(), $_SESSION['ecole']->getDirecteur()->getTel(), $_SESSION['ecole']->getDirecteur()->getMail()
             );
@@ -198,43 +160,17 @@ switch ($action) {
                 'Choisi' => $_SESSION['choix3'],
                 'Impossibilités' => $_SESSION['impo3']
             );
-
-<<<<<<< HEAD
             include("views/inscriptionEcole/v_Recap.php");
         } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
-=======
-        include("views/inscriptionEcole/v_Recap.php");
-    }
-    catch (Exception $e)
-    {
-        Main::setFlashMessage($e->getMessage(), "error");
-    } break;
-
-    case 'valider' : 
-    try
-    {
-        if (MEnseignant::isEnseignantExistant($_SESSION['enseignant']) == 0){
-            MEnseignant::addEnseignant($_SESSION['enseignant']);
-        }
-
-        $divers = $_SESSION['divers'];
-
-        if(empty($_SESSION['impo1']) && empty($_SESSION['impo2']) && empty($_SESSION['impo3'])){
-            $impo = '<strong><em>Vide</em></strong>';
->>>>>>> 7812e1afe048b9800e1145e184c5c3144ec71962
         }
         break;
-
     case 'valider' :
         try {
             if (MEnseignant::isEnseignantExistant($_SESSION['enseignant']) == 0) {
                 MEnseignant::addEnseignant($_SESSION['enseignant']);
             }
-<<<<<<< HEAD
-
             $divers = $_SESSION['divers'];
-
             if (empty($_SESSION['impo1']) && empty($_SESSION['impo2']) && empty($_SESSION['impo3'])) {
                 $impo = '<strong><em>Vide</em></strong>';
             } else {
@@ -253,7 +189,6 @@ switch ($action) {
             $UneInscription = new Inscription(1, $_SESSION['enseignant'], $date, $divers, $impo, $_SESSION['nbrEleve'], $_SESSION['nbrAccom']);
             MInscription::addInscription($UneInscription);
             $UneInscription = $_SESSION['inscription'];
-
             $nomSpectacle = MSpectacle::getSpectacleByName($_SESSION['choix1']->getSpectacle()->getNom());
             $_SESSION['Spectacle1'] = $nomSpectacle;
             $nomInscription = MInscription::getInscriptionByEnseignant($_SESSION['enseignant']);
@@ -263,29 +198,8 @@ switch ($action) {
                 $unChoix = new Choix($_SESSION['inscription'], $_SESSION['Spectacle1'], 1);
                 MChoix::addChoix($unChoix);
                 $passe = true;
-=======
-            $impo = '1 : '.$_SESSION['impo1'].'<br> 2 : '.$_SESSION['impo2'].'<br> 3 : '.$_SESSION['impo3'];
-        }
-        $date= new DateTime();
-        $UneInscription = new Inscription(1,$_SESSION['enseignant'], $date, $divers, $impo, $_SESSION['nbrEleve'],$_SESSION['nbrAccom']);
-        MInscription::addInscription($UneInscription);
-
-        $nomSpectacle = MSpectacle::getSpectacleByName($_SESSION['choix1']);
-        $nomInscription = MInscription::getInscriptionByEnseignant($_SESSION['enseignant']);
-        $passe = false;
-        $envoimail = false;
-        foreach ($nomInscription->getCollection() as $choix) {
-            if(!(MChoix::addChoix($nomSpectacle->getId(), $choix->getId(), 1 ))){
-                $passe=false;
-                $envoimail = false;
-                $_SESSION['error'] = "<h1> La demande d'inscription a échoué, erreur inconnue.</h1>";
-            }else{
-                MChoix::addChoix(MChoix::addChoix($nomSpectacle->getId(), $choix->getId(), 1  );
-                $passe=true;
->>>>>>> 7812e1afe048b9800e1145e184c5c3144ec71962
                 $envoimail = true;
             }
-<<<<<<< HEAD
             if ($_SESSION['choix2'] != 'non') {
                 $nomSpectacle2 = MSpectacle::getSpectacleByName($_SESSION['choix2']->getSpectacle()->getNom());
                 $_SESSION['Spectacle2'] = $nomSpectacle2;
@@ -296,35 +210,21 @@ switch ($action) {
                     $_SESSION['Spectacle3'] = $nomSpectacle3;
                     $unChoix3 = new Choix($_SESSION['inscription'], $_SESSION['Spectacle3'], 3);
                     MChoix::addChoix($unChoix3);
-=======
-            if($_SESSION['choix2'] != 'non') {
-                $nomSpectacle = MSpectacle::getSpectacleByName($_SESSION['choix2']);
-                $_SESSION['Spectacle'] = $nomSpectacle;
-                MChoix::addChoix($nomSpectacle['idSpectacle'],$key['idInscription'],2);
-                if($_SESSION['choix3'] != 'non') {
-                    $nomSpectacle = MSpectacle::getSpectacleByName($_SESSION['choix3']);
-                    MChoix::addChoix($nomSpectacle['idSpectacle'],$key['idInscription'],3);
->>>>>>> 7812e1afe048b9800e1145e184c5c3144ec71962
                 }
             }
-
-
-
-        $mail = $_SESSION['ecole']->getMailDirecteur();
-
-        $passage_ligne = "\n";
-        $boundary = "-----=".md5(rand());
-        // ==== Création header mail
-        $header = "From: kiosque-noreply@kiosque-mayenne.org".$passage_ligne;
-        $header.= "Reply-to: \"".$_SESSION['ecole']->getNom()."\" ".$_SESSION['ecole']->getMailDirecteur().$passage_ligne;
-        $header.= "MIME-Version: 1.0".$passage_ligne;
-        $header.= 'Content-Type: text/html; charset=iso-8859-1'.$passage_ligne;
-        $header.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
-        // ====
-        // ==== Création différents messages
-        $classes = implode(", ", $_SESSION['classe']) ;
-
-        $message_html = "<html><head><meta charset='UTF-8'></head><body>Bonjour,<br><br>
+            $mail = $_SESSION['ecole']->getMailDirecteur();
+            $passage_ligne = "\n";
+            $boundary = "-----=".md5(rand());
+            // ==== Création header mail
+            $header = "From: kiosque-noreply@kiosque-mayenne.org".$passage_ligne;
+            $header.= "Reply-to: \"".$_SESSION['ecole']->getNom()."\" ".$_SESSION['ecole']->getMailDirecteur().$passage_ligne;
+            $header.= "MIME-Version: 1.0".$passage_ligne;
+            $header.= 'Content-Type: text/html; charset=iso-8859-1'.$passage_ligne;
+            $header.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
+            // ====
+            // ==== Création différents messages
+            $classes = implode(", ", $_SESSION['classe']) ;
+            $message_html = "<html><head><meta charset='UTF-8'></head><body>Bonjour,<br><br>
         Nous avons bien reçu l'inscription de votre classe pour la
         saison spectacles jeune public.<br>
         Nous vous remercions pour votre contribution
@@ -332,7 +232,6 @@ switch ($action) {
         Valérie Martin reste à votre disposition pour tout complément d'information.
         N'hésitez pas à la contacter, par mail de préférence à v.martin@kiosque-mayenne.org
         ou par téléphone au 02 43 30 10 16.<br>Voici le récapitulatif de votre demande : <br>
-
         <br><strong>Ecole</strong> : <br>Type : ".$_SESSION['ecole']->getType()."<br>Nom : ".$_SESSION['ecole']->getNom()."<br>Adresse 1 : ".$_SESSION['ecole']->getAdresse()."<br>
         Adresse 2 : ".$_SESSION['ecole']->getAdresse2()."<br>Code postal : ".$_SESSION['ecole']->getCp()."<br>Ville : ".$_SESSION['ecole']->getVille()."<br>Téléphone : ".$_SESSION['ecole']->getDirecteur()->getTel()."<br>
         Mail : ".$_SESSION['ecole']->getMailDirecteur()."<br><br><strong>Responsable</strong> : <br>
@@ -340,47 +239,42 @@ switch ($action) {
         <br><strong>Divers</strong> : <br>".$_SESSION['divers']."<br><br><strong>Enseignant</strong> : <br>
         Civilité : ".$_SESSION['enseignant']->getCivilite()."<br>Nom : ".$_SESSION['enseignant']->getNom()."<br>Prénom : ".$_SESSION['enseignant']->getPrenom()."<br>Téléphone : ".$_SESSION['enseignant']->getTel()."<br>
         Mail : ".$_SESSION['enseignant']->getMail()."<br>Classe : ".$classes."<br>Elèves : ".$_SESSION['nbrEleve']."<br>Accompagnateurs : ".$_SESSION['nbrAccom']."<br>
-
         <br><strong>Choix : </strong><br>
         Premier choix : ".$_SESSION['choix1']."<br>Deuxième choix : ".$_SESSION['choix2']."<br>Troisième choix : ".$_SESSION['choix3']."<br>
         <br>À très bientôt.<br>
-
         L'équipe du Kiosque.</body></html>";
-        // ====
-        // === Sujet mail
-        $sujet = "Confirmation demande d'inscription - Le Kiosque";
-        // ===
-        // Création message HTML
-        $message = $passage_ligne.$message_html.$passage_ligne;
-        // =======
-        //=====Envoi de l'e-mail.
-        if($envoimail == true) {
-            mail($mail,$sujet,$message,$header);
-            mail('oceane.martin53960@gmail.com',$sujet,$message,$header);//v.martin@kiosque-mayenne.org
-        }
-        $bla = $_SESSION['enseignant']->getMail();
-        // === Mail si diffférent du mail de établissement de celui du responsable
-        if($envoimail == true) {
-            if($_SESSION['enseignant']->getMail() && $_SESSION['enseignant']->getMail() != $_SESSION['ecole']->getMailDirecteur() && $_SESSION['enseignant']->getMail() != "" && $_SESSION['enseignant']->getMail() != null){
-                // ==== Création header mail
-                $header = "From: kiosque-noreply@kiosque-mayenne.org".$passage_ligne;
-                $header.= "Reply-to: \"".$_SESSION['nomEcole']."\" ".$_SESSION['mailEns'].$passage_ligne;
-                $header.= "MIME-Version: 1.0".$passage_ligne;
-                $header.= 'Content-Type: text/html; charset=iso-8859-1'.$passage_ligne;
-                $header.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
-                // ====
-                utf8_encode($message);
-                mail($bla,$sujet,$message,$header);
-                // ===
+            // ====
+            // === Sujet mail
+            $sujet = "Confirmation demande d'inscription - Le Kiosque";
+            // ===
+            // Création message HTML
+            $message = $passage_ligne.$message_html.$passage_ligne;
+            // =======
+            //=====Envoi de l'e-mail.
+            if($envoimail == true) {
+                mail($mail,$sujet,$message,$header);
+                mail('oceane.martin53960@gmail.com',$sujet,$message,$header);//v.martin@kiosque-mayenne.org
             }
+            $bla = $_SESSION['enseignant']->getMail();
+            // === Mail si diffférent du mail de établissement de celui du responsable
+            if($envoimail == true) {
+                if($_SESSION['enseignant']->getMail() && $_SESSION['enseignant']->getMail() != $_SESSION['ecole']->getMailDirecteur() && $_SESSION['enseignant']->getMail() != "" && $_SESSION['enseignant']->getMail() != null){
+                    // ==== Création header mail
+                    $header = "From: kiosque-noreply@kiosque-mayenne.org".$passage_ligne;
+                    $header.= "Reply-to: \"".$_SESSION['nomEcole']."\" ".$_SESSION['mailEns'].$passage_ligne;
+                    $header.= "MIME-Version: 1.0".$passage_ligne;
+                    $header.= 'Content-Type: text/html; charset=iso-8859-1'.$passage_ligne;
+                    $header.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
+                    // ====
+                    utf8_encode($message);
+                    mail($bla,$sujet,$message,$header);
+                    // ===
+                }
+            }
+            include("views/inscriptionEcole/v_Fin.php");
         }
-
-        include("views/inscriptionEcole/v_Fin.php");
-
-    }
-    catch (Exception $e)
-    {
-        Main::setFlashMessage($e->getMessage(), "error");
-    } break;
-
+        catch (Exception $e)
+        {
+            Main::setFlashMessage($e->getMessage(), "error");
+        } break;
 }
