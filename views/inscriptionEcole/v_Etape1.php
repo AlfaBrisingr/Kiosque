@@ -67,7 +67,7 @@
 				<label for="divers" >Divers</label>
 				<div class="col-sm-12 col-xs-6 col-md-6 col-lg-6">
 					<div class="form-group">
-						<textarea rows="6" cols="90" style="resize:none" name="divers" class="form-control" placeholder="Mentionnez ici toute information qui vous semble importante de nous communiquer."><?php if(isset($_SESSION['divers1']) && $_SESSION['divers1'] != ""){ echo $_SESSION['divers1']; } ?></textarea>
+						<textarea rows="6" cols="90" style="resize:none" name="divers" class="form-control" placeholder="Mentionnez ici toute information qui vous semble importante de nous communiquer."><?php if(isset($_SESSION['divers']) && $_SESSION['divers'] != ""){ echo $_SESSION['divers']; } ?></textarea>
 					</div>
 				</div>
 			</div>

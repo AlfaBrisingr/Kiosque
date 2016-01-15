@@ -1,4 +1,3 @@
-<?php ob_start(); ?>
 <script src="/JP/js/css_cond.js"></script>
 <div class="container">
 	<div class="row">
@@ -15,8 +14,7 @@
 	</div>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<a href="/JP/kiosqueadmin/" class="btn btn-primary">Retour</a>
+		<a href="?uc=admin&action=voirAdmin" class="btn btn-primary">Retour</a>
 	</div>
 </div>
 <br>
-<?php $contenu = ob_get_clean(); ?>

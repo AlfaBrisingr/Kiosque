@@ -62,7 +62,7 @@
                         <a href="?uc=connexion">Jeune Public</a>
                     <?php } ?>
                 </li>
-                <?php if(Main::connexionExistante()){ ?> <li><a href="kiosqueadmin">Administration</a></li><?php } ?>
+                <?php if(Main::connexionExistante()){ ?> <li><a href="?uc=admin&action=voirAdmin">Administration</a></li><?php } ?>
             </ul>
             <?php if(Main::connexionExistante()) { ?>
                 <ul class="nav navbar-nav pull-right">
@@ -83,11 +83,21 @@
                 break;
             case 'connexion' :
                 include("controller/inscriptionEcole/c_Connexion.php");
+                break;
             case 'admin' :
                 include("controller/kiosqueadmin/c_KiosqueAdmin.php");
                 break;
             case 'jp' :
                 include("controller/inscriptionEcole/c_Inscription.php");
+                break;
+            case 'lieu':
+                include("controller/kiosqueadmin/c_Lieu.php");
+                break;
+            case 'ecole':
+                include("controller/kiosqueadmin/c_Ecole.php");
+                break;
+            case 'spectacle':
+                include("controller/kiosqueadmin/c_Spectacle.php");
                 break;
             default :
                 include("views/v_Erreur.php");

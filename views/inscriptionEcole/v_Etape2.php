@@ -63,40 +63,40 @@
 				<div class="row">
 					<div class="col-xs-3 col-md-3 col-lg-3">
 						<label>
-							<input type="checkbox" name="classe" <?php if(isset($_SESSION['classe']) && $_SESSION['classe'] == 'Maternelle petite section'){ echo 'checked="checked"'; } ?> value="Maternelle petite section">Maternelle petite section
+							<input type="checkbox" name="classe[]" <?php if(isset($_SESSION['classe']) && $_SESSION['classe'] == 'Maternelle petite section'){ echo 'checked="checked"'; } ?> value="Maternelle petite section">Maternelle petite section
 						</label>
 						<label>
-							<input type="checkbox" name="classe" value="Maternelle moyenne section">Maternelle moyenne section
+							<input type="checkbox" name="classe[]" value="Maternelle moyenne section">Maternelle moyenne section
 						</label>
 						<label>
-							<input type="checkbox" name="classe" value="Maternelle grande section">Maternelle grande section
-						</label>
-					</div>
-					<div class="col-xs-2 col-md-2 col-lg-2">
-						<label>
-							<input type="checkbox" name="classe" value="CP">Primaire CP
-						</label>
-						<label>
-							<input type="checkbox" name="classe" value="CE1">Primaire CE1
-						</label>
-						<label>
-							<input type="checkbox" name="classe" value="CE2">Primaire CE2
+							<input type="checkbox" name="classe[]" value="Maternelle grande section">Maternelle grande section
 						</label>
 					</div>
 					<div class="col-xs-2 col-md-2 col-lg-2">
 						<label>
-							<input type="checkbox" name="classe" value="CM1">Primaire CM1
+							<input type="checkbox" name="classe[]" value="CP">Primaire CP
 						</label>
 						<label>
-							<input type="checkbox" name="classe" value="CM2">Primaire CM2
+							<input type="checkbox" name="classe[]" value="CE1">Primaire CE1
 						</label>
 						<label>
-							<input type="checkbox" name="classe" value="C.L.I.S">C.L.I.S
+							<input type="checkbox" name="classe[]" value="CE2">Primaire CE2
+						</label>
+					</div>
+					<div class="col-xs-2 col-md-2 col-lg-2">
+						<label>
+							<input type="checkbox" name="classe[]" value="CM1">Primaire CM1
+						</label>
+						<label>
+							<input type="checkbox" name="classe[]" value="CM2">Primaire CM2
+						</label>
+						<label>
+							<input type="checkbox" name="classe[]" value="C.L.I.S">C.L.I.S
 						</label>
 					</div>
 					<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
 						<label>
-							<input type="checkbox" name="classe" value="Autre">Autre
+							<input type="checkbox" name="classe[]" value="Autre">Autre
 						</label>
 					</div>
 				</div>

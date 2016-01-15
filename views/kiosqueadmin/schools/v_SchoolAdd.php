@@ -1,10 +1,9 @@
-<?php ob_start(); ?>
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="jumbotron">
 				<fieldset>
-					<form action="/JP/kiosqueadmin/schools/?schoolsaddfinish=1" method="POST">
+					<form action="?uc=ecole&action=AjouterEcole" method="POST">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<legend>Ajouter une école</legend>
 						</div>
@@ -75,7 +74,7 @@
 								<input type="reset" class="btn btn-default" value="Par défaut"><br><br>
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<a href="/JP/kiosqueadmin/schools/" class="btn btn-link">Retour</a>
+								<a href="?uc=admin&action=voirEcole" class="btn btn-link">Retour</a>
 							</div>
 						</div>
 					</form>
@@ -84,4 +83,3 @@
 		</div>
 	</div>
 </div>
-<?php $contenu = ob_get_clean(); ?>

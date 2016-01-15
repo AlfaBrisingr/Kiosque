@@ -1,10 +1,9 @@
-<?php ob_start(); ?>
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="jumbotron">
 				<fieldset><legend>Modifier l'école <?= $listEcole['nomEcole'] ?></legend>
-					<form action="/JP/kiosqueadmin/schools/?schoolsseditfinish=1&schools=<?= $listEcole['idEcole'] ?>" method="POST">
+					<form action="?uc=ecole&action=EditEcole&schools=<?= $listEcole['idEcole'] ?>" method="POST">
 						<div class="form-group">
 							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 								<label for="typeEcole">Type</label>
@@ -76,8 +75,7 @@
 				</fieldset>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<a href="/JP/kiosqueadmin/schools/" class="btn btn-link">Retour</a>
+				<a href="?uc=admin&action=voirEcole" class="btn btn-link">Retour</a>
 			</div>
 		</div>
 	</div>
-	<?php $contenu = ob_get_clean(); ?>

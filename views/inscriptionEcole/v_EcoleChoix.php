@@ -55,13 +55,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($listEcole->getCollection() as $key) { ?>
+                    <?php foreach ($listEcole->getCollection() as $ecole) { ?>
                         <tr>
-                            <td><input onchange="this.form.submit()" type="radio" name="choix" required value="<?= $key->getId() ?>"></td>
-                            <td><?= $key->getNom() ?></td>
-                            <td><?= $key->getAdresse() ?></td>
-                            <td><?= $key->getCp() ?></td>
-                            <td><?= $key->getVille() ?></td>
+                            <td><input onchange="this.form.submit()" type="radio" name="choix" required value="<?= $ecole->getId() ?>"></td>
+                            <td><?= $ecole->getNom() ?></td>
+                            <td><?= $ecole->getAdresse() ?></td>
+                            <td><?= $ecole->getCp() ?></td>
+                            <td><?= $ecole->getVille() ?></td>
                         </tr>
                     <?php } ?>
                     </tbody>

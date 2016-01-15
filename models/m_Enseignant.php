@@ -15,7 +15,7 @@ class MEnseignant
         {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("
-                SELECT e.idEcole, typeEcole, nomEcole, adresseEcole, adresse2Ecole, cpEcole, villeEcole, mail_dir, civEns, nomEns, prenomEns, mailEns, telEns FROM ecole
+                SELECT e.idEcole, typeEcole, nomEcole, adresseEcole, adresse2Ecole, cpEcole, villeEcole, mail_dir, civEns, nomEns, prenomEns, mailEns, telEns 
                 FROM enseignant ens
                 INNER JOIN ecole e ON e.idEcole = ens.idEcole");
             $tabs = $reqPrepare->fetchAll();
@@ -83,7 +83,7 @@ class MEnseignant
         try
         {
             $conn = Main::bdd();
-            $reqPrepare = $conn->prepare("SELECT e.idEcole, typeEcole, nomEcole, adresseEcole, adresse2Ecole, cpEcole, villeEcole, mail_dir, civEns, nomEns, prenomEns, mailEns, telEns FROM ecole
+            $reqPrepare = $conn->prepare("SELECT e.idEcole, typeEcole, nomEcole, adresseEcole, adresse2Ecole, cpEcole, villeEcole, mail_dir, civEns, nomEns, prenomEns, mailEns, telEns 
                 FROM enseignant ens
                 INNER JOIN ecole e ON e.idEcole = ens.idEcole
                 WHERE ens.nomEns = ? AND ens.prenomEns = ?");
@@ -102,12 +102,34 @@ class MEnseignant
         }
     }
 
+    static public function isEnseignantExistant(Enseignant $enseignant){
+        try{
+
+            $conn = Main::bdd();
+            $reqPrepare = $conn->prepare("SELECT count(*) as 'NbEnseignant', nomEns, prenomEns
+                FROM enseignant 
+                WHERE nomEns = ? AND prenomEns = ?
+                GROUP BY nomEns, prenomEns");
+            $reqPrepare->execute(array(
+                $enseignant->getNom(),
+                $enseignant->getPrenom()
+                ));
+            $reqPrepare=$reqPrepare->fetch();
+            return $reqPrepare['NbEnseignant'];
+
+        }
+        catch (PDOException $e)
+        {
+            throw new Exception("L'enseignant ".$enseignant->getNom()." ".$enseignant->getPrenom()." n'existe pas");
+        }
+    }
+
     /**
      * Ajoute un enseignant
      * @param Enseignant $enseignant
      * @throws Exception
      */
-    public function addEnseignant(Enseignant $enseignant)
+    static public function addEnseignant(Enseignant $enseignant)
     {
         $conn = Main::bdd();
         try
