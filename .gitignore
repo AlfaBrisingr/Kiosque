@@ -3,4 +3,8 @@
 # Example .gitignore files: https://github.com/github/gitignore
 /bower_components/
 /node_modules/
+<<<<<<< HEAD
 /.idea/*
+=======
+/.idea/
+>>>>>>> 7812e1afe048b9800e1145e184c5c3144ec71962

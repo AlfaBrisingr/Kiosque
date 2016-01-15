@@ -67,6 +67,7 @@ switch ($action) {
 
             // NE PAS OUBLIER DE FAIRE LA MODIFICATION
 
+<<<<<<< HEAD
             /*  if(isset($_POST['civEns'])||isset($_POST['nomEns'])||isset($_POST['prenomEns'])||isset($_POST['telEns'])||isset($_POST['mailEns'])){
                   $unEnseignant = new Enseignant($_SESSION['enseignant']->getId(), $_POST['civEns'],$_POST['nomEns'],$_POST['prenomEns'],$_POST['mailEns'],$_POST['telEns']);
                   MEnseignant::editEnseignant($unEnseignant);
@@ -76,6 +77,20 @@ switch ($action) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
+=======
+        // NE PAS OUBLIER DE FAIRE LA MODIFICATION 
+
+      /*  if(isset($_POST['civEns'])||isset($_POST['nomEns'])||isset($_POST['prenomEns'])||isset($_POST['telEns'])||isset($_POST['mailEns'])){
+            $unEnseignant = new Enseignant($_SESSION['enseignant']->getId(), $_POST['civEns'],$_POST['nomEns'],$_POST['prenomEns'],$_POST['mailEns'],$_POST['telEns']);
+            MEnseignant::editEnseignant($unEnseignant);
+        } */
+        include("views/inscriptionEcole/v_Etape2.php");
+    }
+    catch (Exception $e)
+    {
+        Main::setFlashMessage($e->getMessage(), "error");
+    } break;
+>>>>>>> 7812e1afe048b9800e1145e184c5c3144ec71962
 
     case 'etape3' :
         try {
@@ -184,9 +199,30 @@ switch ($action) {
                 'Impossibilités' => $_SESSION['impo3']
             );
 
+<<<<<<< HEAD
             include("views/inscriptionEcole/v_Recap.php");
         } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
+=======
+        include("views/inscriptionEcole/v_Recap.php");
+    }
+    catch (Exception $e)
+    {
+        Main::setFlashMessage($e->getMessage(), "error");
+    } break;
+
+    case 'valider' : 
+    try
+    {
+        if (MEnseignant::isEnseignantExistant($_SESSION['enseignant']) == 0){
+            MEnseignant::addEnseignant($_SESSION['enseignant']);
+        }
+
+        $divers = $_SESSION['divers'];
+
+        if(empty($_SESSION['impo1']) && empty($_SESSION['impo2']) && empty($_SESSION['impo3'])){
+            $impo = '<strong><em>Vide</em></strong>';
+>>>>>>> 7812e1afe048b9800e1145e184c5c3144ec71962
         }
         break;
 
@@ -195,6 +231,7 @@ switch ($action) {
             if (MEnseignant::isEnseignantExistant($_SESSION['enseignant']) == 0) {
                 MEnseignant::addEnseignant($_SESSION['enseignant']);
             }
+<<<<<<< HEAD
 
             $divers = $_SESSION['divers'];
 
@@ -226,8 +263,29 @@ switch ($action) {
                 $unChoix = new Choix($_SESSION['inscription'], $_SESSION['Spectacle1'], 1);
                 MChoix::addChoix($unChoix);
                 $passe = true;
+=======
+            $impo = '1 : '.$_SESSION['impo1'].'<br> 2 : '.$_SESSION['impo2'].'<br> 3 : '.$_SESSION['impo3'];
+        }
+        $date= new DateTime();
+        $UneInscription = new Inscription(1,$_SESSION['enseignant'], $date, $divers, $impo, $_SESSION['nbrEleve'],$_SESSION['nbrAccom']);
+        MInscription::addInscription($UneInscription);
+
+        $nomSpectacle = MSpectacle::getSpectacleByName($_SESSION['choix1']);
+        $nomInscription = MInscription::getInscriptionByEnseignant($_SESSION['enseignant']);
+        $passe = false;
+        $envoimail = false;
+        foreach ($nomInscription->getCollection() as $choix) {
+            if(!(MChoix::addChoix($nomSpectacle->getId(), $choix->getId(), 1 ))){
+                $passe=false;
+                $envoimail = false;
+                $_SESSION['error'] = "<h1> La demande d'inscription a échoué, erreur inconnue.</h1>";
+            }else{
+                MChoix::addChoix(MChoix::addChoix($nomSpectacle->getId(), $choix->getId(), 1  );
+                $passe=true;
+>>>>>>> 7812e1afe048b9800e1145e184c5c3144ec71962
                 $envoimail = true;
             }
+<<<<<<< HEAD
             if ($_SESSION['choix2'] != 'non') {
                 $nomSpectacle2 = MSpectacle::getSpectacleByName($_SESSION['choix2']->getSpectacle()->getNom());
                 $_SESSION['Spectacle2'] = $nomSpectacle2;
@@ -238,6 +296,15 @@ switch ($action) {
                     $_SESSION['Spectacle3'] = $nomSpectacle3;
                     $unChoix3 = new Choix($_SESSION['inscription'], $_SESSION['Spectacle3'], 3);
                     MChoix::addChoix($unChoix3);
+=======
+            if($_SESSION['choix2'] != 'non') {
+                $nomSpectacle = MSpectacle::getSpectacleByName($_SESSION['choix2']);
+                $_SESSION['Spectacle'] = $nomSpectacle;
+                MChoix::addChoix($nomSpectacle['idSpectacle'],$key['idInscription'],2);
+                if($_SESSION['choix3'] != 'non') {
+                    $nomSpectacle = MSpectacle::getSpectacleByName($_SESSION['choix3']);
+                    MChoix::addChoix($nomSpectacle['idSpectacle'],$key['idInscription'],3);
+>>>>>>> 7812e1afe048b9800e1145e184c5c3144ec71962
                 }
             }
 
