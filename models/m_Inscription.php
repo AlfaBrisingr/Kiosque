@@ -147,7 +147,7 @@ class MInscription
                     $tab['nbEnfantsInscription'],
                     $tab['nbAdultesInscription']
                     );
-                $lesChoix = MChoix::getChoixsByInscription($inscription);
+                $lesChoix = MChoix::getChoixBySub($inscription);
                 $inscription->setLesChoix($lesChoix);
                 $coll->ajouter($inscription);
             }
@@ -216,6 +216,7 @@ class MInscription
                 $inscription->getNbEnfants(),
                 $inscription->getNbAdultes()
                 ));
+            $conn->commit();
         }
         catch (PDOException $e)
         {
@@ -251,6 +252,7 @@ class MInscription
                 $inscription->getNbAdultes(),
                 $inscription->getId()
                 ));
+            $conn->commit();
         }
         catch (PDOException $e)
         {
@@ -272,10 +274,40 @@ class MInscription
             $reqPrepare->execute(array($inscription->getId()));
             $reqPrepare = $conn->prepare("DELETE FROM inscription WHERE idInscription = ?");
             $reqPrepare->execute(array($inscription->getId()));
+            $conn->commit();
         }
         catch (PDOException $e) {
             $conn->rollBack();
             throw new Exception("L'inscription ".$inscription->getId()." n'a pas pu être supprimée. Détails : <p>".$e->getMessage()."</p>");
+        }
+    }
+
+    static public function getInscriptionByIdEnseignantNonJoin(Enseignant $enseignant){
+        $conn = Main::bdd();
+        try {
+
+            $reqPrepare = $conn->prepare("SELECT * FROM inscription WHERE idEns = ?");
+            $reqPrepare->execute(array($enseignant->getId()));
+            $tab = $reqPrepare->fetchall();
+            return $tab;
+        }
+        catch (PDOException $e)
+        {
+            throw new Exception("L'enseignant ".$enseignant->getId()." n'a aucune inscription.");
+        }
+    }
+
+    static public function getIdInscription(Inscription $inscription){
+        $conn = Main::bdd();
+        try{
+            $reqPrepare = $conn->prepare("SELECT idIscription FROM inscription");
+            $reqPrepare->execute(array(Main::bdd()->lastInsertId($inscription->getId())));
+            $req = $reqPrepare->fetch();
+            return $req;
+        }
+        catch (PDOException $e)
+        {
+            throw new Exception("L'id de l'inscription n° ".$inscription->getId()." n'a pas été retrouvé.");
         }
     }
 }

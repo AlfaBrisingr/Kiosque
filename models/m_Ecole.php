@@ -209,6 +209,7 @@ class MEcole
                 $ecole->getMailDirecteur(),
                 $ecole->getDirecteur()->getId()
                 ));
+            $conn->commit();
         }
         catch (PDOException $e) {
             $conn->rollBack();
@@ -237,6 +238,7 @@ class MEcole
                 $ecole->getDirecteur()->getId(),
                 $ecole->getId()
                 ));
+            $conn->commit();
         }
         catch (PDOException $e) {
             $conn->rollBack();
@@ -257,6 +259,7 @@ class MEcole
             $reqPrepare->execute(array($ecole->getId()));
             $reqPrepare = $conn->prepare("DELETE FROM ecole WHERE idEcole = ?");
             $reqPrepare->execute(array($ecole->getId()));
+            $conn->commit();
         }
         catch (PDOException $e) {
             $conn->rollBack();

@@ -211,6 +211,7 @@ class MSaison
             $reqPrepare->execute(array($saisonAncienne->getId()));
             $reqPrepare = $conn->prepare("UPDATE saison SET courante = 1 WHERE idSaison = ?");
             $reqPrepare->execute(array($saisonNouvelle->getId()));
+            $conn->commit();
         }
         catch (PDOException $e)
         {

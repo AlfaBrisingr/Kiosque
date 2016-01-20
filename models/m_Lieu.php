@@ -118,6 +118,7 @@ class MLieu
                 $lieu->getCp(),
                 $lieu->getVille()
             ));
+            $conn->commit();
         }
         catch (PDOException $e)
         {
@@ -139,6 +140,7 @@ class MLieu
             $reqPrepare->execute(array($lieu->getId()));
             $reqPrepare = $conn->prepare("DELETE FROM lieu WHERE idLieu = ?");
             $reqPrepare->execute(array($lieu->getId()));
+            $conn->commit();
         }
         catch (PDOException $e) {
             $conn->rollBack();
@@ -164,6 +166,7 @@ class MLieu
                 $lieu->getVille(),
                 $lieu->getId()
             ));
+            $conn->commit();
         }
         catch (PDOException $e)
         {

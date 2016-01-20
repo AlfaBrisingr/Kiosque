@@ -66,6 +66,7 @@ class MChoix
             $conn->beginTransaction();
             $reqPrepare = $conn->prepare("DELETE FROM choix WHERE idInscription = ?");
             $reqPrepare->execute(array($choix->getId()));
+            $conn->commit();
         }
         catch (PDOException $e) {
             $conn->rollBack();
@@ -79,10 +80,11 @@ class MChoix
             $conn->beginTransaction();
             $reqPrepare = $conn->prepare("INSERT INTO choix (idInscription, idSpectacle, prioriteChoix) VALUES (?,?,?)");
             $reqPrepare->execute(array(
-                $choix->getInscription()->getId(),
+                Main::bdd()->lastInsertId($choix->getInscription()->getId()),
                 $choix->getSpectacle()->getId(),
                 $choix->getPriorite()
             ));
+            $conn->commit();
         }
         catch (PDOException $e)
         {

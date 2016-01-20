@@ -189,6 +189,7 @@ class MSeance
             $reqPrepare->execute(array($seance->getId()));
             $reqPrepare = $conn->prepare("DELETE FROM seance WHERE idSeance = ?");
             $reqPrepare->execute(array($seance->getId()));
+            $conn->commit();
         }
         catch (PDOException $e) {
             $conn->rollBack();
@@ -211,6 +212,7 @@ class MSeance
             }
             $reqPrepare = $conn->prepare("DELETE FROM seance WHERE idSpectacle = ?");
             $reqPrepare->execute(array($spectacle->getId()));
+            $conn->commit();
         }
         catch (PDOException $e) {
             $conn->rollBack();
@@ -228,6 +230,7 @@ class MSeance
                 $seance->getDate()->format('Y-m-d H:i:s'),
                 $seance->getLieu()->getId()
             ));
+            $conn->commit();
         }
         catch (PDOException $e)
         {

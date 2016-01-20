@@ -91,7 +91,7 @@ class MEnseignant
             $tab = $reqPrepare->fetch();
             $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
             $ecole = new Ecole($tab['idEcole'], $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
-            $lesInscriptions = MInscription::getInscriptionsByEns($directeur);
+            $lesInscriptions = MInscription::getInscriptionByEnseignant($directeur);
             $directeur->setEcole($ecole);
             $directeur->setLesInscriptions($lesInscriptions);
             return $directeur;
@@ -144,11 +144,33 @@ class MEnseignant
                 $enseignant->getTel(),
                 $enseignant->getEcole()->getId()
                 ));
+            $conn->commit();
         }
         catch (PDOException $e)
         {
             $conn->rollBack();
             throw new Exception("L'ajout de l'enseignant ".$enseignant->getId()." a échoué. Détails : <p>".$e->getMessage()."</p>");
+        }
+    }
+
+    static public function editDirecteur(Enseignant $directeur){
+        $conn = Main::bdd();
+        try{
+            $conn->beginTransaction();
+            $reqPrepare = $conn->prepare("UPDATE enseignant SET civEns = ?, nomEns = ?, prenomEns = ?, mailEns = ? WHERE idEns = ?");
+            $reqPrepare->execute(array(
+                $directeur->getCivilite(),
+                $directeur->getNom(),
+                $directeur->getPrenom(),
+                $directeur->getMail(),
+                $directeur->getId()
+            ));
+            $conn->commit();
+        }
+        catch (PDOException $e)
+        {
+            $conn->rollBack();
+            throw new Exception("Le directeur ".$directeur->getId()." n'a pas pu être modifiée. Détails : <p>".$e->getMessage()."</p>");
         }
     }
 
@@ -172,6 +194,7 @@ class MEnseignant
                 $enseignant->getEcole()->getId(),
                 $enseignant->getId()
                 ));
+            $conn->commit();
         }
         catch (PDOException $e) {
             $conn->rollBack();
@@ -197,6 +220,7 @@ class MEnseignant
             $reqPrepare->execute(array($enseignant->getId()));
             $reqPrepare = $conn->prepare("DELETE FROM enseignant WHERE idEns = ?");
             $reqPrepare->execute(array($enseignant->getId()));
+            $conn->commit();
         }
         catch (PDOException $e) {
             $conn->rollBack();

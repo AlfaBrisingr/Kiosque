@@ -165,6 +165,7 @@ class MPlanning
             $conn->beginTransaction();
             $reqPrepare = $conn->prepare("DELETE FROM planning WHERE idSeance = ? AND idInscription = ?");
             $reqPrepare->execute(array($seance->getId(), $inscription->getId()));
+            $conn->commit();
         }
         catch (PDOException $e) {
             $conn->rollBack();
@@ -188,6 +189,7 @@ class MPlanning
                 $seance->getId(),
                 $inscription->getId()
             ));
+            $conn->commit();
         }
         catch (PDOException $e)
         {
@@ -207,6 +209,7 @@ class MPlanning
             $conn->beginTransaction();
             $reqPrepare = $conn->prepare("DELETE FROM planning WHERE idInscription = ?");
             $reqPrepare->execute(array($inscription->getId()));
+            $conn->commit();
         }
         catch (PDOException $e) {
             $conn->rollBack();

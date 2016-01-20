@@ -253,6 +253,7 @@ class MSpectacle
                 $spectacle->getNbPlace(),
                 $spectacle->getTypeClasse()
             ));
+            $conn->commit();
         }
         catch (PDOException $e)
         {
@@ -278,6 +279,7 @@ class MSpectacle
                 $spectacle->getTypeClasse(),
                 $spectacle->getId()
             ));
+            $conn->commit();
         }
         catch (PDOException $e)
         {
@@ -304,6 +306,7 @@ class MSpectacle
             $reqPrepare->execute(array($spectacle->getId()));
             $reqPrepare = $conn->prepare("DELETE FROM spectacle WHERE idLieu = ?");
             $reqPrepare->execute(array($spectacle->getId()));
+            $conn->commit();
         }
         catch (PDOException $e) {
             $conn->rollBack();
