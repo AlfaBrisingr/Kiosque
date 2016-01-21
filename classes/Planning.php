@@ -18,6 +18,17 @@ class Planning
     private $inscription;
 
     /**
+     * @var int
+     */
+    private $jaugeUtilise;
+
+    /**
+     * @var int
+     */
+    private $jaugeMax;
+
+
+    /**
      * Planning constructor.
      * @param Seance $seance
      * @param Inscription $inscription
@@ -26,6 +37,9 @@ class Planning
     {
         $this->seance = $seance;
         $this->inscription = $inscription;
+        $this->jaugeMax = $this->seance->getSpectacle()->getNbPlace();
+        $this->jaugeUtilise = $this->inscription->getNbAdultes()+$this->inscription->getNbEnfants();
+
     }
 
     /**
@@ -62,6 +76,45 @@ class Planning
     {
         $this->inscription = $inscription;
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getJaugeUtilise()
+    {
+        return $this->jaugeUtilise;
+    }
+
+    /**
+     * @param int $jaugeUtilise
+     */
+    public function setJaugeUtilise($jaugeUtilise)
+    {
+        $this->jaugeUtilise = $jaugeUtilise;
+    }
+
+    /**
+     * @return int
+     */
+    public function getJaugeMax()
+    {
+        return $this->jaugeMax;
+    }
+
+    /**
+     * @param int $jaugeMax
+     */
+    public function setJaugeRestante($jaugeMax)
+    {
+        $this->jaugeMax = $jaugeMax;
+    }
+
+    /**
+     * @return int
+     */
+    public function getJaugeRestante(){
+        return $this->jaugeMax - $this->jaugeUtilise;
     }
 
 

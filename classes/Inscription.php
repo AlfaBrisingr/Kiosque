@@ -47,6 +47,11 @@ class Inscription
     private $lesChoix;
 
     /**
+     * @var String
+     */
+    private $classe;
+
+    /**
      * @param int $id
      * @param Enseignant $enseignant
      * @param DateTime $date
@@ -54,8 +59,9 @@ class Inscription
      * @param String $impo
      * @param int $nbEnfants
      * @param int $nbAdultes
+     * @param String $classe
      */
-    public function Inscription ($id, Enseignant $enseignant, \DateTime $date, $divers, $impo, $nbEnfants, $nbAdultes)
+    public function Inscription ($id, Enseignant $enseignant, \DateTime $date, $divers, $impo, $nbEnfants, $nbAdultes, $classe)
     {
         $this->id = (int) $id;
         $this->enseignant = $enseignant;
@@ -65,6 +71,23 @@ class Inscription
         $this->nbEnfants = (int) $nbEnfants;
         $this->nbAdultes = (int) $nbAdultes;
         $this->lesChoix = new Collection();
+        $this->classe = $classe;
+    }
+
+    /**
+     * @return String
+     */
+    public function getClasse(){
+        return $this->classe;
+    }
+
+    /**
+     * @param String $classe
+     * @return Inscription
+     */
+    public function setClasse($classe){
+        $this->classe = $classe;
+        return $this;
     }
 
     /**

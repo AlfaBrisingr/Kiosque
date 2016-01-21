@@ -82,7 +82,7 @@ class MSeance
         try
         {
             $conn = Main::bdd();
-            $reqPrepare = $conn->query("SELECT * FROM seance WHERE idLieu = ?");
+            $reqPrepare = $conn->prepare("SELECT * FROM seance WHERE idLieu = ?");
             $reqPrepare->execute(array($lieu->getId()));
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();

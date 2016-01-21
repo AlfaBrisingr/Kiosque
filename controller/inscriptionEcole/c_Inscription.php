@@ -53,8 +53,6 @@ switch ($action) {
     case 'etape2':
         try {
             if (isset($_SESSION['ecole'])) {
-                $enseignant = MEnseignant::getEnseignantById($_SESSION['ecole']->getDirecteur()->getId());
-                $_SESSION['enseignant'] = $enseignant;
                 $_SESSION['facture'] = $_POST['facture'];
                 $_SESSION['divers'] = $_POST['divers'];
             } else {
@@ -97,6 +95,8 @@ switch ($action) {
     case 'etape3' :
         try {
 
+            $enseignant = MEnseignant::getEnseignantById($_SESSION['ecole']->getDirecteur()->getId());
+            $_SESSION['enseignant'] = $enseignant;
             if(isset($_POST['nomEns']) && !empty($_POST['nomEns'])){
                 if($_POST['nomEns'] != $_SESSION['enseignant']->getNom()){
                     $_SESSION['enseignant']->setNom($_POST['nomEns']);
@@ -223,7 +223,6 @@ switch ($action) {
                 'Impossibilités' => $_SESSION['impo3']
             );
             include("views/inscriptionEcole/v_Recap.php");
-            var_dump($_SESSION['enseignant']);
         } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
@@ -232,8 +231,8 @@ switch ($action) {
         try {
             if (MEnseignant::isEnseignantExistant($_SESSION['enseignant']) == 0) {
                 MEnseignant::addEnseignant($_SESSION['enseignant']);
-                $unId = MEnseignant::getEnseignantByName($_SESSION['enseignant']->getNom(), $_SESSION['enseignant']->getPrenom());
-                $_SESSION['enseignant']->setId($UnId->getId());
+                $unEnseignant = MEnseignant::getEnseignantByName($_SESSION['enseignant']->getNom(), $_SESSION['enseignant']->getPrenom());
+                $_SESSION['enseignant']->setId($unEnseignant->getId());
             }
             $divers = $_SESSION['divers'];
             if (empty($_SESSION['impo1']) && empty($_SESSION['impo2']) && empty($_SESSION['impo3'])) {
@@ -251,21 +250,14 @@ switch ($action) {
                 $impo = '1 : ' . $_SESSION['impo1'] . '<br> 2 : ' . $_SESSION['impo2'] . '<br> 3 : ' . $_SESSION['impo3'];
             }
             $date = new DateTime();
-            $UneInscription = new Inscription(1,$_SESSION['enseignant'], $date, $divers, $impo, $_SESSION['nbrEleve'], $_SESSION['nbrAccom']);
-            MInscription::addInscription($UneInscription);
-
+            $classe = implode(", ", $_SESSION['classe']);
+            $UneInscription = new Inscription(1,$_SESSION['enseignant'], $date, $divers, $impo, $_SESSION['nbrEleve'], $_SESSION['nbrAccom'], $classe);
+            $IdInscription = MInscription::addInscription($UneInscription);
             $_SESSION['Spectacle1'] = MSpectacle::getSpectacleByName($_SESSION['choix1']);
-            $nomInscription = MInscription::getInscriptionByIdEnseignantNonJoin($_SESSION['enseignant']);
+            $UneInscription->setId($IdInscription);
 
-            $passe = false;
-            $envoimail = false;
-
-            foreach ($nomInscription as $choix) {
-                $unChoix = new Choix($UneInscription, $_SESSION['Spectacle1'], 1);
-                MChoix::addChoix($unChoix);
-                $passe = true;
-                $envoimail = true;
-            }
+            $unChoix = new Choix($UneInscription, $_SESSION['Spectacle1'], 1);
+            MChoix::addChoix($unChoix);
 
             if ($_SESSION['choix2'] != 'non') {
                 $_SESSION['Spectacle2'] = MSpectacle::getSpectacleByName($_SESSION['choix2']);
@@ -317,26 +309,24 @@ switch ($action) {
             $message = $passage_ligne.$message_html.$passage_ligne;
             // =======
             //=====Envoi de l'e-mail.
-            if($envoimail == true) {
-                mail($mail,$sujet,$message,$header);
-                mail('oceane.martin53960@gmail.com',$sujet,$message,$header);//v.martin@kiosque-mayenne.org
-            }
+            mail($mail,$sujet,$message,$header);
+            mail('oceane.martin53960@gmail.com',$sujet,$message,$header);//v.martin@kiosque-mayenne.org
             $bla = $_SESSION['enseignant']->getMail();
             // === Mail si diffférent du mail de établissement de celui du responsable
-            if($envoimail == true) {
-                if($_SESSION['enseignant']->getMail() && $_SESSION['enseignant']->getMail() != $_SESSION['ecole']->getMailDirecteur() && $_SESSION['enseignant']->getMail() != "" && $_SESSION['enseignant']->getMail() != null){
-                    // ==== Création header mail
-                    $header = "From: kiosque-noreply@kiosque-mayenne.org".$passage_ligne;
-                    $header.= "Reply-to: \"".$_SESSION['nomEcole']."\" ".$_SESSION['mailEns'].$passage_ligne;
-                    $header.= "MIME-Version: 1.0".$passage_ligne;
-                    $header.= 'Content-Type: text/html; charset=iso-8859-1'.$passage_ligne;
-                    $header.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
-                    // ====
-                    utf8_encode($message);
-                    mail($bla,$sujet,$message,$header);
-                    // ===
-                }
+
+            if($_SESSION['enseignant']->getMail() && $_SESSION['enseignant']->getMail() != $_SESSION['ecole']->getMailDirecteur() && $_SESSION['enseignant']->getMail() != "" && $_SESSION['enseignant']->getMail() != null){
+                // ==== Création header mail
+                $header = "From: kiosque-noreply@kiosque-mayenne.org".$passage_ligne;
+                $header.= "Reply-to: \"".$_SESSION['nomEcole']."\" ".$_SESSION['mailEns'].$passage_ligne;
+                $header.= "MIME-Version: 1.0".$passage_ligne;
+                $header.= 'Content-Type: text/html; charset=iso-8859-1'.$passage_ligne;
+                $header.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
+                // ====
+                utf8_encode($message);
+                mail($bla,$sujet,$message,$header);
+                // ===
             }
+
             include("views/inscriptionEcole/v_Fin.php");
         }
         catch (Exception $e)

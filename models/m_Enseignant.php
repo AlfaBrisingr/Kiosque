@@ -24,7 +24,7 @@ class MEnseignant
             {
                 $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
                 $ecole = new Ecole($tab['idEcole'], $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
-                $lesInscriptions = MInscription::getInscriptionsByEns($directeur);
+                $lesInscriptions = MInscription::getInscriptionByEnseignant($directeur);
                 $directeur->setEcole($ecole);
                 $directeur->setLesInscriptions($lesInscriptions);
                 $coll->ajouter($directeur);
@@ -83,7 +83,7 @@ class MEnseignant
         try
         {
             $conn = Main::bdd();
-            $reqPrepare = $conn->prepare("SELECT e.idEcole, typeEcole, nomEcole, adresseEcole, adresse2Ecole, cpEcole, villeEcole, mail_dir, civEns, nomEns, prenomEns, mailEns, telEns 
+            $reqPrepare = $conn->prepare("SELECT e.idEcole, typeEcole, nomEcole, adresseEcole, adresse2Ecole, cpEcole, villeEcole, mail_dir, idEns, civEns, nomEns, prenomEns, mailEns, telEns
                 FROM enseignant ens
                 INNER JOIN ecole e ON e.idEcole = ens.idEcole
                 WHERE ens.nomEns = ? AND ens.prenomEns = ?");

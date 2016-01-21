@@ -1,10 +1,9 @@
-<?php ob_start(); ?>
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="jumbotron">
 				<fieldset>
-					<form action="/JP/kiosqueadmin/?ins=<?= $listIns['idInscription'] ?>&editfinish=1" method="POST">
+					<form action="?uc=admin&action=validerInscription&ins=<?= $listIns['idInscription'] ?>&editfinish=1" method="POST">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<legend>Modifier l'inscription de <?php echo "\"".$listIns['nomEns'].' '.$listIns['prenomEns']."\""; ?></legend>
 						</div>
@@ -100,4 +99,3 @@
 		</div>
 	</div>
 </div>
-<?php $contenu = ob_get_clean(); ?>

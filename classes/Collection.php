@@ -43,7 +43,7 @@ class Collection
         }
         else
         {
-            //throw new KeyInvalidException("Invalid key $key.");
+            Return("Vide");
         }
     }
 

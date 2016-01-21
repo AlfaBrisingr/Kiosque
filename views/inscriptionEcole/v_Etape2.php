@@ -21,10 +21,10 @@
 			<label>Civilité <span class="require">*</span></label>
 			<div class="radio">
 				<label>
-					<input required type="radio" class="radio-inline" <?php if(isset($_SESSION['enseignant']) && $_SESSION['enseignant']->getCivilite() == 'Madame'){ echo 'checked="checked"'; } ?> name="civEns" value="Madame">Madame
+					<input required type="radio" class="radio-inline" <?php if(isset($_SESSION['directeur']) && $_SESSION['directeur']->getCivilite() == 'Madame'){ echo 'checked="checked"'; } ?> name="civEns" value="Madame">Madame
 				</label>
 				<label>
-					<input required type="radio" class="radio-inline" <?php if(isset($_SESSION['enseignant']) && $_SESSION['enseignant']->getCivilite() == 'Monsieur'){ echo 'checked="checked"'; } ?> name="civEns" value="Monsieur">Monsieur
+					<input required type="radio" class="radio-inline" <?php if(isset($_SESSION['directeur']) && $_SESSION['directeur']->getCivilite() == 'Monsieur'){ echo 'checked="checked"'; } ?> name="civEns" value="Monsieur">Monsieur
 				</label>
 			</div>
 		</div>
@@ -32,11 +32,11 @@
 			<div class="row">
 				<div class="col-md-3 col-lg-3 col-xs-3">
 					<label>Nom de l'enseignant <span class="require">*</span></label>
-					<input required="" class="form-control" type="text" <?php if(isset($_SESSION['enseignant']) && $_SESSION['enseignant']->getNom() != ""){ echo 'value='.$_SESSION['enseignant']->getNom(); } ?> name="nomEns" placeholder="Nom de l'enseignant">
+					<input required="" class="form-control" type="text" <?php if(isset($_SESSION['directeur']) && $_SESSION['directeur']->getNom() != ""){ echo 'value='.$_SESSION['directeur']->getNom(); } ?> name="nomEns" placeholder="Nom de l'enseignant">
 				</div>
 				<div class="col-xs-3 col-md-3 col-lg-3">
 					<label>Prénom de l'enseignant <span class="require">*</span></label>
-					<input required="" class="form-control" type="text" <?php if(isset($_SESSION['enseignant']) && $_SESSION['enseignant']->getPrenom() != ""){ echo 'value='.$_SESSION['enseignant']->getPrenom(); } ?> placeholder="Prénom de l'enseignant" name="prenomEns">
+					<input required="" class="form-control" type="text" <?php if(isset($_SESSION['directeur']) && $_SESSION['directeur']->getPrenom() != ""){ echo 'value='.$_SESSION['directeur']->getPrenom(); } ?> placeholder="Prénom de l'enseignant" name="prenomEns">
 				</div>
 			</div>
 		</div>
@@ -45,12 +45,12 @@
 				<div class="col-xs-3 col-md-3 col-lg-3">
 					<label>N° Portable de l'enseignant</label>
 					<p class="text-justify">Ce n° n'est utilisé qu'en cas d'urgence ou d'impossibilités de vous joindre par le biais de l'établissement ou de votre adresse mail</p>
-					<input class="form-control" type="text" <?php if(isset($_SESSION['enseignant']) && $_SESSION['enseignant']->getTel() != ""){ echo 'value='.$_SESSION['enseignant']->getTel(); } ?> placeholder="ex: 0202020202" name="telEns">
+					<input class="form-control" type="text" <?php if(isset($_SESSION['directeur']) && $_SESSION['directeur']->getTel() != ""){ echo 'value='.$_SESSION['directeur']->getTel(); } ?> placeholder="ex: 0202020202" name="telEns">
 				</div>
 				<div class="col-xs-3 col-md-3 col-lg-3">
 					<label>Adresse mail de l'enseignant</label>
 					<p class="text-justify">Nous permet de vous transmettre efficacement les informations et de vous joindre facilement<br><br></p>
-					<input class="form-control" type="email" <?php if(isset($_SESSION['enseignant']) && $_SESSION['enseignant']->getMail() != ""){ echo 'value='.$_SESSION['enseignant']->getMail(); } ?> placeholder="Si différent de l'établissement" name="mailEns">
+					<input class="form-control" type="email" <?php if(isset($_SESSION['directeur']) && $_SESSION['directeur']->getMail() != ""){ echo 'value='.$_SESSION['directeur']->getMail(); } ?> placeholder="Si différent de l'établissement" name="mailEns">
 				</div>
 			</div>
 		</div>
@@ -63,13 +63,13 @@
 				<div class="row">
 					<div class="col-xs-3 col-md-3 col-lg-3">
 						<label>
-							<input type="checkbox" name="classe[]" <?php if(isset($_SESSION['classe']) && $_SESSION['classe'] == 'Maternelle petite section'){ echo 'checked="checked"'; } ?> value="Maternelle petite section">Maternelle petite section
+							<input type="checkbox" name="classe[]" <?php if(isset($_SESSION['classe']) && $_SESSION['classe'] == 'Maternelle petite section'){ echo 'checked="checked"'; } ?> value="PetiteSection">Maternelle petite section
 						</label>
 						<label>
-							<input type="checkbox" name="classe[]" value="Maternelle moyenne section">Maternelle moyenne section
+							<input type="checkbox" name="classe[]" value="MoyenneSection">Maternelle moyenne section
 						</label>
 						<label>
-							<input type="checkbox" name="classe[]" value="Maternelle grande section">Maternelle grande section
+							<input type="checkbox" name="classe[]" value="GrandeSection">Maternelle grande section
 						</label>
 					</div>
 					<div class="col-xs-2 col-md-2 col-lg-2">

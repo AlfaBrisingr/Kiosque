@@ -26,9 +26,10 @@ class MInscription
                     $tab['diversInscription'],
                     $tab['impoInscription'],
                     $tab['nbEnfantsInscription'],
-                    $tab['nbAdultesInscription']
+                    $tab['nbAdultesInscription'],
+                    $tab['classe']
                     );
-                $lesChoix = MChoix::getChoixsByInscription($inscription);
+                $lesChoix = MChoix::getChoixBySub($inscription);
                 $inscription->setLesChoix($lesChoix);
                 $coll->ajouter($inscription);
             }
@@ -65,9 +66,10 @@ class MInscription
                     $tab['diversInscription'],
                     $tab['impoInscription'],
                     $tab['nbEnfantsInscription'],
-                    $tab['nbAdultesInscription']
+                    $tab['nbAdultesInscription'],
+                    $tab['classe']
                     );
-                $lesChoix = MChoix::getChoixsByInscription($inscription);
+                $lesChoix = MChoix::getChoixBySub($inscription);
                 $inscription->setLesChoix($lesChoix);
                 $coll->ajouter($inscription);
             }
@@ -105,9 +107,10 @@ class MInscription
                     $tab['diversInscription'],
                     $tab['impoInscription'],
                     $tab['nbEnfantsInscription'],
-                    $tab['nbAdultesInscription']
+                    $tab['nbAdultesInscription'],
+                    $tab['classe']
                     );
-                $lesChoix = MChoix::getChoixsByInscription($inscription);
+                $lesChoix = MChoix::getChoixBySub($inscription);
                 $inscription->setLesChoix($lesChoix);
                 $coll->ajouter($inscription);
             }
@@ -145,7 +148,8 @@ class MInscription
                     $tab['diversInscription'],
                     $tab['impoInscription'],
                     $tab['nbEnfantsInscription'],
-                    $tab['nbAdultesInscription']
+                    $tab['nbAdultesInscription'],
+                    $tab['classe']
                     );
                 $lesChoix = MChoix::getChoixBySub($inscription);
                 $inscription->setLesChoix($lesChoix);
@@ -180,9 +184,10 @@ class MInscription
                 $tab['diversInscription'],
                 $tab['impoInscription'],
                 $tab['nbEnfantsInscription'],
-                $tab['nbAdultesInscription']
+                $tab['nbAdultesInscription'],
+                $tab['classe']
                 );
-            $lesChoix = MChoix::getChoixsByInscription($inscription);
+            $lesChoix = MChoix::getChoixBySub($inscription);
             $inscription->setLesChoix($lesChoix);
             return $inscription;
         }
@@ -206,7 +211,7 @@ class MInscription
                 $validated = 1;
             else
                 $validated = 0;
-            $reqPrepare = $conn->prepare("INSERT INTO inscription (validationInscription, idEns, dateInscription, diversInscription, impoInscription, nbEnfantsInscription, nbAdultesInscription) VALUES (?,?,?,?,?,?,?)");
+            $reqPrepare = $conn->prepare("INSERT INTO inscription (validationInscription, idEns, dateInscription, diversInscription, impoInscription, nbEnfantsInscription, nbAdultesInscription, classe) VALUES (?,?,?,?,?,?,?,?)");
             $reqPrepare->execute(array(
                 $validated,
                 $inscription->getEnseignant()->getId(),
@@ -214,9 +219,14 @@ class MInscription
                 $inscription->getDivers(),
                 $inscription->getImpo(),
                 $inscription->getNbEnfants(),
-                $inscription->getNbAdultes()
+                $inscription->getNbAdultes(),
+                $inscription->getClasse()
                 ));
+            $id = $conn->lastInsertId();
+
             $conn->commit();
+
+            return $id;
         }
         catch (PDOException $e)
         {
@@ -241,7 +251,7 @@ class MInscription
                 $validated = 1;
             else
                 $validated = 0;
-            $reqPrepare = $conn->prepare("UPDATE inscription SET validationInscription = ?, idEns = ?, dateInscription = ?, diversInscription = ?, impoInscription = ?, nbEnfantsInscription = ?, nbAdultesInscription = ? WHERE idInscription = ?");
+            $reqPrepare = $conn->prepare("UPDATE inscription SET validationInscription = ?, idEns = ?, dateInscription = ?, diversInscription = ?, impoInscription = ?, nbEnfantsInscription = ?, nbAdultesInscription = ?, classe = ? WHERE idInscription = ?");
             $reqPrepare->execute(array(
                 $validated,
                 $inscription->getEnseignant()->getId(),
@@ -250,6 +260,7 @@ class MInscription
                 $inscription->getImpo(),
                 $inscription->getNbEnfants(),
                 $inscription->getNbAdultes(),
+                $inscription->getClasse(),
                 $inscription->getId()
                 ));
             $conn->commit();
@@ -308,6 +319,20 @@ class MInscription
         catch (PDOException $e)
         {
             throw new Exception("L'id de l'inscription n° ".$inscription->getId()." n'a pas été retrouvé.");
+        }
+    }
+
+    static public function validerInscription(Inscription $inscription){
+        $conn = Main::bdd();
+        try{
+            $conn->beginTransaction();
+            $reqPrepare = $conn->prepare("UPDATE inscription SET validationInscription = 1 WHERE idInscription = ?");
+            $reqPrepare->execute(array($inscription->getId()));
+            $conn->commit();
+        }
+        catch (PDOException $e){
+            $conn->rollBack();
+            throw new Exception("l'inscription n° ".$inscription->getId()." n'a pas été valider.");
         }
     }
 }

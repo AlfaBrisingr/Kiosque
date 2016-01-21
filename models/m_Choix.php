@@ -19,7 +19,7 @@ class MChoix
             foreach ($tabs as $tab)
             {
                 $inscription = MInscription::getInscriptionByIdInscription($tab['idInscription']);
-                $inscription->setLesChoix(MChoix::getChoixsByInscription($inscription));
+                $inscription->setLesChoix(MChoix::getChoixBySub($inscription));
                 $spectacle = MSpectacle::getSpectacleById($tab['idSpectacle']);
                 $choix = new Choix($inscription,$spectacle,$tab['prioriteChoix']);
                 $coll->ajouter($choix);
@@ -39,7 +39,7 @@ class MChoix
         try
         {
             $conn = Main::bdd();
-            $reqPrepare = $conn->query("SELECT * FROM choix WHERE idInscription = ?");
+            $reqPrepare = $conn->prepare("SELECT * FROM choix WHERE idInscription = ? ORDER BY PrioriteChoix");
             $reqPrepare->execute(array($inscription->getId()));
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
@@ -53,7 +53,7 @@ class MChoix
         }
         catch (PDOException $e)
         {
-            throw new Exception("Il n'y a aucun choix pour inscription ".$inscription->getId().".");
+            throw new Exception($e->getMessage());
         }
         catch (KeyHasUseException $ex)
         {
@@ -80,7 +80,7 @@ class MChoix
             $conn->beginTransaction();
             $reqPrepare = $conn->prepare("INSERT INTO choix (idInscription, idSpectacle, prioriteChoix) VALUES (?,?,?)");
             $reqPrepare->execute(array(
-                Main::bdd()->lastInsertId($choix->getInscription()->getId()),
+                $choix->getInscription()->getId(),
                 $choix->getSpectacle()->getId(),
                 $choix->getPriorite()
             ));

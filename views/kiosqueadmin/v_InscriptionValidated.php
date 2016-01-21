@@ -1,4 +1,4 @@
-<?php ob_start(); ?>
+
 <div class="container">
 	<div class="row">
 		<div class="jumbotron">
@@ -6,14 +6,15 @@
 				<fieldset>
 					<legend>Planifier l'inscription n° <?= $idInscription ?></legend>
 				</fieldset>
-				<form method="POST" action="/JP/kiosqueadmin/?ins=<?=$idInscription ?>&validfinish=1">
+				<form method="POST" action="?uc=admin&action=validerInscription&?ins=<?=$idInscription ?>">
 					<div class="row">
 						<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
 							<div class="form-group">
 								<label>Sur la séance</label>
 								<select class="form-control" name="seance">
 									<?php foreach ($listChoix as $key) { ?>
-									<option value="<?= $key['idSeance'] ?>">N° <?= $key['idSeance'] ?> - <?php $d = new DateTime($key['date_heure']); echo $d->format('d/m/Y H:i'); ?> - <?= $key['nomSpectacle'] ?> - Choix <?= $key['prioriteChoix'] ?></option>
+									<option value="<?= $key['idSeance'] ?>">N° <?= $key['idSeance'] ?> - <?php $seance->getDate()->format("d/m/Y H:i"); ?> - <?= getXXX() $key['nomSpectacle'] ?> - Choix <?= $key['prioriteChoix'] ?></option>
+									<!-- value doit être getIdTruc() -->
 									<?php } ?>
 								</select>
 							</div>
@@ -26,7 +27,6 @@
 				</form>
 			</div>
 		</div>
-		<a href="/JP/kiosqueadmin/?admin=registration" title="Retour">Retour</a>
+		<a href="?uc=admin&action=voirInscription" title="Retour">Retour</a>
 	</div>
 </div>
-<?php $contenu = ob_get_clean(); ?>

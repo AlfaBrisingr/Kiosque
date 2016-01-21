@@ -19,7 +19,7 @@ class MPlanning
             foreach ($tabs as $tab)
             {
                 $inscription = MInscription::getInscriptionByIdInscription($tab['idInscription']);
-                $seance = MSeance::getSeance($tab['idSaison']);
+                $seance = MSeance::getSeance($tab['idSeance']);
                 $planning = new Planning($seance, $inscription);
                 $coll->ajouter($planning);
             }
@@ -36,6 +36,27 @@ class MPlanning
     }
 
     /**
+     * Recuperer un planning
+     * @param int $idSeance, int $idInscription
+     * @return Planning
+     */
+    static public function getPlanning($idSeance,$idInscription){
+        try{
+            $conn = Main::bdd();
+            $reqPrepare = $conn->prepare("SELECT * FROM planning WHERE idSeance = ? AND idInscription = ? ");
+            $reqPrepare->execute(array($idSeance, $idInscription));
+            $tab = $reqPrepare->fetch();
+            $seance = MSeance::getSeance($tab['idSeance']);
+            $inscription = MInscription::getInscriptionByIdInscription($tab['idInscription']);
+            $planning = new Planning($seance,$inscription);
+            return $planning;
+        }
+        catch (PDOException $e){
+            throw new Exception("Il n'y a aucun planning");
+        }
+    }
+
+    /**
      * Récupère la jauge restante
      * @return Collection
      * @throws Exception
@@ -44,7 +65,7 @@ class MPlanning
         try
         {
             $conn = Main::bdd();
-            $reqPrepare = $conn->query("SELECT *, SUM(i.nbAdultesInscription + i.nbEnfantsInscription) as jaugeUtilise, spec.nbPlaceSpectacle as jaugeMax, (spec.nbPlaceSpectacle - SUM((i.nbAdultesInscription + i.nbEnfantsInscription))) as jaugeRestante FROM planning as p
+            $reqPrepare = $conn->prepare("SELECT *, SUM(i.nbAdultesInscription + i.nbEnfantsInscription) as jaugeUtilise, spec.nbPlaceSpectacle as jaugeMax, (spec.nbPlaceSpectacle - SUM((i.nbAdultesInscription + i.nbEnfantsInscription))) as jaugeRestante FROM planning as p
 				INNER JOIN inscription as i ON i.idInscription = p.idInscription
 				INNER JOIN seance as s ON s.idSeance = p.idSeance
 				INNER JOIN spectacle as spec ON spec.idSpectacle = s.idSpectacle
@@ -174,11 +195,11 @@ class MPlanning
     }
 
     /**
-     * Ajoute la séance et l'inscription au planning
-     * @param Seance $seance
-     * @param Inscription $inscription
-     * @throws Exception
-     */
+ * Ajoute la séance et l'inscription au planning
+ * @param Seance $seance
+ * @param Inscription $inscription
+ * @throws Exception
+ */
     static public function addPlanning(Seance $seance,Inscription $inscription) {
         $conn = Main::bdd();
         try
@@ -214,6 +235,30 @@ class MPlanning
         catch (PDOException $e) {
             $conn->rollBack();
             throw new Exception("Le planning n'a pas pu être supprimé. Détails : <p>".$e->getMessage()."</p>");
+        }
+    }
+
+    /**
+     * Ajoute la séance et l'inscription au planning
+     * @param Planning $unPlanning
+     * @throws Exception
+     */
+    static public function addUnPlanning(Planning $unPlanning) {
+        $conn = Main::bdd();
+        try
+        {
+            $conn->beginTransaction();
+            $reqPrepare = $conn->prepare("INSERT INTO planning (idSeance, idInscription) VALUES (?,?)");
+            $reqPrepare->execute(array(
+                $unPlanning->getSeance()->getId(),
+                $unPlanning->getInscription()->getId()
+            ));
+            $conn->commit();
+        }
+        catch (PDOException $e)
+        {
+            $conn->rollBack();
+            throw new Exception("L'ajout du planning a échoué. Détails : <p>".$e->getMessage()."</p>");
         }
     }
 }
