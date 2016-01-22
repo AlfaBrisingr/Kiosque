@@ -53,7 +53,7 @@ switch($action) {
 		break;
 
 	case 'voirSpectacle' :
-		$listSpec = MSpectacle::getSpectacles();
+		$listSpec = MSpectacle::getSpectaclesSaisonCourante();
 		$actuel = MSaison::getSaisonCourante();
 		include("views/kiosqueadmin/shows/v_Spectacle.php");
 		break;
@@ -83,7 +83,7 @@ switch($action) {
 		try {
 			// ON EST ARRETE LA !!!!!!!!!!!!!
 			// afficher la liste des seance disponible Miam ! formulaire !
-			
+
 			if (isset($_POST['seance'])) {
 				$inscription = MInscription::getInscriptionByIdInscription($_GET['ins']);
 				$seance = MSeance::getSeance($_POST['seance']);

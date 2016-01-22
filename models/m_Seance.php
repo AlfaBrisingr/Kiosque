@@ -213,10 +213,12 @@ class MSeance
             $reqPrepare = $conn->prepare("DELETE FROM seance WHERE idSpectacle = ?");
             $reqPrepare->execute(array($spectacle->getId()));
             $conn->commit();
+            return true;
         }
         catch (PDOException $e) {
             $conn->rollBack();
             throw new Exception("Les séances du spectacle ".$spectacle->getId()." n'ont pas pu être supprimées. Détails : <p>".$e->getMessage()."</p>");
+            return false;
         }
     }
     static public function addSeance(Seance $seance) {

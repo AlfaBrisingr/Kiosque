@@ -44,11 +44,11 @@
 					<td><?= $spectacle->getNbPlace() ?></td>
 					<td><?= $spectacle->getTypeClasse() ?></td>
 					<td>
-						<a title="Modifier <?= $spectacle->getNom() ?>" href="?uc=spectacle&action=SupprimerSpectacle?shows=<?= $spectacle->getId() ?>">
+						<a title="Modifier <?= $spectacle->getNom() ?>" href="?uc=spectacle&action=voirModifierSpectacle&shows=<?= $spectacle->getId() ?>">
 							<span class="glyphicon glyphicon-pencil" aria-hidden="true">
 							</span>
 						</a>
-						<a title="Supprimer <?= $spectacle->getNom() ?>" href="?uc=spectacle&action=SupprimerSpectacle?shows=<?= $spectacle->getId() ?>">
+						<a title="Supprimer <?= $spectacle->getNom() ?>" href="?uc=spectacle&action=SupprimerSpectacle&shows=<?= $spectacle->getId() ?>">
 							<span class="glyphicon glyphicon-remove" aria-hidden="true">
 							</span>
 						</a>

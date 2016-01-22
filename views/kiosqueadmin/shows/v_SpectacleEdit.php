@@ -1,4 +1,3 @@
-<?php ob_start(); ?>
 <div class="container">
 	<div class="row">
 		<div class="jumbotron">
@@ -47,4 +46,3 @@
 		</div>
 	</div>
 </div>
-<?php $contenu = ob_get_clean(); ?>

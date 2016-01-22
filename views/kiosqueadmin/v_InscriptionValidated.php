@@ -13,7 +13,7 @@
 								<label>Sur la séance</label>
 								<select class="form-control" name="seance">
 									<?php foreach ($listChoix as $key) { ?>
-									<option value="<?= $key['idSeance'] ?>">N° <?= $key['idSeance'] ?> - <?php $seance->getDate()->format("d/m/Y H:i"); ?> - <?= getXXX() $key['nomSpectacle'] ?> - Choix <?= $key['prioriteChoix'] ?></option>
+									<option value="<?= $seance->getId() ?>">N° <?= $seance->getId()  ?> - <?php $seance->getDate()->format("d/m/Y H:i"); ?> - <?= $seance->getSpectacle()->getNom() ?> - Choix <?= $key->getPriorite() ?></option>
 									<!-- value doit être getIdTruc() -->
 									<?php } ?>
 								</select>

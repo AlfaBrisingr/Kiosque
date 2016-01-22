@@ -1,9 +1,8 @@
-<?php ob_start(); ?>
 <div class="container">
 	<div class="row">
 		<div class="jumbotron">
 			<fieldset><legend>Nouveau spectacle</legend></fieldset>
-			<form action="/JP/kiosqueadmin/shows/?showsaddfinish=1" method="POST">
+			<form action="?uc=spectacle&action=AjouterSpectacle" method="POST">
 				<div class="form-group">
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<label>Nom du spectacle</label>
@@ -26,8 +25,8 @@
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<label>Saison</label>
 						<select name="idSaison" class="form-control">
-							<?php foreach ($listSaison as $key) { ?>
-							<option value="<?= $key['idSaison'] ?>" <?php if($key['idSaison'] == $actuel['idSaison']) { ?> selected="selected" <?php } ?>><?= $key['nomSaison'] ?></option>
+							<?php foreach ($listSaison->getCollection() as $saison) { ?>
+							<option value="<?= $saison->getId() ?>" <?php if(($saison->getId()) == ($actuel->getId())) { ?> selected="selected" <?php } ?>><?= $saison->getNom() ?></option>
 							<?php } ?>
 						</select>
 					</div>
@@ -40,7 +39,6 @@
 				</div>
 			</form>
 		</div>
-		<a href="/JP/kiosqueadmin/shows/" charset="btn btn-link">Retour</a>
+		<a href="?uc=spectacle" charset="btn btn-link">Retour</a>
 	</div>
 </div>
-<?php $contenu = ob_get_clean(); ?>

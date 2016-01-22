@@ -307,10 +307,12 @@ class MSpectacle
             $reqPrepare = $conn->prepare("DELETE FROM spectacle WHERE idLieu = ?");
             $reqPrepare->execute(array($spectacle->getId()));
             $conn->commit();
+            return true;
         }
         catch (PDOException $e) {
             $conn->rollBack();
             throw new Exception("Le spectacle ".$spectacle->getId()." n'a pas pu être supprimé. Détails : <p>".$e->getMessage()."</p>");
+            return false;
         }
     }
 }

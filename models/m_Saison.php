@@ -10,29 +10,26 @@ class MSaison
      * @throws Exception
      */
     static public function getSaisons() {
-        try
-        {
+        try {
             $conn = Main::bdd();
-            $reqPrepare = $conn->query("SELECT * FROM saison s INNER JOIN saison_spectacle ss ON ss.idSaison = s.idSaison INNER JOIN spectacle sp ON sp.idSpectacle = ss.idSpectacle");
+            $reqPrepare = $conn->query("SELECT * FROM saison s");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
-            foreach ($tabs as $tab)
-            {
-                $lesSpectacles = MSpectacle::getSpectaclesByIdSaison($tab['idSaison']);
+            foreach ($tabs as $tab){
                 $saison = new Saison(
                     $tab['idSaison'],
                     $tab['nomSaison'],
                     $tab['courante']
                 );
+                $lesSpectacles = MSpectacle::getSpectaclesBySaison($saison);
                 $saison->setLesSpectacles($lesSpectacles);
                 $coll->ajouter($saison);
             }
-            $conn = null;
             return $coll;
         }
         catch (PDOException $e)
         {
-            throw new Exception("Il n'y a aucune saison");
+            throw new Exception("La saison n'existe pas.");
         }
         catch (KeyHasUseException $ex)
         {
@@ -135,25 +132,23 @@ class MSaison
     }
 
     /**
-     * Récupère les saisons non courantes
+     * Récupère la saison courante
      * @return Saison
      * @throws Exception
      */
     static public function getSaisonNonCourante() {
-        try
-        {
+        try {
             $conn = Main::bdd();
-            $reqPrepare = $conn->query("SELECT * FROM saison s INNER JOIN saison_spectacle ss ON ss.idSaison = s.idSaison INNER JOIN spectacle sp ON sp.idSpectacle = ss.idSpectacle WHERE courante = 0");
+            $reqPrepare = $conn->query("SELECT * FROM saison s WHERE courante = 0");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
-            foreach ($tabs as $tab)
-            {
-                $lesSpectacles = MSpectacle::getSpectaclesByIdSaison($tab['idSaison']);
+            foreach ($tabs as $tab){
                 $saison = new Saison(
                     $tab['idSaison'],
                     $tab['nomSaison'],
                     $tab['courante']
                 );
+                $lesSpectacles = MSpectacle::getSpectaclesBySaison($saison);
                 $saison->setLesSpectacles($lesSpectacles);
                 $coll->ajouter($saison);
             }
@@ -161,13 +156,14 @@ class MSaison
         }
         catch (PDOException $e)
         {
-            throw new Exception("Il y a aucune saison non courante");
+            throw new Exception("La saison n'existe pas.");
         }
         catch (KeyHasUseException $ex)
         {
             throw new Exception($ex->getMessage());
         }
     }
+
 
     static public function getSaisonByIdSpectacle($id) {
         try
@@ -200,6 +196,7 @@ class MSaison
      * Change la saison courante
      * @param Saison $saisonAncienne
      * @param Saison $saisonNouvelle
+     * @return bool
      * @throws Exception
      */
     static public function setSaisonCourante(Saison $saisonAncienne, Saison $saisonNouvelle) {
@@ -212,11 +209,84 @@ class MSaison
             $reqPrepare = $conn->prepare("UPDATE saison SET courante = 1 WHERE idSaison = ?");
             $reqPrepare->execute(array($saisonNouvelle->getId()));
             $conn->commit();
+            return true;
         }
         catch (PDOException $e)
         {
             $conn->rollBack();
             throw new Exception("La saison courante n'a pas pu être modifiée. Détails : <p>".$e->getMessage()."</p>");
+            return false;
         }
     }
+
+    static public function getSaisonSpectacle() {
+        try {
+            $conn = Main::bdd();
+            return $conn->query("SELECT * FROM spectacle as spec
+				INNER JOIN saison_spectacle as ss ON ss.idSpectacle = spec.idSpectacle
+				INNER JOIN saison as s ON s.idSaison = ss.idSaison
+				ORDER BY nomSpectacle");
+            return true;
+        }
+        catch (PDOException $e) {
+            return false;
+        }
+    }
+    static public function getSaisonDuSpectacle(Spectacle $spectacle) {
+        try {
+            $conn = Main::bdd();
+            $reqPrepare = $conn->prepare("SELECT * FROM spectacle as spec
+				INNER JOIN saison_spectacle as ss ON ss.idSpectacle = spec.idSpectacle
+				INNER JOIN saison as s ON s.idSaison = ss.idSaison
+				WHERE spec.idSpectacle = ?
+				ORDER BY nomSpectacle");
+            $reqPrepare->execute(array($spectacle->getId()));
+            $tab = $reqPrepare->fetch();
+            $saison = new Saison(
+                $tab['idSaison'],
+                $tab['nomSaison'],
+                $tab['courante']
+            );
+            $lesSpectacles = MSpectacle::getSpectaclesBySaison($saison);
+            $saison->setLesSpectacles($lesSpectacles);
+            return $saison;
+        }
+        catch (PDOException $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+    static public function setSaisonSpectacle(Saison $saison, Spectacle $spectacle){
+        $conn = Main::bdd();
+        try {
+
+            $conn->beginTransaction();
+            $reqPrepare = $conn->prepare("INSERT INTO saison_spectacle(idSaison, idSpectacle) VALUES (?,?)");
+            $reqPrepare->execute(array($saison->getId(),$spectacle->getId()));
+            $conn->commit();
+            return true;
+        }
+        catch (PDOException $e) {
+            $conn->rollBack();
+            throw new Exception($e->getMessage());
+            return false;
+        }
+    }
+    static public function rmSaisonSpectacle(Saison $saison, Spectacle $spectacle) {
+        $conn = Main::bdd();
+        try {
+
+            $conn->beginTransaction();
+            $reqPrepare = $conn->prepare("DELETE FROM saison_spectacle WHERE idSpectacle = ? AND idSaison = ?");
+            $reqPrepare->execute(array($saison->getId(),$spectacle->getId()));
+            $conn->commit();
+            return true;
+        }
+        catch (PDOException $e) {
+            $conn->rollBack();
+            throw new Exception($e->getMessage());
+            return false;
+        }
+    }
+
+
 }
