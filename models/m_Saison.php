@@ -209,13 +209,11 @@ class MSaison
             $reqPrepare = $conn->prepare("UPDATE saison SET courante = 1 WHERE idSaison = ?");
             $reqPrepare->execute(array($saisonNouvelle->getId()));
             $conn->commit();
-            return true;
         }
         catch (PDOException $e)
         {
             $conn->rollBack();
             throw new Exception("La saison courante n'a pas pu être modifiée. Détails : <p>".$e->getMessage()."</p>");
-            return false;
         }
     }
 
@@ -226,10 +224,10 @@ class MSaison
 				INNER JOIN saison_spectacle as ss ON ss.idSpectacle = spec.idSpectacle
 				INNER JOIN saison as s ON s.idSaison = ss.idSaison
 				ORDER BY nomSpectacle");
-            return true;
         }
         catch (PDOException $e) {
-            return false;
+            throw new Exception($e->getMessage());
+
         }
     }
     static public function getSaisonDuSpectacle(Spectacle $spectacle) {
@@ -263,28 +261,24 @@ class MSaison
             $reqPrepare = $conn->prepare("INSERT INTO saison_spectacle(idSaison, idSpectacle) VALUES (?,?)");
             $reqPrepare->execute(array($saison->getId(),$spectacle->getId()));
             $conn->commit();
-            return true;
         }
         catch (PDOException $e) {
             $conn->rollBack();
             throw new Exception($e->getMessage());
-            return false;
         }
     }
-    static public function rmSaisonSpectacle(Saison $saison, Spectacle $spectacle) {
+    static public function rmSaisonSpectacle(Spectacle $spectacle) {
         $conn = Main::bdd();
         try {
 
             $conn->beginTransaction();
-            $reqPrepare = $conn->prepare("DELETE FROM saison_spectacle WHERE idSpectacle = ? AND idSaison = ?");
-            $reqPrepare->execute(array($saison->getId(),$spectacle->getId()));
+            $reqPrepare = $conn->prepare("DELETE FROM saison_spectacle WHERE idSpectacle = ?");
+            $reqPrepare->execute(array($spectacle->getId()));
             $conn->commit();
-            return true;
         }
         catch (PDOException $e) {
             $conn->rollBack();
             throw new Exception($e->getMessage());
-            return false;
         }
     }
 

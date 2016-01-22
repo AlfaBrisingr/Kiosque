@@ -297,22 +297,23 @@ class MSpectacle
         $conn = Main::bdd();
         try {
             $conn->beginTransaction();
+
+            MSaison::rmSaisonSpectacle($spectacle);
+
             foreach ($spectacle->getLesSeances()->getCollection() as $seance)
             {
-                $reqPrepare = $conn->prepare("DELETE FROM planning WHERE idSeance = ?");
-                $reqPrepare->execute(array($seance->getId()));
+                MPlanning::rmPlanningbySeance($seance);
             }
-            $reqPrepare = $conn->prepare("DELETE FROM seance WHERE idSpectacle = ?");
+            MSeance::rmSeancesSpec($spectacle);
+
+            $reqPrepare = $conn->prepare("DELETE FROM spectacle WHERE idSpectacle = ?");
             $reqPrepare->execute(array($spectacle->getId()));
-            $reqPrepare = $conn->prepare("DELETE FROM spectacle WHERE idLieu = ?");
-            $reqPrepare->execute(array($spectacle->getId()));
+
             $conn->commit();
-            return true;
         }
         catch (PDOException $e) {
             $conn->rollBack();
             throw new Exception("Le spectacle ".$spectacle->getId()." n'a pas pu être supprimé. Détails : <p>".$e->getMessage()."</p>");
-            return false;
         }
     }
 }

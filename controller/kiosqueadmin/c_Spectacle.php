@@ -32,14 +32,13 @@ switch($action) {
             if ($_POST['nouvelleSaison']) {
                 $nouvelle = MSaison::getSaisonById($_POST['nouvelleSaison']);
                 $d = MSaison::setSaisonCourante($actuel, $nouvelle);
-                if ($d) {
-                    $r = MSaison::getSaisonCourante();
-                    header("Location:?uc=admin&action=voirSpectacle");
-                    $_SESSION['valid'] = "La nouvelle saison est désormais " . $r->getNom();
-                } else {
-                    $_SESSION['error'] = "Une erreur s'est produite lors du changement de saison";
-                }
+                $saison = MSaison::getSaisonCourante();
+                header("Location:?uc=admin&action=voirSpectacle");
+                $_SESSION['valid'] = "La nouvelle saison est désormais " . $saison->getNom();
+            }else{
+                $_SESSION['error'] = "Une erreur s'est produite lors du changement de saison";
             }
+
 
         }
         catch (Exception $e)
@@ -61,51 +60,29 @@ switch($action) {
                 $spectacle = new Spectacle(1, $_POST['nomSpectacle'], $_POST['nbPlaceSpectacle'], $_POST['typeClasse'], $saison);
                 MSpectacle::addSpectacle($spectacle);
                 $spec = MSpectacle::getSpectacleByName($_POST['nomSpectacle']);
-                if($spec){
+                MSaison::setSaisonSpectacle($saison, $spec);
 
-                    $q = MSaison::setSaisonSpectacle($saison,$spec);
-                    if($q){
-                        $_SESSION['valid'] = "Le spectacle a bien été ajouté à la saison ".$saison->getNom();
-                        header("Location:?uc=admin&action=voirSpectacle");
-                    }else{
-                        $_SESSION['error'] = "Impossible d'ajouter le spectacle (mauvais formats entrés)";
-                    }
-                }else{
-                    $_SESSION['error'] = "Impossible d'ajouter le spectacle (mauvais formats entrés)";
-                }
+                Main::setFlashMessage("Le spectacle a bien été ajouté à la saison " . $saison->getNom(), "valid");
+                header("Location:?uc=admin&action=voirSpectacle");
+
             }else{
-                $_SESSION['error'] = "Impossible d'ajouter le spectacle (mauvais formats entrés ou champs vides)";
+                throw new Exception ("Impossible d'ajouter le spectacle (mauvais formats entrés)");
             }
+
         }
         catch (Exception $e)
         {
+
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
 
     case 'SupprimerSpectacle':
-        try{
+        try {
             $spectacle = MSpectacle::getSpectacleById($_GET['shows']);
-            $saison = MSaison::getSaisonDuSpectacle($spectacle);
-            $x = MSeance::rmSeancesSpec($spectacle);
-            if ($x){
-                $q = MSaison::rmSaisonSpectacle($saison,$spectacle);
-                if($q){
-                    $t = MSpectacle::rmSpectacle($spectacle);
-                    if($t) {
-                        $_SESSION['valid'] = "Le spectacle $spectacle->getId() a bien été supprimé";
-                        header("Location:?uc=admin&action=voirSpectacle");
-                    }
-                    else
-                    {
-                        $_SESSION['error'] = "Impossible de supprimer le spectacle $spectacle->getId(), il n'existe pas";
-                    }
-                }else{
-                    $_SESSION['error'] = "Impossible de supprimer le spectacle $spectacle->getId(), il n'existe pas";
-                }
-            }else{
-                $_SESSION['error'] = "Impossible de supprimer le spectacle $spectacle->getId(), il n'existe pas";
-            }
+            MSpectacle::rmSpectacle($spectacle);
+            Main::setFlashMessage("Le spectacle $spectacle->getId() a bien été supprimé", "valid");
+            header("Location:?uc=admin&action=voirSpectacle");
         }
         catch (Exception $e)
         {

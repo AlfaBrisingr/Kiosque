@@ -194,6 +194,20 @@ class MPlanning
         }
     }
 
+    static public function rmPlanningbySeance(Seance $seance) {
+        $conn = Main::bdd();
+        try {
+            $conn->beginTransaction();
+            $reqPrepare = $conn->prepare("DELETE FROM planning WHERE idSeance = ? ");
+            $reqPrepare->execute(array($seance->getId()));
+            $conn->commit();
+        }
+        catch (PDOException $e) {
+            $conn->rollBack();
+            throw new Exception("Le planning n'a pas pu être supprimé. Détails : <p>".$e->getMessage()."</p>");
+        }
+    }
+
     /**
  * Ajoute la séance et l'inscription au planning
  * @param Seance $seance
