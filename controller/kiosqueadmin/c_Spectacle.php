@@ -11,6 +11,8 @@ if(isset($_GET['action'])){
 
 switch($action) {
     case 'voirSpectacle':
+        $listSpec = MSpectacle::getSpectaclesSaisonCourante();
+        $actuel = MSaison::getSaisonCourante();
         include("views/kiosqueadmin/shows/v_Spectacle.php");
         break;
 
@@ -63,7 +65,7 @@ switch($action) {
                 MSaison::AjoutSaisonSpectacle($saison, $spec);
 
                 Main::setFlashMessage("Le spectacle a bien été ajouté à la saison " . $saison->getNom(), "valid");
-                header("Location:?uc=admin&action=voirSpectacle");
+                header("Location:?uc=spectacle");
 
             }else{
                 throw new Exception ("Impossible d'ajouter le spectacle (mauvais formats entrés)");
@@ -82,7 +84,7 @@ switch($action) {
             $spectacle = MSpectacle::getSpectacleById($_GET['shows']);
             MSpectacle::rmSpectacle($spectacle);
             Main::setFlashMessage("Le spectacle $spectacle->getId() a bien été supprimé", "valid");
-            header("Location:?uc=admin&action=voirSpectacle");
+            header("Location:?uc=spectacle");
         }
         catch (Exception $e)
         {
@@ -105,7 +107,7 @@ switch($action) {
                 MSpectacle::editSpectacle($saison,$spectacle);
 
                 Main::setFlashMessage("Le spectacle a bien été modifié à la saison " . $saison->getNom(), "valid");
-                header("Location:?uc=admin&action=voirSpectacle");
+                header("Location:?uc=spectacle");
             }else{
                 throw new Exception ("Impossible d'ajouter le spectacle (mauvais formats entrés)");
             }

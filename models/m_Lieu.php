@@ -113,7 +113,7 @@ class MLieu
             $conn->beginTransaction();
             $reqPrepare = $conn->prepare("INSERT INTO lieu (nomLieu, adrLieu, cpLieu, villeLieu) VALUES (?,?,?,?)");
             $reqPrepare->execute(array(
-                $lieu->getId(),
+                $lieu->getNom(),
                 $lieu->getAdresse(),
                 $lieu->getCp(),
                 $lieu->getVille()

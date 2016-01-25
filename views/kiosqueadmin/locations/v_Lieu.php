@@ -42,11 +42,11 @@
 					<td><?= $lieu->getCp() ?></td>
 					<td><?= $lieu->getVille() ?></td>
 					<td>
-						<a title="Modifier <?= $lieu->getNom() ?>" href="?uc=lieu&action=voirModifierLieu?locations=<?= $lieu->getId() ?>">
+						<a title="Modifier <?= $lieu->getNom() ?>" href="?uc=lieu&action=voirModifierLieu&locations=<?= $lieu->getId() ?>">
 							<span class="glyphicon glyphicon-pencil" aria-hidden="true">
 							</span>
 						</a>
-						<a title="Supprimer <?= $lieu->getNom() ?>" href="?uc=lieu&action=voirSupprimerLieu?locations=<?= $lieu->getId() ?>">
+						<a title="Supprimer <?= $lieu->getNom() ?>" href="?uc=lieu&action=SupprimerLieu&locations=<?= $lieu->getId() ?>">
 							<span class="glyphicon glyphicon-remove" aria-hidden="true">
 							</span>
 						</a>

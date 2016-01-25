@@ -1,9 +1,8 @@
-<?php ob_start(); ?>
 <div class="container">
 	<div class="row">
 		<div class="jumbotron">
 			<fieldset><legend>Nouveau lieu</legend></fieldset>
-			<form action="/JP/kiosqueadmin/locations/?locationsaddfinish=1" method="POST">
+			<form action="?uc=lieu&action=AjouterLieu" method="POST">
 				<div class="form-group">
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 						<label>Nom</label>
@@ -36,7 +35,6 @@
 				</div>
 			</form>
 		</div>
-		<a href="/JP/kiosqueadmin/locations/" charset="btn btn-link">Retour</a>
+		<a href="?uc=lieu" charset="btn btn-link">Retour</a>
 	</div>
 </div>
-<?php $contenu = ob_get_clean(); ?>

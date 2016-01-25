@@ -42,7 +42,7 @@
 			</form>
 		</div>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<a href="?uc=spectacle&action=voirSpectacle" class="btn btn-link">Retour</a>
+			<a href="?uc=spectacle" class="btn btn-link">Retour</a>
 		</div>
 	</div>
 </div>
