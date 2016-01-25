@@ -253,12 +253,27 @@ class MSaison
             throw new Exception($e->getMessage());
         }
     }
-    static public function setSaisonSpectacle(Saison $saison, Spectacle $spectacle){
+    static public function AjoutSaisonSpectacle(Saison $saison, Spectacle $spectacle){
         $conn = Main::bdd();
         try {
 
             $conn->beginTransaction();
             $reqPrepare = $conn->prepare("INSERT INTO saison_spectacle(idSaison, idSpectacle) VALUES (?,?)");
+            $reqPrepare->execute(array($saison->getId(),$spectacle->getId()));
+            $conn->commit();
+        }
+        catch (PDOException $e) {
+            $conn->rollBack();
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    static public function setSaisonSpectacle(Saison $saison, Spectacle $spectacle){
+        $conn = Main::bdd();
+        try {
+
+            $conn->beginTransaction();
+            $reqPrepare = $conn->prepare("UPDATE saison_spectacle SET idSaison = ? WHERE idSpectacle = ?");
             $reqPrepare->execute(array($saison->getId(),$spectacle->getId()));
             $conn->commit();
         }

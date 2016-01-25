@@ -267,11 +267,12 @@ class MSpectacle
      * @param Spectacle $spectacle
      * @throws Exception
      */
-    static public function editSpectacle(Spectacle $spectacle) {
+    static public function editSpectacle(Saison $saison, Spectacle $spectacle) {
         $conn = Main::bdd();
         try
         {
             $conn->beginTransaction();
+            MSaison::setSaisonSpectacle($saison,$spectacle);
             $reqPrepare = $conn->prepare("UPDATE spectacle SET nomSpectacle = ?, nbPlaceSpectacle = ?, typeClasse = ? WHERE idSpectacle = ?");
             $reqPrepare->execute(array(
                 $spectacle->getNom(),

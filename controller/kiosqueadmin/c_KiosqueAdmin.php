@@ -24,7 +24,8 @@ switch($action) {
 					$_SESSION['utilisateur'] = Admin::getUserByName($_POST['login']);
 					if (isset($_POST['password']) == $_SESSION['utilisateur']->getPassword()) {
 						Main::setFlashMessage("Connecté avec succès", "valid");
-						include("views/kiosqueadmin/v_AccueilAdmin.php");
+						header("Location:?uc=admin&action=voirForm");
+						//include("views/kiosqueadmin/v_AccueilAdmin.php");
 					} else {
 
 						Main::launchWrongUserPwd();
