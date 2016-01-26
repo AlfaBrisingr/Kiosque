@@ -29,7 +29,7 @@ switch($action) {
                 Main::setFlashMessage("Le lieu a bien été modifié", "valid");
                 header("Location:?uc=lieu");
             }else{
-                throw new Exception ("Impossible d'ajouter le spectacle (mauvais formats entrés)");
+                throw new Exception ("Impossible de modifier le lieu (mauvais formats entrés)");
             }
         }
         catch (Exception $e)
@@ -51,7 +51,7 @@ switch($action) {
                 Main::setFlashMessage("Le lieu a bien été ajouté", "valid");
                 header("Location:?uc=lieu");
             }else{
-                throw new Exception ("Impossible d'ajouter le spectacle (mauvais formats entrés)");
+                throw new Exception ("Impossible d'ajouter le lieu (mauvais formats entrés)");
             }
         }
         catch (Exception $e)

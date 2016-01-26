@@ -47,6 +47,7 @@ class Ecole
 
     /**
      * @param int        $id
+     * @param int        $type
      * @param string     $nom
      * @param string     $adresse
      * @param string     $adresse2
@@ -55,9 +56,10 @@ class Ecole
      * @param string     $mail
      * @param Enseignant $directeur
      */
-    public function Ecole($id, $nom, $adresse, $adresse2, $cp, $ville, $mail, Enseignant $directeur)
+    public function Ecole($id, $type, $nom, $adresse, $adresse2, $cp, $ville, $mail, Enseignant $directeur)
     {
         $this->id =            (int) $id;
+        $this->type =          $type;
         $this->nom =           $nom;
         $this->adresse =       $adresse;
         $this->adresse2 =      $adresse2;

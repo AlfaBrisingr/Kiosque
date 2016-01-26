@@ -240,4 +240,36 @@ class MSeance
             throw new Exception("L'ajout de la séance ".$seance->getId()." a échouée. Détails : <p>".$e->getMessage()."</p>");
         }
     }
+
+    static public function getSeanceByIns($idInscription)
+    {
+        $conn = Main::bdd();
+        $lesSeances = new Collection();
+        try
+        {
+            $reqPrepare = $conn->prepare("SELECT choix.idInscription, spectacle.idSpectacle, seance.idSeance, seance.idLieu, seance.date_heure, choix.prioriteChoix
+            FROM choix
+            INNER JOIN spectacle ON choix.idSpectacle = spectacle.idSpectacle
+            INNER JOIN seance ON seance.idSeance = spectacle.idSpectacle
+
+            WHERE choix.idInscription = ?
+            ORDER BY choix.prioriteChoix");
+            $reqPrepare->execute(array($idInscription));
+            $tabs = $reqPrepare->fetchAll();
+            foreach ($tabs as $tab) {
+                $spectacle = MSpectacle::getSpectacleById($tab['idSpectacle']);
+                $inscription = MInscription::getInscriptionByIdInscription($idInscription);
+                $lieu = MLieu::getLieuById($tab['idLieu']);
+                $seance = new Seance($tab['idSeance'], $spectacle, new \DateTime($tab['date_heure']), $lieu);
+                $choix = MChoix::getChoixBySub($inscription);
+                $lesSeances->ajouter($seance);
+}
+        }
+        catch (PDOException $e)
+        {
+            throw new Exception($e->getMessage());
+        }
+        return $lesSeances;
+    }
+
 }

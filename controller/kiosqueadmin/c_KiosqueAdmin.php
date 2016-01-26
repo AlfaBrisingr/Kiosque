@@ -66,7 +66,6 @@ switch($action) {
 
 	case 'voirEcole':
 		$listEcole = MEcole::getEcoles();
-
 		include("views/kiosqueadmin/schools/v_School.php");
 		break;
 
@@ -82,26 +81,19 @@ switch($action) {
 
 	case 'validerInscription':
 		try {
-			// ON EST ARRETE LA !!!!!!!!!!!!!
-			// afficher la liste des seance disponible Miam ! formulaire !
-
+			$inscription = MInscription::getInscriptionByIdInscription($_GET['ins']);
 			if (isset($_POST['seance'])) {
-				$inscription = MInscription::getInscriptionByIdInscription($_GET['ins']);
 				$seance = MSeance::getSeance($_POST['seance']);
 				$planning = new Planning($seance, $inscription);
-				if ($planning->getInscription()->isValidated() == true) {
-					$_SESSION['error'] = 'Cette inscription est déjà planifiée';
-				} else {
-					if ($planning->getJaugeRestante() <= 0) {
-						$_SESSION['error'] = "La séance $idSeance est complète. Vous ne pouvez pas ajouter d'autres inscriptions.";
-					} else {
-						MInscription::validerInscription($inscription); //Objet Inscription à faire
-						MPlanning::addUnPlanning($planning); // Mettre les deux en objet
-						$_SESSION['valid'] = "L'inscription $idInscription a bien été planifiée à la séance $idSeance";
-					}
-				}
+				MPlanning::addUnPlanning($planning);
+				MInscription::validerInscription($inscription);
+
+				Main::setFlashMessage("La panification de l'inscription à été faite", "valid");
+				header("Location:?uc=admin&action=voirInscription");
 			} else {
 
+				$listChoix = MChoix::getChoixByIns($_GET['ins']);
+				include("views/kiosqueadmin/v_InscriptionValidated.php");
 			}
 		}
 		catch (Exception $e){

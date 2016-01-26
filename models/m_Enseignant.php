@@ -59,7 +59,7 @@ class MEnseignant
             $reqPrepare->execute(array($codeEnseignant));
             $tab = $reqPrepare->fetch();
             $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
-            $ecole = new Ecole($tab['idEcole'], $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
+            $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'], $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
             $lesInscriptions = MInscription::getInscriptionByEnseignant($directeur);
             $directeur->setEcole($ecole);
             $directeur->setLesInscriptions($lesInscriptions);
@@ -144,7 +144,10 @@ class MEnseignant
                 $enseignant->getTel(),
                 $enseignant->getEcole()->getId()
                 ));
+            $idEnseignant = $conn->lastInsertId();
             $conn->commit();
+
+            return $idEnseignant;
         }
         catch (PDOException $e)
         {
@@ -206,7 +209,7 @@ class MEnseignant
      * @param Enseignant $enseignant
      * @throws Exception
      */
-    public function rmEnseignant(Enseignant $enseignant)
+    static public function rmEnseignant(Enseignant $enseignant)
     {
         $conn = Main::bdd();
         try {

@@ -74,7 +74,7 @@
 								<input type="reset" class="btn btn-default" value="Par défaut"><br><br>
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<a href="?uc=admin&action=voirEcole" class="btn btn-link">Retour</a>
+								<a href="?uc=ecole" class="btn btn-link">Retour</a>
 							</div>
 						</div>
 					</form>

@@ -61,7 +61,7 @@
 							<td><?php if($inscription->getLesChoix()->taille() >= 2){if($inscription->getLesChoix()->getElement(1)->getPriorite() == 2 ){ echo $inscription->getLesChoix()->getElement(1)->getSpectacle()->getNom(); } }else{ echo '<strong><em>Aucun</em></strong>';}?></td>
 							<td><?php if($inscription->getLesChoix()->taille() == 3){ if($inscription->getLesChoix()->getElement(2)->getPriorite() == 3 ){ echo $inscription->getLesChoix()->getElement(2)->getSpectacle()->getNom(); } }else{ echo '<strong><em>Aucun</em></strong>';}?></td>
 							<td>
-								<a href="?uc=admin&action=validerInscription?ins=<?= $inscription->getId()  ?>" title="Planifier l'inscription n° <?= $inscription->getId()  ?>">
+								<a href="?uc=admin&action=validerInscription&ins=<?= $inscription->getId()  ?>" title="Planifier l'inscription n° <?= $inscription->getId()  ?>">
 									<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
 								</a>
 								<a href="/JP/kiosqueadmin/?ins=<?= $inscription->getId()  ?>" title="Modifier l'inscription n° <?= $inscription->getId()  ?>">

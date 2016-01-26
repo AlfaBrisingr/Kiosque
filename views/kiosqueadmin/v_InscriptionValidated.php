@@ -4,16 +4,16 @@
 		<div class="jumbotron">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<fieldset>
-					<legend>Planifier l'inscription n° <?= $idInscription ?></legend>
+					<legend>Planifier l'inscription n° <?= $_GET['ins'] ?></legend>
 				</fieldset>
-				<form method="POST" action="?uc=admin&action=validerInscription&?ins=<?=$idInscription ?>">
+				<form method="POST" action="?uc=admin&action=validerInscription&ins=<?=$_GET['ins'] ?>">
 					<div class="row">
 						<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
 							<div class="form-group">
 								<label>Sur la séance</label>
 								<select class="form-control" name="seance">
-									<?php foreach ($listChoix as $key) { ?>
-									<option value="<?= $seance->getId() ?>">N° <?= $seance->getId()  ?> - <?php $seance->getDate()->format("d/m/Y H:i"); ?> - <?= $seance->getSpectacle()->getNom() ?> - Choix <?= $key->getPriorite() ?></option>
+									<?php foreach ($listChoix as $choix) {?>
+									<option value="<?= $choix['idSeance'] ?>">N° <?= $choix['idSeance']  ?> - <?php $choix['date_heure']; ?> - <?= $choix['nomSpectacle'] ?> - Choix <?= $choix['Priorite'] ?></option>
 									<!-- value doit être getIdTruc() -->
 									<?php } ?>
 								</select>

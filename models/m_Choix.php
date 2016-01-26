@@ -92,4 +92,22 @@ class MChoix
             throw new Exception("L'ajout du choix a échoué. Détails : <p>".$e->getMessage()."</p>");
         }
     }
+
+    static public function getChoixByIns($idInscription) {
+        $conn = Main::bdd();
+        try {
+            $reqPrepare = $conn->prepare("SELECT *,c.prioriteChoix as Priorite FROM seance as s
+                INNER JOIN spectacle as spec ON spec.idSpectacle = s.idSpectacle
+                INNER JOIN choix as c ON c.idSpectacle = spec.idSpectacle
+                WHERE c.idInscription = ?
+                ORDER BY Priorite");
+            $reqPrepare->execute(array($idInscription));
+            return $reqPrepare;
+
+        }
+        catch (PDOException $e) {
+
+            throw new Exception($e->getMessage());
+        }
+    }
 }

@@ -50,7 +50,7 @@
 							<td><?= $ecole->getDirecteur()->getNom().' '.$ecole->getDirecteur()->getPrenom() ?>
 							</td>
 							<td>
-								<a href="?uc=ecole&action=ModifierEcole&schools=<?= $ecole->getId() ?>" title="Modifier l'école n° <?= $ecole->getId() ?>">
+								<a href="?uc=ecole&action=voirModifierEcole&schools=<?= $ecole->getId() ?>" title="Modifier l'école n° <?= $ecole->getId() ?>">
 									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 								</a>
 								<a onclick="return sure()" href="?uc=ecole&action=SupprimerEcole&schools=<?= $ecole->getId() ?>" title="Supprimer l'école n° <?= $ecole->getId() ?>">

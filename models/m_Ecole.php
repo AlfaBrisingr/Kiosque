@@ -23,7 +23,7 @@ class MEcole
             foreach ($tabs as $tab)
             {
                 $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
-                $ecole = new Ecole($tab['idEcole'], $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
+                $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
                 $coll->ajouter($ecole);
             }
             return $coll;
@@ -53,7 +53,7 @@ class MEcole
             foreach ($tabs as $tab)
             {
                 $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
-                $ecole = new Ecole($tab['idEcole'], $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
+                $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
                 $coll->ajouter($ecole);
             }
             return $coll;
@@ -83,7 +83,7 @@ class MEcole
             foreach ($tabs as $tab)
             {
                 $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
-                $ecole = new Ecole($tab['idEcole'], $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
+                $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
                 $coll->ajouter($ecole);
             }
             return $coll;
@@ -115,7 +115,7 @@ class MEcole
             $reqPrepare->execute(array($codeEcole));
             $tab = $reqPrepare->fetch();
             $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
-            $ecole = new Ecole($tab['idEcole'], $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
+            $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
             return $ecole;
         }
         catch (PDOException $e)
@@ -143,7 +143,7 @@ class MEcole
         $reqPrepare->execute(array($name));
         $tab = $reqPrepare->fetch();
         $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
-        $ecole = new Ecole($tab['idEcole'], $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
+        $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
         return $ecole;
     }
     catch (PDOException $e)
@@ -174,7 +174,7 @@ class MEcole
             foreach ($tabs as $tab)
             {
                 $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
-                $ecole = new Ecole($tab['idEcole'], $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
+                $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'], $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
                 $coll->ajouter($ecole);
                 return $coll;
             }
@@ -209,7 +209,10 @@ class MEcole
                 $ecole->getMailDirecteur(),
                 $ecole->getDirecteur()->getId()
                 ));
+            $idEcole = $conn->lastInsertId();
             $conn->commit();
+
+            return $idEcole;
         }
         catch (PDOException $e) {
             $conn->rollBack();
@@ -222,10 +225,11 @@ class MEcole
      * @param Ecole $ecole
      * @throws Exception
      */
-    static public function editEcole(Ecole $ecole) {
+    static public function editEcole(Ecole $ecole, Enseignant $directeur) {
         $conn = Main::bdd();
         try {
             $conn->beginTransaction();
+            MEnseignant::editDirecteur($directeur);
             $reqPrepare = $conn->prepare("UPDATE ecole SET typeEcole = ?, nomEcole = ?, adresseEcole = ?, adresse2Ecole = ?, cpEcole = ?, villeEcole = ?, mail_dir = ?, idDirecteur = ? WHERE idEcole = ?");
             $reqPrepare->execute(array(
                 $ecole->getType(),
@@ -235,7 +239,7 @@ class MEcole
                 $ecole->getCp(),
                 $ecole->getVille(),
                 $ecole->getMailDirecteur(),
-                $ecole->getDirecteur()->getId(),
+                $directeur->getId(),
                 $ecole->getId()
                 ));
             $conn->commit();
