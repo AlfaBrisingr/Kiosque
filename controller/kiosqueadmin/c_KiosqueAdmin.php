@@ -95,6 +95,21 @@ switch($action) {
 		}
 		break;
 
+	case 'SupprimerInscription':
+		try{
+			$inscription = MInscription::getInscriptionByIdInscription($_GET['ins']);
+			MInscription::rmInscription($inscription);
+
+			Main::setFlashMessage("La suppression de l'inscription a été faite", "valid");
+			header("Location:?uc=admin&action=voirInscription");
+
+		}
+		catch (Exception $e){
+			Main::setFlashMessage($e->getMessage(), "error");
+		}
+		break;
+
+
 	case 'ModifierInscription':
 		try{
 			if(isset($_POST['idSpectacleC1']) && isset($_POST['idSpectacleC2']) && isset($_POST['idSpectacleC3']) && isset($_POST['nbrEnfants']) && isset($_POST['nbrAdultes']) && isset($_POST['mailEns']) && isset($_POST['telDir']) && isset($_POST['classe'])){

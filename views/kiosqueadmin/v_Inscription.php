@@ -67,7 +67,7 @@
 								<a href="?uc=admin&action=ModifierInscription&ins=<?= $inscription->getId()  ?>" title="Modifier l'inscription n° <?= $inscription->getId()  ?>">
 									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 								</a>
-								<a onclick="return sure()" href="?uc=admin&SupprimerInscription&ins=<?= $inscription->getId()  ?>" title="Supprimer l'inscription n° <?= $inscription->getId()  ?>">
+								<a onclick="return sure()" href="?uc=admin&action=SupprimerInscription&ins=<?= $inscription->getId()  ?>" title="Supprimer l'inscription n° <?= $inscription->getId()  ?>">
 									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 								</a>
 							</td>

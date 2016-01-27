@@ -287,6 +287,7 @@ class MInscription
         $conn = Main::bdd();
         try {
             $conn->beginTransaction();
+            MPlanning::rmPlanningByInscription($inscription);
             $reqPrepare = $conn->prepare("DELETE FROM choix WHERE idInscription = ?");
             $reqPrepare->execute(array($inscription->getId()));
             $reqPrepare = $conn->prepare("DELETE FROM inscription WHERE idInscription = ?");
