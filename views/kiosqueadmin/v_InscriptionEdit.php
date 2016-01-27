@@ -3,19 +3,19 @@
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="jumbotron">
 				<fieldset>
-					<form action="?uc=admin&action=validerInscription&ins=<?= $listIns['idInscription'] ?>&editfinish=1" method="POST">
+					<form action="?uc=admin&action=ModifierInscription&ins=<?= $listIns->getId() ?>" method="POST">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<legend>Modifier l'inscription de <?php echo "\"".$listIns['nomEns'].' '.$listIns['prenomEns']."\""; ?></legend>
+							<legend>Modifier l'inscription de <?php echo "\"".$listIns->getEnseignant()->getNom().' '.$listIns->getEnseignant()->getPrenom()."\""; ?></legend>
 						</div>
 						<div class="form-group">
 							<div class="clear col-xs-12 col-sm-12 col-md-4 col-lg-4">
 								<label for="idSpectacleC1">Choix n° 1</label>
 								<select name="idSpectacleC1" class="form-control">
-									<?php foreach ($listSpec as $key) { ?>
-									<?php if($key['idSpectacle'] == $listChoix1['idSpectacle']){ ?>
-									<option selected="selected" value="<?= $key['idSpectacle'] ?>"><?= $key['nomSpectacle'] ?></option>
+									<?php foreach ($listSpec->getCollection() as $spectacle) { ?>
+									<?php if($spectacle->getId() == $listChoix1['idSpectacle']){ ?>
+									<option selected="selected" value="<?= $spectacle->getId() ?>"><?= $spectacle->getNom() ?></option>
 									<?php } else { ?>
-									<option value="<?= $key['idSpectacle'] ?>"><?= $key['nomSpectacle'] ?></option>
+									<option value="<?= $spectacle->getId() ?>"><?= $spectacle->getNom() ?></option>
 									<?php } } ?>
 								</select><br>
 							</div>
@@ -29,15 +29,15 @@
 									<?php } else { ?>
 									<option value="non">Pas de choix n°2</option>
 									<?php } ?>
-									<?php foreach ($listSpec2 as $key) { ?>
+									<?php foreach ($listSpec2->getCollection() as $spectacle) { ?>
 									<?php if(isset($listChoix2)){ ?>
-									<?php if($key['idSpectacle'] == $listChoix2['idSpectacle']){ ?>
-									<option selected="selected" value="<?= $key['idSpectacle'] ?>"><?= $key['nomSpectacle'] ?></option>
+									<?php if($spectacle->getId() == $listChoix2['idSpectacle']){ ?>
+									<option selected="selected" value="<?= $spectacle->getId() ?>"><?= $spectacle->getNom() ?></option>
 									<?php } else { ?>
-									<option value="<?= $key['idSpectacle'] ?>"><?= $key['nomSpectacle'] ?></option>
+									<option value="<?= $spectacle->getId() ?>"><?= $spectacle->getNom() ?></option>
 									<?php } ?>
 									<?php } else { ?>
-									<option value="<?= $key['idSpectacle'] ?>"><?= $key['nomSpectacle'] ?></option>
+									<option value="<?= $spectacle->getId() ?>"><?= $spectacle->getNom() ?></option>
 									<?php } ?>
 									<?php } ?>
 								</select>
@@ -53,15 +53,15 @@
 									<?php } else { ?>
 									<option value="non">Pas de choix n°3</option>
 									<?php } ?>
-									<?php foreach ($listSpec3 as $key) { ?>
+									<?php foreach ($listSpec3->getCollection()  as $spectacle) { ?>
 									<?php if(isset($listChoix3)){ ?>
-									<?php if($key['idSpectacle'] == $listChoix2['idSpectacle']){ ?>
-									<option selected="selected" value="<?= $key['idSpectacle'] ?>"><?= $key['nomSpectacle'] ?></option>
+									<?php if($spectacle->getId() == $listChoix2['idSpectacle']){ ?>
+									<option selected="selected" value="<?= $spectacle->getId() ?>"><?= $spectacle->getNom() ?></option>
 									<?php } else { ?>
-									<option value="<?= $key['idSpectacle'] ?>"><?= $key['nomSpectacle'] ?></option>
+									<option value="<?= $spectacle->getId() ?>"><?= $spectacle->getNom() ?></option>
 									<?php } ?>
 									<?php } else { ?>
-									<option value="<?= $key['idSpectacle'] ?>"><?= $key['nomSpectacle'] ?></option>
+									<option value="<?= $spectacle->getId() ?>"><?= $spectacle->getNom() ?></option>
 									<?php } ?>
 									<?php } ?>
 								</select>
@@ -71,19 +71,31 @@
 						<div class="form-group">
 							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 								<label for="nbrEnfants">Nombre d'Enfants</label>
-								<input type="text" value="<?= $listIns['nbEnfantsInscription'] ?>" name="nbrEnfants" class="form-control">
+								<input type="text" value="<?= $listIns->getNbEnfants() ?>" name="nbrEnfants" class="form-control">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 								<label for="nbrAdultes">Nombre d'Adultes</label>
-								<input type="text" value="<?= $listIns['nbAdultesInscription'] ?>" name="nbrAdultes" class="form-control"><br>
+								<input type="text" value="<?= $listIns->getNbAdultes() ?>" name="nbrAdultes" class="form-control"><br>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 								<label>Mail de l'enseignant</label>
-								<input type="text" class="form-control" name="mailEns" value="<?= $listIns['telEns'] ?>" placeholder="Mail de l'enseignant">
+								<input type="text" class="form-control" name="mailEns" value="<?= $listIns->getEnseignant()->getMail() ?>" placeholder="Mail de l'enseignant">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="clear col-xs-12 col-sm-12 col-md-4 col-lg-4">
+								<label>Classe</label>
+								<input type="text" class="form-control" name="classe" value="<?= $listIns->getClasse() ?>" placeholder="Classe">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+								<label>Téléphone de l'établissement</label>
+								<input type="text" class="form-control" name="telDir" value="<?= $listIns->getEnseignant()->getEcole()->getDirecteur()->getTel() ?>" placeholder="téléphone de l'établissement">
 							</div>
 						</div>
 						<div class="form-group">
@@ -95,7 +107,7 @@
 					</form>
 				</fieldset>
 			</div>
-			<a href="/JP/kiosqueadmin/?admin=registration" class="btn btn-link">Retour</a>
+			<a href="?uc=admin&action=voirInscription" class="btn btn-link">Retour</a>
 		</div>
 	</div>
 </div>

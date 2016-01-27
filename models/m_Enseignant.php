@@ -90,7 +90,7 @@ class MEnseignant
             $reqPrepare->execute(array($name, $prenom));
             $tab = $reqPrepare->fetch();
             $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
-            $ecole = new Ecole($tab['idEcole'], $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
+            $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'], $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
             $lesInscriptions = MInscription::getInscriptionByEnseignant($directeur);
             $directeur->setEcole($ecole);
             $directeur->setLesInscriptions($lesInscriptions);

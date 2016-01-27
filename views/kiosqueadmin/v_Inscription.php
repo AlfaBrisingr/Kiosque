@@ -43,10 +43,10 @@
 						</tr>
 						</thead>
 						<tbody>
-						<?php foreach ($listIns->getCollection() as $inscription) { ?>
+						<?php foreach ($listIns->getCollection() as $inscription) {;?>
 						<tr>
 							<td><?= $inscription->getId() ?></td>
-							<td id="etat"><?php if($inscription->isValidated() == '1') { echo 'Validée'; } else { echo 'Non validée'; } ?></td>
+							<td id="etat"><?php if($inscription->isValidated() == true ) { echo 'Validée'; } else { echo 'Non validée'; } ?></td>
 							<td><?= $inscription->getEnseignant()->getEcole()->getNom() ?></td>
 							<td><?= $inscription->getEnseignant()->getNom().' '.$inscription->getEnseignant()->getPrenom() ?></td>
 							<td><?php if(empty($inscription->getDivers())){ echo '<strong><em>Vide</em></strong>'; } else { echo $inscription->getDivers(); } ?></td>
@@ -64,10 +64,10 @@
 								<a href="?uc=admin&action=validerInscription&ins=<?= $inscription->getId()  ?>" title="Planifier l'inscription n° <?= $inscription->getId()  ?>">
 									<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
 								</a>
-								<a href="/JP/kiosqueadmin/?ins=<?= $inscription->getId()  ?>" title="Modifier l'inscription n° <?= $inscription->getId()  ?>">
+								<a href="?uc=admin&action=ModifierInscription&ins=<?= $inscription->getId()  ?>" title="Modifier l'inscription n° <?= $inscription->getId()  ?>">
 									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 								</a>
-								<a onclick="return sure()" href="/JP/kiosqueadmin/?ins=<?= $inscription->getId()  ?>" title="Supprimer l'inscription n° <?= $inscription->getId()  ?>">
+								<a onclick="return sure()" href="?uc=admin&SupprimerInscription&ins=<?= $inscription->getId()  ?>" title="Supprimer l'inscription n° <?= $inscription->getId()  ?>">
 									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 								</a>
 							</td>
@@ -99,12 +99,12 @@
 						</tr>
 						</thead>
 						<tbody>
-						<?php foreach ($listPlan as $planning) { ?>
+						<?php foreach ($listPlan->getCollection() as $planning) { ?>
 							<tr>
 								<td><?= $planning->getSeance()->getId() ?></td>
 								<td><?= $planning->getSeance()->getSpectacle()->getNom() ?></td>
 								<td>
-									<?php $d = new DateTime($planning->getInscription()->getDate());
+									<?php $d = $planning->getInscription()->getDate();
 									echo $jour[$d->format('N')].' ';
 									echo $d->format('d/m/Y - H:i'); ?>
 								</td>
@@ -114,7 +114,7 @@
 								<td><?= $planning->getInscription()->getNbEnfants()?></td>
 								<td><?= $planning->getInscription()->getNbAdultes() ?></td>
 								<td>
-									<a onclick="return sure()" href="?uc=inscription&action=Supprimer?>&i=<?= $planning['idInscription'] ?>" title="Supprimer du planning">
+									<a onclick="return sure()" href="?uc=admin&action=SupprimerunPlanning&i=<?= $planning->getInscription()->getId() ?>" title="Supprimer du planning">
 										<span class="glyphicon glyphicon-remove"></span>
 									</a>
 								</td>
@@ -140,7 +140,7 @@
 					<?php foreach ($listJauge->getCollection() as $jauge) { ?>
 						<tr>
 							<td><?= $jauge->getSeance()->getId() ?></td>
-							<td><?= $jaugegetSeance()->getSpectacle()->getNom() ?></td>
+							<td><?= $jauge->getSeance()->getSpectacle()->getNom() ?></td>
 							<td>
 								<?php $d =$jauge->getSeance()->getDate();
 								echo $jour[$d->format('N')].' ';

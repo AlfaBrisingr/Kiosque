@@ -16,6 +16,7 @@ class MInscription
             $reqPrepare = $conn->query("SELECT * FROM inscription");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
+
             foreach ($tabs as $tab)
             {
                 $enseignant = MEnseignant::getEnseignantById($tab['idEns']);
@@ -29,6 +30,11 @@ class MInscription
                     $tab['nbAdultesInscription'],
                     $tab['classe']
                     );
+                if($tab['validationInscription'] == '1'){
+                    $inscription->setValidated(true);
+                }else{
+                    $inscription->setValidated(false);
+                }
                 $lesChoix = MChoix::getChoixBySub($inscription);
                 $inscription->setLesChoix($lesChoix);
                 $coll->ajouter($inscription);

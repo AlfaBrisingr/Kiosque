@@ -24,8 +24,7 @@ switch($action) {
 					$_SESSION['utilisateur'] = Admin::getUserByName($_POST['login']);
 					if (isset($_POST['password']) == $_SESSION['utilisateur']->getPassword()) {
 						Main::setFlashMessage("Connecté avec succès", "valid");
-						header("Location:?uc=admin&action=voirForm");
-						//include("views/kiosqueadmin/v_AccueilAdmin.php");
+						header("Location:?uc=admin&action=voirAdmin");
 					} else {
 
 						Main::launchWrongUserPwd();
@@ -73,11 +72,6 @@ switch($action) {
 		include("views/kiosqueadmin/infos/v_Infos.php");
 		break;
 
-	case 'voirPlanif':
-		$inscription = MInscription::getInscriptionByIdInscription($_GET['ins']);
-		$listChoix = MChoix::getChoixBySub($inscription);
-		include("views/kiosqueadmin/v_InscriptionValidated.php");
-		break;
 
 	case 'validerInscription':
 		try {
@@ -88,13 +82,48 @@ switch($action) {
 				MPlanning::addUnPlanning($planning);
 				MInscription::validerInscription($inscription);
 
-				Main::setFlashMessage("La panification de l'inscription à été faite", "valid");
+				Main::setFlashMessage("La panification de l'inscription a été faite", "valid");
 				header("Location:?uc=admin&action=voirInscription");
 			} else {
 
 				$listChoix = MChoix::getChoixByIns($_GET['ins']);
 				include("views/kiosqueadmin/v_InscriptionValidated.php");
 			}
+		}
+		catch (Exception $e){
+			Main::setFlashMessage($e->getMessage(), "error");
+		}
+		break;
+
+	case 'ModifierInscription':
+		try{
+			if(isset($_POST['idSpectacleC1']) && isset($_POST['idSpectacleC2']) && isset($_POST['idSpectacleC3']) && isset($_POST['nbrEnfants']) && isset($_POST['nbrAdultes']) && isset($_POST['mailEns']) && isset($_POST['telDir']) && isset($_POST['classe'])){
+
+			}else{
+
+				//A Faire
+				$listSpec = MSpectacle::getSpectacles();
+				$listSpec2 = MSpectacle::getSpectacles();
+				$listSpec3 = MSpectacle::getSpectacles();
+				include("views/kiosqueadmin/v_InscriptionEdit.php");
+			}
+
+		}
+		catch (Exception $e){
+			Main::setFlashMessage($e->getMessage(), "error");
+		}
+		break;
+
+	case 'SupprimerunPlanning' :
+		try{
+			$inscription = MInscription::getInscriptionByIdInscription($_GET['i']);
+			MPlanning::rmPlanningByInscription($inscription);
+			$inscription->setValidated(0);
+			MInscription::editInscription($inscription);
+
+			Main::setFlashMessage("La suppression du planning a été faite", "valid");
+			header("Location:?uc=admin&action=voirInscription");
+
 		}
 		catch (Exception $e){
 			Main::setFlashMessage($e->getMessage(), "error");

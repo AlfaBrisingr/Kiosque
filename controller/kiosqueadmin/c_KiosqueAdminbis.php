@@ -153,21 +153,21 @@ class EspaceAdmin
 					"idSpectacle" => $key['idSpectacle'],
 					"idInscription" => $key['idInscription'],
 					"priorite" => $key['prioriteChoix']
-					);
+				);
 			}
 			if($c == 2) {
 				$listChoix2 = array(
 					"idSpectacle" => $key['idSpectacle'],
 					"idInscription" => $key['idInscription'],
 					"priorite" => $key['prioriteChoix']
-					);
+				);
 			}
 			if($c == 3) {
 				$listChoix2 = array(
 					"idSpectacle" => $key['idSpectacle'],
 					"idInscription" => $key['idInscription'],
 					"priorite" => $key['prioriteChoix']
-					);
+				);
 			}
 		}
 		$listIns = $this->inscription->getInscriptionByIdInscription($idInscription)->fetch();

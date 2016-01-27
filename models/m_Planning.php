@@ -65,7 +65,7 @@ class MPlanning
         try
         {
             $conn = Main::bdd();
-            $reqPrepare = $conn->prepare("SELECT *, SUM(i.nbAdultesInscription + i.nbEnfantsInscription) as jaugeUtilise, spec.nbPlaceSpectacle as jaugeMax, (spec.nbPlaceSpectacle - SUM((i.nbAdultesInscription + i.nbEnfantsInscription))) as jaugeRestante FROM planning as p
+            $reqPrepare = $conn->query("SELECT *, SUM(i.nbAdultesInscription + i.nbEnfantsInscription) as jaugeUtilise, spec.nbPlaceSpectacle as jaugeMax, (spec.nbPlaceSpectacle - SUM((i.nbAdultesInscription + i.nbEnfantsInscription))) as jaugeRestante FROM planning as p
 				INNER JOIN inscription as i ON i.idInscription = p.idInscription
 				INNER JOIN seance as s ON s.idSeance = p.idSeance
 				INNER JOIN spectacle as spec ON spec.idSpectacle = s.idSpectacle
