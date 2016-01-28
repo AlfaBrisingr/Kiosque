@@ -167,7 +167,19 @@ switch($action) {
 
 	case 'AjouterSeance':
 		try {
-
+			if(isset($_POST['idSpectacle']) && isset($_POST['dateHeure']) && isset($_POST['idLieu'])){
+				$spectacle = MSpectacle::getSpectacleById($_POST['idSpectacle']);
+				$lieu = MLieu::getLieuById($_POST['idLieu']);
+				$date = DateTime::createFromFormat('d/m/Y H:i:s', $_POST['dateHeure']);
+				$seance = new Seance(1,$spectacle,$date,$lieu);
+				MSeance::addSeance($seance);
+				Main::setFlashMessage("L'ajout de la séance a été faite", "valid");
+				header("Location:?uc=admin&action=voirInscription");
+			}else{
+				$listLieu = MLieu::getLieux() ;
+				$listSpec = MSpectacle::getSpectacles();
+				include("views/kiosqueadmin/v_SeanceAdd.php");
+			}
 		} catch (Exception $e) {
 			Main::setFlashMessage($e->getMessage(), "error");
 		}

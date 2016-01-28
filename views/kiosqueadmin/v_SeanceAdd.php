@@ -3,7 +3,7 @@
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="jumbotron">
 				<fieldset>
-					<form action="/JP/kiosqueadmin/?seanceaddfinish=1" method="POST">
+					<form action="?uc=admin&action=AjouterSeance" method="POST">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<legend>Ajouter une séance</legend>
 						</div>
@@ -11,8 +11,8 @@
 							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 								<label for="idSpectacle">Pour le spectacle</label>
 								<select name="idSpectacle" class="form-control">
-									<?php foreach ($listSpec as $key) { ?>
-									<option value="<?= $key['idSpectacle'] ?>"><?= $key['nomSpectacle'] ?></option>;
+									<?php foreach ($listSpec->getCollection() as $spectacle) { ?>
+									<option value="<?= $spectacle->getId() ?>"><?= $spectacle->getNom() ?></option>;
 									<?php } ?>
 								</select>
 							</div>
@@ -23,8 +23,8 @@
 							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 								<label for="idLieu">A</label>
 								<select name="idLieu" class="form-control">
-									<?php foreach ($listLieu as $key) { ?>
-									<option value="<?= $key['idLieu'] ?>"><?= $key['nomLieu'] ?></option>;
+									<?php foreach ($listLieu->getCollection() as $lieu) { ?>
+									<option value="<?= $lieu->getId() ?>"><?= $lieu->getNom() ?></option>;
 									<?php } ?>
 								</select><br><br>
 							</div>
@@ -35,7 +35,7 @@
 								<input type="reset" class="btn btn-default" value="Par défaut"><br><br>
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-								<a href="/JP/kiosqueadmin/?admin=registration" class="btn btn-link">Retour</a>
+								<a href="?uc=admin&action=voirInscription" class="btn btn-link">Retour</a>
 							</div>
 						</div>
 					</form>
