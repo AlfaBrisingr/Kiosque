@@ -89,30 +89,28 @@ switch($action) {
 				$listChoix = MChoix::getChoixByIns($_GET['ins']);
 				include("views/kiosqueadmin/v_InscriptionValidated.php");
 			}
-		}
-		catch (Exception $e){
+		} catch (Exception $e) {
 			Main::setFlashMessage($e->getMessage(), "error");
 		}
 		break;
 
 	case 'SupprimerInscription':
-		try{
+		try {
 			$inscription = MInscription::getInscriptionByIdInscription($_GET['ins']);
 			MInscription::rmInscription($inscription);
 
 			Main::setFlashMessage("La suppression de l'inscription a été faite", "valid");
 			header("Location:?uc=admin&action=voirInscription");
 
-		}
-		catch (Exception $e){
+		} catch (Exception $e) {
 			Main::setFlashMessage($e->getMessage(), "error");
 		}
 		break;
 
 
 	case 'ModifierInscription':
-		try{
-			if(isset($_POST['idSpectacleC1']) && isset($_POST['idSpectacleC2']) && isset($_POST['idSpectacleC3']) && isset($_POST['nbrEnfants']) && isset($_POST['nbrAdultes']) && isset($_POST['classe'])){
+		try {
+			if (isset($_POST['idSpectacleC1']) && isset($_POST['idSpectacleC2']) && isset($_POST['idSpectacleC3']) && isset($_POST['nbrEnfants']) && isset($_POST['nbrAdultes']) && isset($_POST['classe'])) {
 				$inscription = MInscription::getInscriptionByIdInscription($_GET['ins']);
 				MChoix::rmChoix($inscription);
 				$inscription->setClasse($_POST['classe']);
@@ -120,16 +118,16 @@ switch($action) {
 				$inscription->setNbEnfants($_POST['nbrEnfants']);
 
 				$spectacle1 = MSpectacle::getSpectacleById($_POST['idSpectacleC1']);
-				$choix1 = new Choix($inscription,$spectacle1,1);
+				$choix1 = new Choix($inscription, $spectacle1, 1);
 				MChoix::addChoix($choix1);
 
-				if($_POST['idSpectacleC2'] != "non") {
+				if ($_POST['idSpectacleC2'] != "non") {
 					$spectacle2 = MSpectacle::getSpectacleById($_POST['idSpectacleC2']);
 					$choix2 = new Choix($inscription, $spectacle2, 2);
 					MChoix::addChoix($choix2);
 				}
 
-				if($_POST['idSpectacleC3'] != "non") {
+				if ($_POST['idSpectacleC3'] != "non") {
 					$spectacle3 = MSpectacle::getSpectacleById($_POST['idSpectacleC3']);
 					$choix3 = new Choix($inscription, $spectacle3, 3);
 					MChoix::addChoix($choix3);
@@ -139,7 +137,7 @@ switch($action) {
 
 				Main::setFlashMessage("La modification de l'inscription a réussi", "valid");
 				header("Location:?uc=admin&action=voirInscription");
-			}else{
+			} else {
 				$listIns = MInscription::getInscriptionByIdInscription($_GET['ins']);
 				$listSpec = MSpectacle::getSpectacles();
 				$listSpec2 = MSpectacle::getSpectacles();
@@ -147,14 +145,13 @@ switch($action) {
 				include("views/kiosqueadmin/v_InscriptionEdit.php");
 			}
 
-		}
-		catch (Exception $e){
+		} catch (Exception $e) {
 			Main::setFlashMessage($e->getMessage(), "error");
 		}
 		break;
 
 	case 'SupprimerunPlanning' :
-		try{
+		try {
 			$inscription = MInscription::getInscriptionByIdInscription($_GET['i']);
 			MPlanning::rmPlanningByInscription($inscription);
 			$inscription->setValidated(0);
@@ -163,9 +160,30 @@ switch($action) {
 			Main::setFlashMessage("La suppression du planning a été faite", "valid");
 			header("Location:?uc=admin&action=voirInscription");
 
+		} catch (Exception $e) {
+			Main::setFlashMessage($e->getMessage(), "error");
+		}
+		break;
+
+	case 'AjouterSeance':
+		try {
+
+		} catch (Exception $e) {
+			Main::setFlashMessage($e->getMessage(), "error");
+		}
+		break;
+
+	case 'SupprimerSeance':
+		try{
+			$seance = MSeance::getSeance($_GET['seance']);
+			MSeance::rmSeance($seance);
+
+			Main::setFlashMessage("La suppression de la séance a été faite", "valid");
+			header("Location:?uc=admin&action=voirInscription");
 		}
 		catch (Exception $e){
 			Main::setFlashMessage($e->getMessage(), "error");
 		}
 		break;
+
 }

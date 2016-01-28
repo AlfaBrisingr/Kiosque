@@ -178,7 +178,7 @@
 				</table>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-				<legend>Séance <a title="Ajouter une séance" href="?uc=Seance&action=AjouterSeance"><span class="pull-right glyphicon glyphicon-plus" aria-hidden="true"></span></a></legend>
+				<legend>Séance <a title="Ajouter une séance" href="?uc=admin&action=AjouterSeance"><span class="pull-right glyphicon glyphicon-plus" aria-hidden="true"></span></a></legend>
 				<div class="overflow-scroll-table">
 					<table class="clear table table-striped table-hover table-condensed table-bordered">
 						<thead>
@@ -202,7 +202,7 @@
 								</td>
 								<td><?= $seance->getLieu()->getNom() ?></td>
 								<td>
-									<a onclick="return sure()" href="uc?seance&action=cliquer?seance=<?= $seance->getId() ?>">
+									<a onclick="return sure()" href="?uc=admin&action=SupprimerSeance&seance=<?= $seance->getId() ?>">
 										<span class="glyphicon glyphicon-remove"></span>
 									</a>
 								</td>
