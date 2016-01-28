@@ -112,11 +112,35 @@ switch($action) {
 
 	case 'ModifierInscription':
 		try{
-			if(isset($_POST['idSpectacleC1']) && isset($_POST['idSpectacleC2']) && isset($_POST['idSpectacleC3']) && isset($_POST['nbrEnfants']) && isset($_POST['nbrAdultes']) && isset($_POST['mailEns']) && isset($_POST['telDir']) && isset($_POST['classe'])){
+			if(isset($_POST['idSpectacleC1']) && isset($_POST['idSpectacleC2']) && isset($_POST['idSpectacleC3']) && isset($_POST['nbrEnfants']) && isset($_POST['nbrAdultes']) && isset($_POST['classe'])){
+				$inscription = MInscription::getInscriptionByIdInscription($_GET['ins']);
+				MChoix::rmChoix($inscription);
+				$inscription->setClasse($_POST['classe']);
+				$inscription->setNbAdultes($_POST['nbrAdultes']);
+				$inscription->setNbEnfants($_POST['nbrEnfants']);
 
+				$spectacle1 = MSpectacle::getSpectacleById($_POST['idSpectacleC1']);
+				$choix1 = new Choix($inscription,$spectacle1,1);
+				MChoix::addChoix($choix1);
+
+				if($_POST['idSpectacleC2'] != "non") {
+					$spectacle2 = MSpectacle::getSpectacleById($_POST['idSpectacleC2']);
+					$choix2 = new Choix($inscription, $spectacle2, 2);
+					MChoix::addChoix($choix2);
+				}
+
+				if($_POST['idSpectacleC3'] != "non") {
+					$spectacle3 = MSpectacle::getSpectacleById($_POST['idSpectacleC3']);
+					$choix3 = new Choix($inscription, $spectacle3, 3);
+					MChoix::addChoix($choix3);
+				}
+
+				MInscription::editInscription($inscription);
+
+				Main::setFlashMessage("La modification de l'inscription a réussi", "valid");
+				header("Location:?uc=admin&action=voirInscription");
 			}else{
-
-				//A Faire
+				$listIns = MInscription::getInscriptionByIdInscription($_GET['ins']);
 				$listSpec = MSpectacle::getSpectacles();
 				$listSpec2 = MSpectacle::getSpectacles();
 				$listSpec3 = MSpectacle::getSpectacles();

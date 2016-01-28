@@ -60,12 +60,12 @@ class MChoix
             throw new Exception($ex->getMessage());
         }
     }
-    static public function rmChoix(Choix $choix) {
+    static public function rmChoix(Inscription $inscription) {
         $conn = Main::bdd();
         try {
             $conn->beginTransaction();
             $reqPrepare = $conn->prepare("DELETE FROM choix WHERE idInscription = ?");
-            $reqPrepare->execute(array($choix->getId()));
+            $reqPrepare->execute(array($inscription->getId()));
             $conn->commit();
         }
         catch (PDOException $e) {
