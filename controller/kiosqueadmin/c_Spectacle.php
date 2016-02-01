@@ -35,7 +35,7 @@ switch($action) {
                 $nouvelle = MSaison::getSaisonById($_POST['nouvelleSaison']);
                 $d = MSaison::setSaisonCourante($actuel, $nouvelle);
                 $saison = MSaison::getSaisonCourante();
-                Main::setFlashMessage("La nouvelle saison est désormais " . $saison->getNom(), "valid");
+                Main::setFlashMessage("La nouvelle saison est dÃ©sormais " . $saison->getNom(), "valid");
                 header("Location:?uc=admin&action=voirSpectacle");
             }else{
                 throw new Exception ("Une erreur s'est produite lors du changement de saison");
@@ -64,11 +64,11 @@ switch($action) {
                 $spec = MSpectacle::getSpectacleByName($_POST['nomSpectacle']);
                 MSaison::AjoutSaisonSpectacle($saison, $spec);
 
-                Main::setFlashMessage("Le spectacle a bien été ajouté à la saison " . $saison->getNom(), "valid");
+                Main::setFlashMessage("Le spectacle a bien Ã©tÃ© ajoutÃ© Ã  la saison " . $saison->getNom(), "valid");
                 header("Location:?uc=spectacle");
 
             }else{
-                throw new Exception ("Impossible d'ajouter le spectacle (mauvais formats entrés)");
+                throw new Exception ("Impossible d'ajouter le spectacle (mauvais formats entrÃ©s)");
             }
 
         }
@@ -83,7 +83,7 @@ switch($action) {
         try {
             $spectacle = MSpectacle::getSpectacleById($_GET['shows']);
             MSpectacle::rmSpectacle($spectacle);
-            Main::setFlashMessage("Le spectacle $spectacle->getId() a bien été supprimé", "valid");
+            Main::setFlashMessage("Le spectacle $spectacle->getId() a bien Ã©tÃ© supprimÃ©", "valid");
             header("Location:?uc=spectacle");
         }
         catch (Exception $e)
@@ -106,10 +106,10 @@ switch($action) {
                 $spectacle = new Spectacle($_GET['shows'], $_POST['nomSpectacle'], $_POST['nbPlaceSpectacle'], $_POST['typeClasse'], $saison);
                 MSpectacle::editSpectacle($saison,$spectacle);
 
-                Main::setFlashMessage("Le spectacle a bien été modifié à la saison " . $saison->getNom(), "valid");
+                Main::setFlashMessage("Le spectacle a bien Ã©tÃ© modifiÃ© Ã  la saison " . $saison->getNom(), "valid");
                 header("Location:?uc=spectacle");
             }else{
-                throw new Exception ("Impossible de modifier le spectacle (mauvais formats entrés)");
+                throw new Exception ("Impossible de modifier le spectacle (mauvais formats entrÃ©s)");
             }
         }
         catch (Exception $e)

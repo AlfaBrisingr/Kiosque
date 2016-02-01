@@ -26,10 +26,10 @@ switch($action) {
                 $lieu = new Lieu($_GET['locations'],$_POST['nomLieu'],$_POST['adrLieu'],$_POST['cpLieu'],$_POST['villeLieu']);
                 MLieu::editLieu($lieu);
 
-                Main::setFlashMessage("Le lieu a bien ÈtÈ modifiÈ", "valid");
+                Main::setFlashMessage("Le lieu a bien √©t√© modifi√©", "valid");
                 header("Location:?uc=lieu");
             }else{
-                throw new Exception ("Impossible de modifier le lieu (mauvais formats entrÈs)");
+                throw new Exception ("Impossible de modifier le lieu (mauvais formats entr√©s)");
             }
         }
         catch (Exception $e)
@@ -48,10 +48,10 @@ switch($action) {
                 $lieu = new Lieu(1,$_POST['nomLieu'],$_POST['adrLieu'],$_POST['cpLieu'],$_POST['villeLieu']);
                 MLieu::addLieu($lieu);
 
-                Main::setFlashMessage("Le lieu a bien ÈtÈ ajoutÈ", "valid");
+                Main::setFlashMessage("Le lieu a bien √©t√© ajout√©", "valid");
                 header("Location:?uc=lieu");
             }else{
-                throw new Exception ("Impossible d'ajouter le lieu (mauvais formats entrÈs)");
+                throw new Exception ("Impossible d'ajouter le lieu (mauvais formats entr√©s)");
             }
         }
         catch (Exception $e)
@@ -65,7 +65,7 @@ switch($action) {
             $lieu = MLieu::getLieuById($_GET['locations']);
             MLieu::rmLieu($lieu);
 
-            Main::setFlashMessage("Le lieu : " .$lieu->getNom(). " a bien ÈtÈ supprimÈ", "valid");
+            Main::setFlashMessage("Le lieu : " .$lieu->getNom(). " a bien √©t√© supprim√©", "valid");
             header("Location:?uc=lieu");
         }
         catch (Exception $e)

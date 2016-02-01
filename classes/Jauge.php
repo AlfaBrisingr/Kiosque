@@ -20,6 +20,14 @@ class Jauge
      * @var int
      */
     private $max;
+    /*
+     * @var int
+     */
+    private $nbEnfants;
+    /*
+     * @var int
+     */
+    private $nbAdultes;
     /**
      * @var Seance
      */
@@ -32,10 +40,12 @@ class Jauge
      * @param int $max
      * @param Seance $seance
      */
-    public function __construct($utilise, $restante, $max, Seance $seance)
+    public function __construct($utilise, $restante, $enfants, $adultes, $max, Seance $seance)
     {
         $this->utilise = (int) $utilise;
         $this->restante = (int) $restante;
+        $this->nbEnfants = $enfants;
+        $this->nbAdultes = $adultes;
         $this->max = (int) $max;
         $this->seance = $seance;
     }
@@ -93,6 +103,39 @@ class Jauge
         $this->max = (int) $max;
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getNbEnfants()
+    {
+        return $this->nbEnfants;
+    }
+
+    /**
+     * @param mixed $nbEnfants
+     */
+    public function setNbEnfants($nbEnfants)
+    {
+        $this->nbEnfants = $nbEnfants;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNbAdultes()
+    {
+        return $this->nbAdultes;
+    }
+
+    /**
+     * @param mixed $nbAdultes
+     */
+    public function setNbAdultes($nbAdultes)
+    {
+        $this->nbAdultes = $nbAdultes;
+    }
+
 
     /**
      * @return Seance

@@ -28,11 +28,11 @@ switch($action) {
                 $ecole = new Ecole($_GET['schools'], $_POST['typeEcole'],$_POST['nomEcole'],$_POST['adresseEcole'],1,$_POST['cpEcole'],$_POST['villeEcole'],$_POST['mailDir'],$directeur);
                 MEcole::editEcole($ecole,$directeur);
 
-                Main::setFlashMessage("L'ÈcolÈ a bien ÈtÈ modifiÈe", "valid");
+                Main::setFlashMessage("L'√©col√© a bien √©t√© modifi√©e", "valid");
                 header("Location:?uc=ecole");
 
             }else{
-                throw new Exception ("Impossible de modifier l'Ècole (mauvais formats entrÈs)");
+                throw new Exception ("Impossible de modifier l'√©cole (mauvais formats entr√©s)");
             }
 
         }
@@ -62,11 +62,11 @@ switch($action) {
                 MEcole::editEcole($ecole,$directeur);
 
 
-                Main::setFlashMessage("L'ÈcolÈ a bien ÈtÈ ajoutÈe", "valid");
+                Main::setFlashMessage("L'√©col√© a bien √©t√© ajout√©e", "valid");
                 header("Location:?uc=ecole");
 
             }else{
-                throw new Exception ("Impossible d'ajouter l'Ècole (mauvais formats entrÈs)");
+                throw new Exception ("Impossible d'ajouter l'√©cole (mauvais formats entr√©s)");
             }
 
         }
@@ -81,7 +81,7 @@ switch($action) {
             $ecole = MEcole::getEcoleById($_GET['schools']);
             MEcole::rmEcole($ecole);
 
-            Main::setFlashMessage("L'Ècole : " .$ecole->getNom(). " a bien ÈtÈ supprimÈe", "valid");
+            Main::setFlashMessage("L'√©cole : " .$ecole->getNom(). " a bien √©t√© supprim√©e", "valid");
             header("Location:?uc=ecole");
 
         }

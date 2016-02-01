@@ -82,7 +82,7 @@
 
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<legend>Planning</legend>
+				<legend>Planning <a title="Mettre le Tableau en PDF" href="?uc=admin&action=TableauPDF"><span class="pull-right glyphicon glyphicon-new-window" aria-hidden="true"></span></a></legend>
 				<div class="overflow-scroll-table">
 					<table class="table table-striped table-hover table-bordered table-condensed">
 						<thead>
@@ -94,7 +94,7 @@
 							<th>Classe</th>
 							<th>N° Téléphone</th>
 							<th>Nbr Enfants</th>
-							<th>Nbr Accompagnateur</th>
+							<th>Nbr Adultes</th>
 							<th>Options</th>
 						</tr>
 						</thead>
@@ -104,7 +104,7 @@
 								<td><?= $planning->getSeance()->getId() ?></td>
 								<td><?= $planning->getSeance()->getSpectacle()->getNom() ?></td>
 								<td>
-									<?php $d = $planning->getInscription()->getDate();
+									<?php $d = $planning->getSeance()->getDate();
 									echo $jour[$d->format('N')].' ';
 									echo $d->format('d/m/Y - H:i'); ?>
 								</td>
@@ -124,7 +124,7 @@
 					</table>
 				</div>
 			</div>
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" id="jauge">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9" id="jauge">
 				<table class="table table-striped table-hover table-bordered table-condensed">
 					<legend>Jauges</legend>
 					<thead>
@@ -132,6 +132,8 @@
 						<th>Séance</th>
 						<th>Spectacle</th>
 						<th>Date Séance</th>
+						<th>Nbr Enfants</th>
+						<th>Nbr Adultes</th>
 						<th>Jauge utilisée</th>
 						<th>Jauge restante</th>
 					</tr>
@@ -146,6 +148,8 @@
 								echo $jour[$d->format('N')].' ';
 								echo $d->format('d/m/Y - H:i'); ?>
 							</td>
+							<td><?= $jauge->getNbEnfants(); ?></td>
+							<td><?= $jauge->getNbAdultes(); ?></td>
 							<td><?= $jauge->getUtilise(); ?></td>
 							<td><?= $jauge->getRestante(); ?></td>
 						</tr>
@@ -218,5 +222,4 @@
 		</div>
 	</div>
 	<br>
-<?php if(isset($_SESSION['error'])){ unset($_SESSION['error']); }
-if(isset($_SESSION['valid'])){ unset($_SESSION['valid']); } ?>
+

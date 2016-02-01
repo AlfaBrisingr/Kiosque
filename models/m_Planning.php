@@ -5,7 +5,7 @@ class MPlanning
 {
 
     /**
-     * Récupère tous les plannings
+     * RÃ©cupÃ¨re tous les plannings
      * @return Collection
      * @throws Exception
      */
@@ -13,7 +13,7 @@ class MPlanning
         try
         {
             $conn = Main::bdd();
-            $reqPrepare = $conn->query("SELECT * FROM planning");
+            $reqPrepare = $conn->query("SELECT * FROM planning ORDER BY idSeance");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
             foreach ($tabs as $tab)
@@ -57,7 +57,7 @@ class MPlanning
     }
 
     /**
-     * Récupère la jauge restante
+     * RÃ©cupÃ¨re la jauge restante
      * @return Collection
      * @throws Exception
      */
@@ -65,7 +65,7 @@ class MPlanning
         try
         {
             $conn = Main::bdd();
-            $reqPrepare = $conn->query("SELECT *, SUM(i.nbAdultesInscription + i.nbEnfantsInscription) as jaugeUtilise, spec.nbPlaceSpectacle as jaugeMax, (spec.nbPlaceSpectacle - SUM((i.nbAdultesInscription + i.nbEnfantsInscription))) as jaugeRestante FROM planning as p
+            $reqPrepare = $conn->query("SELECT *, SUM(i.nbAdultesInscription + i.nbEnfantsInscription) as jaugeUtilise, SUM(i.nbAdultesInscription) as nbAdultes, SUM(i.nbEnfantsInscription) as nbEnfants, spec.nbPlaceSpectacle as jaugeMax, (spec.nbPlaceSpectacle - SUM((i.nbAdultesInscription + i.nbEnfantsInscription))) as jaugeRestante FROM planning as p
 				INNER JOIN inscription as i ON i.idInscription = p.idInscription
 				INNER JOIN seance as s ON s.idSeance = p.idSeance
 				INNER JOIN spectacle as spec ON spec.idSpectacle = s.idSpectacle
@@ -76,7 +76,7 @@ class MPlanning
             foreach ($tabs as $tab)
             {
                 $seance = MSeance::getSeance($tab['idSeance']);
-                $jauge = new Jauge($tab['jaugeUtilise'], $tab['jaugeRestante'], $tab['jaugeMax'], $seance);
+                $jauge = new Jauge($tab['jaugeUtilise'], $tab['jaugeRestante'], $tab['nbEnfants'], $tab['nbAdultes'], $tab['jaugeMax'], $seance);
                 $coll->ajouter($jauge);
             }
             return $coll;
@@ -92,7 +92,7 @@ class MPlanning
     }
 
     /**
-     * Récupère la jauge restante par séance
+     * RÃ©cupÃ¨re la jauge restante par sÃ©ance
      * @param Seance $seance
      * @return Collection
      * @throws Exception
@@ -101,7 +101,7 @@ class MPlanning
         try
         {
             $conn = Main::bdd();
-            $reqPrepare = $conn->prepare("SELECT *, SUM(i.nbAdultesInscription + i.nbEnfantsInscription) as jaugeUtilise, spec.nbPlaceSpectacle as jaugeMax, (spec.nbPlaceSpectacle - SUM((i.nbAdultesInscription + i.nbEnfantsInscription))) as jaugeRestante FROM planning as p
+            $reqPrepare = $conn->prepare("SELECT *, SUM(i.nbAdultesInscription + i.nbEnfantsInscription) as jaugeUtilise, SUM(i.nbAdultesInscription) as nbAdultes, SUM(i.nbEnfantsInscription) as nbEnfants, spec.nbPlaceSpectacle as jaugeMax, (spec.nbPlaceSpectacle - SUM((i.nbAdultesInscription + i.nbEnfantsInscription))) as jaugeRestante FROM planning as p
 				INNER JOIN inscription as i ON i.idInscription = p.idInscription
 				INNER JOIN seance as s ON s.idSeance = p.idSeance
 				INNER JOIN spectacle as spec ON spec.idSpectacle = s.idSpectacle
@@ -113,7 +113,7 @@ class MPlanning
             foreach ($tabs as $tab)
             {
                 $seance = MSeance::getSeance($tab['idSeance']);
-                $jauge = new Jauge($tab['jaugeUtilise'], $tab['jaugeRestante'], $tab['jaugeMax'], $seance);
+                $jauge = new Jauge($tab['jaugeUtilise'], $tab['jaugeRestante'], $tab['nbEnfants'], $tab['nbAdultes'], $tab['jaugeMax'], $seance);
                 $coll->ajouter($jauge);
             }
             return $coll;
@@ -129,9 +129,9 @@ class MPlanning
     }
 
     /**
-     * Récupère le planning où la séance est passée en paramètre
+     * RÃ©cupÃ¨re le planning oÃ¹ la sÃ©ance est passÃ©e en paramÃ¨tre
      * @param Seance $seance
-     * @return Planning
+     * @return Collection
      * @throws Exception
      */
     static public function getPlanningBySeance(Seance $seance) {
@@ -140,19 +140,25 @@ class MPlanning
             $conn = Main::bdd();
             $reqPrepare = $conn->prepare("SELECT * FROM planning WHERE idSeance = ?");
             $reqPrepare->execute(array($seance->getId()));
-            $tab = $reqPrepare->fetch();
-            $inscription = MInscription::getInscriptionByIdInscription($tab['idInscription']);
-            $planning = new Planning($seance, $inscription);
-            return $planning;
+            $tabs = $reqPrepare->fetchAll();
+            $coll = new Collection();
+            foreach ($tabs as $tab)
+            {
+                $inscription = MInscription::getInscriptionByIdInscription($tab['idInscription']);
+                $seance = MSeance::getSeance($tab['idSeance']);
+                $planning = new Planning($seance, $inscription);
+                $coll->ajouter($planning);
+            }
+            return $coll;
         }
         catch (PDOException $e)
         {
-            throw new Exception("La séance ".$seance->getId()." n'est pas dans le planning");
+            throw new Exception("La sÃ©ance ".$seance->getId()." n'est pas dans le planning");
         }
     }
 
     /**
-     * Récupère le planning où l'inscription est passé en paramètre
+     * RÃ©cupÃ¨re le planning oÃ¹ l'inscription est passÃ© en paramÃ¨tre
      * @param Inscription $inscription
      * @return Planning
      * @throws Exception
@@ -175,7 +181,7 @@ class MPlanning
     }
 
     /**
-     * Supprime la séance et l'inscription du planning
+     * Supprime la sÃ©ance et l'inscription du planning
      * @param Seance $seance
      * @param Inscription $inscription
      * @throws Exception
@@ -190,7 +196,7 @@ class MPlanning
         }
         catch (PDOException $e) {
             $conn->rollBack();
-            throw new Exception("Le planning n'a pas pu être supprimé. Détails : <p>".$e->getMessage()."</p>");
+            throw new Exception("Le planning n'a pas pu Ãªtre supprimÃ©. DÃ©tails : <p>".$e->getMessage()."</p>");
         }
     }
 
@@ -204,12 +210,12 @@ class MPlanning
         }
         catch (PDOException $e) {
             $conn->rollBack();
-            throw new Exception("Le planning n'a pas pu être supprimé. Détails : <p>".$e->getMessage()."</p>");
+            throw new Exception("Le planning n'a pas pu Ãªtre supprimÃ©. DÃ©tails : <p>".$e->getMessage()."</p>");
         }
     }
 
     /**
- * Ajoute la séance et l'inscription au planning
+ * Ajoute la sÃ©ance et l'inscription au planning
  * @param Seance $seance
  * @param Inscription $inscription
  * @throws Exception
@@ -229,7 +235,7 @@ class MPlanning
         catch (PDOException $e)
         {
             $conn->rollBack();
-            throw new Exception("L'ajout du planning a échoué. Détails : <p>".$e->getMessage()."</p>");
+            throw new Exception("L'ajout du planning a Ã©chouÃ©. DÃ©tails : <p>".$e->getMessage()."</p>");
         }
     }
 
@@ -248,12 +254,12 @@ class MPlanning
         }
         catch (PDOException $e) {
             $conn->rollBack();
-            throw new Exception("Le planning n'a pas pu être supprimé. Détails : <p>".$e->getMessage()."</p>");
+            throw new Exception("Le planning n'a pas pu Ãªtre supprimÃ©. DÃ©tails : <p>".$e->getMessage()."</p>");
         }
     }
 
     /**
-     * Ajoute la séance et l'inscription au planning
+     * Ajoute la sÃ©ance et l'inscription au planning
      * @param Planning $unPlanning
      * @throws Exception
      */
@@ -272,7 +278,7 @@ class MPlanning
         catch (PDOException $e)
         {
             $conn->rollBack();
-            throw new Exception("L'ajout du planning a échoué. Détails : <p>".$e->getMessage()."</p>");
+            throw new Exception("L'ajout du planning a Ã©chouÃ©. DÃ©tails : <p>".$e->getMessage()."</p>");
         }
     }
 }
