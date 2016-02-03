@@ -52,12 +52,11 @@ switch ($action) {
         break;
     case 'etape2':
         try {
-            if (isset($_SESSION['ecole'])) {
+            if (isset($_SESSION['ecole']) && isset($_POST['facture'])) {
                 $_SESSION['facture'] = $_POST['facture'];
                 $_SESSION['divers'] = $_POST['divers'];
-            } else {
-                header("Location:?uc=jp&action=choisirTypeEcole");
             }
+
             $_SESSION['directeur'] = MEnseignant::getEnseignantById($_SESSION['ecole']->getDirecteur()->getId());
 
             if(isset($_POST['nomEns']) && !empty($_POST['nomEns'])){
@@ -134,12 +133,15 @@ switch ($action) {
             }
 
             $lesSpectacles = MSpectacle::getSpectaclesSaisonCourante();
-            $nbrEleve = $_POST['nbrEleve'];
-            $nbrAccom = $_POST['nbrAccom'];
-            $classe = $_POST['classe'];
-            $_SESSION['nbrEleve'] = $nbrEleve;
-            $_SESSION['nbrAccom'] = $nbrAccom;
-            $_SESSION['classe'] = $classe;
+
+            if(isset($_POST['nbrEnfants']) || isset($_POST['nbrAccom']) || isset($_POST['classe'])) {
+                $nbrEleve = $_POST['nbrEleve'];
+                $nbrAccom = $_POST['nbrAccom'];
+                $classe = $_POST['classe'];
+                $_SESSION['nbrEleve'] = $nbrEleve;
+                $_SESSION['nbrAccom'] = $nbrAccom;
+                $_SESSION['classe'] = $classe;
+            }
             include("views/inscriptionEcole/v_Etape3.php");
 
         } catch (Exception $e) {
@@ -149,8 +151,11 @@ switch ($action) {
     case 'etape4':
         try {
             $lesSpectacles = MSpectacle::getSpectaclesSaisonCourante();
-            $_SESSION['choix1'] = $_POST['choix1'];
-            $_SESSION['impo1'] = $_POST['impo1'];
+
+            if(isset($_POST['choix1'])) {
+                $_SESSION['choix1'] = $_POST['choix1'];
+                $_SESSION['impo1'] = $_POST['impo1'];
+            }
             include("views/inscriptionEcole/v_Etape4.php");
         } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
@@ -159,8 +164,10 @@ switch ($action) {
     case 'etape5':
         try {
             $lesSpectacles = MSpectacle::getSpectaclesSaisonCourante();
-            $_SESSION['choix2'] = $_POST['choix2'];
-            $_SESSION['impo2'] = $_POST['impo2'];
+            if(isset($_POST['choix2'])) {
+                $_SESSION['choix2'] = $_POST['choix2'];
+                $_SESSION['impo2'] = $_POST['impo2'];
+            }
             if ($_SESSION['choix1'] == $_SESSION['choix2']) {
                 $_SESSION['choix2'] == 'non';
             }
@@ -277,7 +284,7 @@ switch ($action) {
             $header = "From: kiosque-noreply@kiosque-mayenne.org".$passage_ligne;
             $header.= "Reply-to: \"".$_SESSION['ecole']->getNom()."\" ".$_SESSION['ecole']->getMailDirecteur().$passage_ligne;
             $header.= "MIME-Version: 1.0".$passage_ligne;
-            $header.= 'Content-Type: text/html; charset=iso-8859-1'.$passage_ligne;
+            $header.= 'Content-Type: text/html; charset=UTF-8'.$passage_ligne;
             $header.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
             // ====
             // ==== Création différents messages
@@ -310,7 +317,7 @@ switch ($action) {
             // =======
             //=====Envoi de l'e-mail.
             mail($mail,$sujet,$message,$header);
-            mail('oceane.martin53960@gmail.com',$sujet,$message,$header);//v.martin@kiosque-mayenne.org
+            mail('v.martin@kiosque-mayenne.org',$sujet,$message,$header);
             $bla = $_SESSION['enseignant']->getMail();
             // === Mail si diffférent du mail de établissement de celui du responsable
 

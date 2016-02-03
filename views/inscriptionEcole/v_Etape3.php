@@ -59,7 +59,7 @@
 			<button type="submit" class="btn btn-primary">Continuer</button>
 		</div>
 		<div class="col-md-12 row">
-			<a href="?uc=jp&action=etape3" class="btn btn-link">Retour</a>
+			<a href="?uc=jp&action=etape2" class="btn btn-link">Retour</a>
 			<a href="?uc=jp&action=choisirTypeEcole" class="btn btn-link">Revenir au début du formulaire</a>
 			<a href="?uc=index" class="btn btn-link">Revenir à l'accueil</a>
 		</div>
