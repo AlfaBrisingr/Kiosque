@@ -68,6 +68,66 @@ class MEcole
         }
     }
 
+    static public function getColleges()
+    {
+        try
+        {
+            $conn = Main::bdd();
+            $reqPrepare = $conn->query("
+                SELECT e.idEcole, typeEcole, nomEcole, adresseEcole, adresse2Ecole, cpEcole, villeEcole, mail_dir, civEns, nomEns, prenomEns, mailEns, telEns, idEns
+                FROM ecole e
+                INNER JOIN enseignant ens ON e.idDirecteur = ens.idEns
+                WHERE typeEcole = 3");
+            $tabs = $reqPrepare->fetchAll();
+            $coll = new Collection();
+            foreach ($tabs as $tab)
+            {
+                $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
+                $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
+                $coll->ajouter($ecole);
+            }
+            return $coll;
+        }
+        catch (PDOException $e)
+        {
+            throw new Exception($e->getMessage());
+        }
+        catch (KeyHasUseException $ex)
+        {
+            throw new Exception($ex->getMessage());
+        }
+    }
+
+    static public function getLycees()
+    {
+        try
+        {
+            $conn = Main::bdd();
+            $reqPrepare = $conn->query("
+                SELECT e.idEcole, typeEcole, nomEcole, adresseEcole, adresse2Ecole, cpEcole, villeEcole, mail_dir, civEns, nomEns, prenomEns, mailEns, telEns, idEns
+                FROM ecole e
+                INNER JOIN enseignant ens ON e.idDirecteur = ens.idEns
+                WHERE typeEcole = 4");
+            $tabs = $reqPrepare->fetchAll();
+            $coll = new Collection();
+            foreach ($tabs as $tab)
+            {
+                $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
+                $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
+                $coll->ajouter($ecole);
+            }
+            return $coll;
+        }
+        catch (PDOException $e)
+        {
+            throw new Exception($e->getMessage());
+        }
+        catch (KeyHasUseException $ex)
+        {
+            throw new Exception($ex->getMessage());
+        }
+    }
+
     static public function getEcolesPrive()
     {
         try

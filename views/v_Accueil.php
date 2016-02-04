@@ -14,6 +14,9 @@
     Bienvenue sur le site d'inscription du Kiosque.
 </h1>
 <a href="?uc=connexion" class="btn btn-link">Accéder au formulaire d'inscription Jeune Public</a>
+<a href="?uc=connexionCL" class="btn btn-link">Accéder au formulaire d'inscription Collège Lycée</a>
+
+
 
 <?php
 if(isset($_SESSION['error']))

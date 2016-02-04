@@ -1,27 +1,27 @@
 <?php
-    require_once('models/m_Main.php');
-    require_once('models/m_Choix.php');
-    require_once('models/m_Ecole.php');
-    require_once('models/m_Enseignant.php');
-    require_once('models/m_Inscription.php');
-    require_once('models/m_Lieu.php');
-    require_once('models/m_Planning.php');
-    require_once('models/m_Saison.php');
-    require_once('models/m_Seance.php');
-    require_once('models/m_Spectacle.php');
-    require_once('classes/Choix.php');
-    require_once('classes/Collection.php');
-    require_once('classes/Ecole.php');
-    require_once('classes/Enseignant.php');
-    require_once('classes/Inscription.php');
-    require_once('classes/Jauge.php');
-    require_once('classes/Lieu.php');
-    require_once('classes/Planning.php');
-    require_once('classes/Saison.php');
-    require_once('classes/Seance.php');
-    require_once('classes/Spectacle.php');
-    require_once('classes/Utilisateur.php');
-    session_start();
+require_once('models/m_Main.php');
+require_once('models/m_Choix.php');
+require_once('models/m_Ecole.php');
+require_once('models/m_Enseignant.php');
+require_once('models/m_Inscription.php');
+require_once('models/m_Lieu.php');
+require_once('models/m_Planning.php');
+require_once('models/m_Saison.php');
+require_once('models/m_Seance.php');
+require_once('models/m_Spectacle.php');
+require_once('classes/Choix.php');
+require_once('classes/Collection.php');
+require_once('classes/Ecole.php');
+require_once('classes/Enseignant.php');
+require_once('classes/Inscription.php');
+require_once('classes/Jauge.php');
+require_once('classes/Lieu.php');
+require_once('classes/Planning.php');
+require_once('classes/Saison.php');
+require_once('classes/Seance.php');
+require_once('classes/Spectacle.php');
+require_once('classes/Utilisateur.php');
+session_start();
 ?>
 <!DOCTYPE html>
 <html>
@@ -55,11 +55,24 @@
                     <?php if(Main::connexionExistantePublic())
                     { ?>
                         <a href="?uc=jp&action=choisirEcole">Jeune Public</a>
-                    <?php
+                        <?php
                     }
                     else
                     { ?>
                         <a href="?uc=connexion">Jeune Public</a>
+                    <?php } ?>
+                </li>
+                <li <?php if(isset($_GET['uc']) && $_GET['uc'] == 'cl'){ ?>
+                    class="active" <?php
+                } ?>>
+                    <?php if(Main::connexionExistantePublic())
+                    { ?>
+                        <a href="?uc=cl&action=choisirEcole">Collège Lycée</a>
+                        <?php
+                    }
+                    else
+                    { ?>
+                        <a href="?uc=connexionCL">Collège Lycée</a>
                     <?php } ?>
                 </li>
                 <?php if(Main::connexionExistante()){ ?> <li><a href="?uc=admin&action=voirAdmin">Administration</a></li><?php } ?>
@@ -99,6 +112,12 @@
             case 'spectacle':
                 include("controller/kiosqueadmin/c_Spectacle.php");
                 break;
+            case 'cl' :
+                include("controller/inscriptionCollegeLycee/c_Inscription.php");
+                break;
+            case 'connexionCL':
+                include("controller/inscriptionCollegeLycee/c_Connexion.php");
+                break;
             default :
                 include("views/v_Erreur.php");
                 break;
@@ -106,7 +125,7 @@
     }
     else
     {
-    header("Location:?uc=index");
+        header("Location:?uc=index");
     } ?>
 </div>
 <footer>
