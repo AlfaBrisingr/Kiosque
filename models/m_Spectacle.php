@@ -24,7 +24,8 @@ class MSpectacle
                     $tab['nomSpectacle'],
                     $tab['nbPlaceSpectacle'],
                     $tab['typeClasse'],
-                    $saison
+                    $saison,
+                    $tab['typeSpectacle']
                 );
                 $coll->ajouter($spectacle);
             }
@@ -60,7 +61,86 @@ class MSpectacle
                     $tab['nomSpectacle'],
                     $tab['nbPlaceSpectacle'],
                     $tab['typeClasse'],
-                    $saison
+                    $saison,
+                    $tab['typeSpectacle']
+                );
+                $lesSeances = MSeance::getSeancesBySpec($spectacle);
+                $spectacle->setLesSeances($lesSeances);
+                $coll->ajouter($spectacle);
+            }
+            return $coll;
+        }
+        catch (PDOException $e)
+        {
+            throw new Exception("Il n'y a aucun spectacle");
+        }
+        catch (KeyHasUseException $ex)
+        {
+            throw new Exception($ex->getMessage());
+        }
+    }
+
+    /**
+     * Récupère les spectacles de la saison courante
+     * @return Collection
+     * @throws Exception
+     */
+    static public function getSpectaclesSaisonCouranteJeunePublic() {
+        try
+        {
+            $conn = Main::bdd();
+            $reqPrepare = $conn->query("SELECT * FROM spectacle sp INNER JOIN saison_spectacle ss ON ss.idSpectacle = sp.idSpectacle INNER JOIN saison s ON s.idSaison = ss.idSaison WHERE courante = 1 AND typeSpectacle = 1");
+            $tabs = $reqPrepare->fetchAll();
+            $coll = new Collection();
+            foreach ($tabs as $tab)
+            {
+                $saison = MSaison::getSaisonCourante();
+                $spectacle = new Spectacle(
+                    $tab['idSpectacle'],
+                    $tab['nomSpectacle'],
+                    $tab['nbPlaceSpectacle'],
+                    $tab['typeClasse'],
+                    $saison,
+                    $tab['typeSpectacle']
+                );
+                $lesSeances = MSeance::getSeancesBySpec($spectacle);
+                $spectacle->setLesSeances($lesSeances);
+                $coll->ajouter($spectacle);
+            }
+            return $coll;
+        }
+        catch (PDOException $e)
+        {
+            throw new Exception("Il n'y a aucun spectacle");
+        }
+        catch (KeyHasUseException $ex)
+        {
+            throw new Exception($ex->getMessage());
+        }
+    }
+
+    /**
+     * Récupère les spectacles de la saison courante
+     * @return Collection
+     * @throws Exception
+     */
+    static public function getSpectaclesSaisonCouranteCollegeLycee() {
+        try
+        {
+            $conn = Main::bdd();
+            $reqPrepare = $conn->query("SELECT * FROM spectacle sp INNER JOIN saison_spectacle ss ON ss.idSpectacle = sp.idSpectacle INNER JOIN saison s ON s.idSaison = ss.idSaison WHERE courante = 1 AND typeSpectacle = 2");
+            $tabs = $reqPrepare->fetchAll();
+            $coll = new Collection();
+            foreach ($tabs as $tab)
+            {
+                $saison = MSaison::getSaisonCourante();
+                $spectacle = new Spectacle(
+                    $tab['idSpectacle'],
+                    $tab['nomSpectacle'],
+                    $tab['nbPlaceSpectacle'],
+                    $tab['typeClasse'],
+                    $saison,
+                    $tab['typeSpectacle']
                 );
                 $lesSeances = MSeance::getSeancesBySpec($spectacle);
                 $spectacle->setLesSeances($lesSeances);
@@ -97,7 +177,8 @@ class MSpectacle
                     $tab['nomSpectacle'],
                     $tab['nbPlaceSpectacle'],
                     $tab['typeClasse'],
-                    $saison
+                    $saison,
+                    $tab['typeSpectacle']
                 );
                 $coll->ajouter($spectacle);
             }
@@ -117,7 +198,7 @@ class MSpectacle
         try
         {
             $conn = Main::bdd();
-            $reqPrepare = $conn->prepare("SELECT sp.idSpectacle, nomSpectacle, nbPlaceSpectacle, typeClasse, s.idSaison as 'idSaison' FROM spectacle sp INNER JOIN saison_spectacle ss ON ss.idSpectacle = sp.idSpectacle INNER JOIN saison s ON s.idSaison = ss.idSaison WHERE s.idSaison = ?");
+            $reqPrepare = $conn->prepare("SELECT sp.idSpectacle, nomSpectacle, nbPlaceSpectacle, typeClasse, typeSpectacle, s.idSaison as 'idSaison' FROM spectacle sp INNER JOIN saison_spectacle ss ON ss.idSpectacle = sp.idSpectacle INNER JOIN saison s ON s.idSaison = ss.idSaison WHERE s.idSaison = ?");
             $reqPrepare->execute(array($saison->getId()));
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
@@ -128,7 +209,8 @@ class MSpectacle
                     $tab['nomSpectacle'],
                     $tab['nbPlaceSpectacle'],
                     $tab['typeClasse'],
-                    $saison
+                    $saison,
+                    $tab['typeSpectacle']
                 );
                 $coll->ajouter($spectacle);
             }
@@ -143,7 +225,7 @@ class MSpectacle
         try
         {
             $conn = Main::bdd();
-            $reqPrepare = $conn->prepare("SELECT sp.idSpectacle, nomSpectacle, nbPlaceSpectacle, typeClasse, s.idSaison as 'idSaison' FROM spectacle sp INNER JOIN saison_spectacle ss ON ss.idSpectacle = sp.idSpectacle INNER JOIN saison s ON s.idSaison = ss.idSaison WHERE s.idSaison = ?");
+            $reqPrepare = $conn->prepare("SELECT sp.idSpectacle, nomSpectacle, nbPlaceSpectacle, typeClasse, typeSpectacle, s.idSaison as 'idSaison' FROM spectacle sp INNER JOIN saison_spectacle ss ON ss.idSpectacle = sp.idSpectacle INNER JOIN saison s ON s.idSaison = ss.idSaison WHERE s.idSaison = ?");
             $reqPrepare->execute(array($idSaison));
             $tabs = $reqPrepare->fetchAll();
             Main::viewVar($tabs);
@@ -156,7 +238,8 @@ class MSpectacle
                     $tab['nomSpectacle'],
                     $tab['nbPlaceSpectacle'],
                     $tab['typeClasse'],
-                    $saison
+                    $saison,
+                    $tab['typeSpectacle']
                 );
                 $coll->ajouter($spectacle);
             }
@@ -190,7 +273,8 @@ class MSpectacle
                 $tab['nomSpectacle'],
                 $tab['nbPlaceSpectacle'],
                 $tab['typeClasse'],
-                $saison
+                $saison,
+                $tab['typeSpectacle']
             );
             return $spectacle;
         }
@@ -223,7 +307,8 @@ class MSpectacle
                 $tab['nomSpectacle'],
                 $tab['nbPlaceSpectacle'],
                 $tab['typeClasse'],
-                $saison
+                $saison,
+                $tab['typeSpectacle']
             );
             return $spectacle;
         }
@@ -247,11 +332,12 @@ class MSpectacle
         try
         {
             $conn->beginTransaction();
-            $reqPrepare = $conn->prepare("INSERT INTO spectacle (nomSpectacle, nbPlaceSpectacle, typeClasse) VALUES (?,?,?)");
+            $reqPrepare = $conn->prepare("INSERT INTO spectacle (nomSpectacle, nbPlaceSpectacle, typeClasse, typeSpectacle) VALUES (?,?,?,?)");
             $reqPrepare->execute(array(
                 $spectacle->getNom(),
                 $spectacle->getNbPlace(),
-                $spectacle->getTypeClasse()
+                $spectacle->getTypeClasse(),
+                $spectacle->getTypeSpectacle()
             ));
             $conn->commit();
         }
@@ -273,11 +359,12 @@ class MSpectacle
         {
             $conn->beginTransaction();
             MSaison::setSaisonSpectacle($saison,$spectacle);
-            $reqPrepare = $conn->prepare("UPDATE spectacle SET nomSpectacle = ?, nbPlaceSpectacle = ?, typeClasse = ? WHERE idSpectacle = ?");
+            $reqPrepare = $conn->prepare("UPDATE spectacle SET nomSpectacle = ?, nbPlaceSpectacle = ?, typeClasse = ?, typeSpectacle = ? WHERE idSpectacle = ?");
             $reqPrepare->execute(array(
                 $spectacle->getNom(),
                 $spectacle->getNbPlace(),
                 $spectacle->getTypeClasse(),
+                $spectacle->getTypeSpectacle(),
                 $spectacle->getId()
             ));
             $conn->commit();

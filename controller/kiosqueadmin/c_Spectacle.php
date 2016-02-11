@@ -59,7 +59,7 @@ switch($action) {
         try{
             if( !is_numeric($_POST['nomSpectacle']) && is_numeric($_POST['nbPlaceSpectacle']) && !is_numeric($_POST['typeClasse']) && (!empty($_POST['typeClasse']) && !empty($_POST['nomSpectacle']) && !empty($_POST['nbPlaceSpectacle']) && !empty($_POST['idSaison']) && !empty($_POST['typeClasse']))) {
                 $saison = MSaison::getSaisonById($_POST['idSaison']);
-                $spectacle = new Spectacle(1, $_POST['nomSpectacle'], $_POST['nbPlaceSpectacle'], $_POST['typeClasse'], $saison);
+                $spectacle = new Spectacle(1, $_POST['nomSpectacle'], $_POST['nbPlaceSpectacle'], $_POST['typeClasse'], $saison,$_POST['typeSpectacle']);
                 MSpectacle::addSpectacle($spectacle);
                 $spec = MSpectacle::getSpectacleByName($_POST['nomSpectacle']);
                 MSaison::AjoutSaisonSpectacle($saison, $spec);
@@ -103,7 +103,7 @@ switch($action) {
         try {
             if (!is_numeric($_POST['nomSpectacle']) && is_numeric($_POST['nbPlaceSpectacle']) && !is_numeric($_POST['typeClasse']) && (!empty($_POST['typeClasse']) && !empty($_POST['nomSpectacle']) && !empty($_POST['nbPlaceSpectacle']) && !empty($_POST['idSaison']) && !empty($_POST['typeClasse']))) {
                 $saison = MSaison::getSaisonById($_POST['idSaison']);
-                $spectacle = new Spectacle($_GET['shows'], $_POST['nomSpectacle'], $_POST['nbPlaceSpectacle'], $_POST['typeClasse'], $saison);
+                $spectacle = new Spectacle($_GET['shows'], $_POST['nomSpectacle'], $_POST['nbPlaceSpectacle'], $_POST['typeClasse'], $saison,$_POST['typeSpectacle']);
                 MSpectacle::editSpectacle($saison,$spectacle);
 
                 Main::setFlashMessage("Le spectacle a bien été modifié à la saison " . $saison->getNom(), "valid");

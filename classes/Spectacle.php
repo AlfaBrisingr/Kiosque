@@ -32,6 +32,11 @@ class Spectacle
      * @var Saison
      */
     private $saison;
+    /**
+     * @var int
+     */
+    private $typeSpectacle;
+
 
     /**
      * Spectacle constructor.
@@ -41,7 +46,7 @@ class Spectacle
      * @param string $typeClasse
      * @param Saison $saison
      */
-    public function __construct($id, $nom, $nbPlace, $typeClasse, Saison $saison)
+    public function __construct($id, $nom, $nbPlace, $typeClasse, Saison $saison, $type)
     {
         $this->id = (int) $id;
         $this->nom = $nom;
@@ -49,6 +54,7 @@ class Spectacle
         $this->typeClasse = $typeClasse;
         $this->lesSeances = new Collection();
         $this->saison = $saison;
+        $this->typeSpectacle = $type;
     }
     /**
      * @return int
@@ -136,5 +142,21 @@ class Spectacle
         $this->lesSeances = $lesSeances;
         return $this;
     }
+    /**
+     * @return int
+     */
+    public function getTypeSpectacle()
+    {
+        return $this->typeSpectacle;
+    }
+
+    /**
+     * @param int $typeSpectacle
+     */
+    public function setTypeSpectacle($typeSpectacle)
+    {
+        $this->typeSpectacle = $typeSpectacle;
+    }
+
 
 }

@@ -15,15 +15,15 @@ class MEnseignant
         {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("
-                SELECT e.idEcole, typeEcole, nomEcole, adresseEcole, adresse2Ecole, cpEcole, villeEcole, mail_dir, civEns, nomEns, prenomEns, mailEns, telEns 
+                SELECT *
                 FROM enseignant ens
                 INNER JOIN ecole e ON e.idEcole = ens.idEcole");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
             foreach ($tabs as $tab)
             {
-                $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
-                $ecole = new Ecole($tab['idEcole'], $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
+                $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
+                $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'], $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
                 $lesInscriptions = MInscription::getInscriptionByEnseignant($directeur);
                 $directeur->setEcole($ecole);
                 $directeur->setLesInscriptions($lesInscriptions);
@@ -52,13 +52,13 @@ class MEnseignant
         try
         {
             $conn = Main::bdd();
-            $reqPrepare = $conn->prepare("SELECT e.idEcole, typeEcole, nomEcole, adresseEcole, adresse2Ecole, cpEcole, villeEcole, mail_dir, idEns , civEns, nomEns, prenomEns, mailEns, telEns
+            $reqPrepare = $conn->prepare("SELECT *
                 FROM enseignant ens
                 INNER JOIN ecole e ON e.idEcole = ens.idEcole
                 WHERE ens.idEns = ?");
             $reqPrepare->execute(array($codeEnseignant));
             $tab = $reqPrepare->fetch();
-            $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
+            $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
             $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'], $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
             $lesInscriptions = MInscription::getInscriptionByEnseignant($directeur);
             $directeur->setEcole($ecole);
@@ -68,6 +68,37 @@ class MEnseignant
         catch (PDOException $e)
         {
             throw new Exception("L'enseignant n°$codeEnseignant n'existe pas");
+        }
+    }
+
+    /**
+     * Récupère le directeur dont l'ecole est passé en paramètres
+     * @param Ecole $ecole
+     * @return Enseignant
+     * @throws Exception
+     */
+    static public function getDirecteur(Ecole $ecole)
+    {
+        try
+        {
+            $conn = Main::bdd();
+            $reqPrepare = $conn->prepare("SELECT *
+                FROM enseignant ens
+                INNER JOIN ecole e ON e.idEcole = ens.idEcole
+                WHERE e.idEcole = ?
+                AND TypeEnseignant = 1");
+            $reqPrepare->execute(array($ecole->getId()));
+            $tab = $reqPrepare->fetch();
+            $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
+            $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'], $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
+            $lesInscriptions = MInscription::getInscriptionByEnseignant($directeur);
+            $directeur->setEcole($ecole);
+            $directeur->setLesInscriptions($lesInscriptions);
+            return $directeur;
+        }
+        catch (PDOException $e)
+        {
+            throw new Exception("Le directeur n'existe pas");
         }
     }
 
@@ -83,13 +114,13 @@ class MEnseignant
         try
         {
             $conn = Main::bdd();
-            $reqPrepare = $conn->prepare("SELECT e.idEcole, typeEcole, nomEcole, adresseEcole, adresse2Ecole, cpEcole, villeEcole, mail_dir, idEns, civEns, nomEns, prenomEns, mailEns, telEns
+            $reqPrepare = $conn->prepare("SELECT *
                 FROM enseignant ens
                 INNER JOIN ecole e ON e.idEcole = ens.idEcole
                 WHERE ens.nomEns = ? AND ens.prenomEns = ?");
             $reqPrepare->execute(array($name, $prenom));
             $tab = $reqPrepare->fetch();
-            $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
+            $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
             $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'], $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
             $lesInscriptions = MInscription::getInscriptionByEnseignant($directeur);
             $directeur->setEcole($ecole);
@@ -135,14 +166,15 @@ class MEnseignant
         try
         {
             $conn->beginTransaction();
-            $reqPrepare = $conn->prepare("INSERT INTO enseignant (civEns, nomEns, prenomEns, mailEns, telEns, idEcole) VALUES (?,?,?,?,?,?)");
+            $reqPrepare = $conn->prepare("INSERT INTO enseignant (civEns, nomEns, prenomEns, mailEns, telEns, idEcole, TypeEnseignant) VALUES (?,?,?,?,?,?,?)");
             $reqPrepare->execute(array(
                 $enseignant->getCivilite(),
                 $enseignant->getNom(),
                 $enseignant->getPrenom(),
                 $enseignant->getMail(),
                 $enseignant->getTel(),
-                $enseignant->getEcole()->getId()
+                $enseignant->getEcole()->getId(),
+                $enseignant->getTypeEnseignant()
                 ));
             $idEnseignant = $conn->lastInsertId();
             $conn->commit();

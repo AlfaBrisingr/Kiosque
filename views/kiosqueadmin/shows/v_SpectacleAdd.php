@@ -22,12 +22,22 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+					<div class=" clear col-xs-12 col-sm-12 col-md-4 col-lg-4">
 						<label>Saison</label>
 						<select name="idSaison" class="form-control">
 							<?php foreach ($listSaison->getCollection() as $saison) { ?>
 							<option value="<?= $saison->getId() ?>" <?php if(($saison->getId()) == ($actuel->getId())) { ?> selected="selected" <?php } ?>><?= $saison->getNom() ?></option>
 							<?php } ?>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+						<label>Type de Spectacle</label>
+						<select  name="typeSpectacle" class="form-control">
+							<option disabled selected> -- Sélectionner un type de spectacle -- </option>
+							<option value="1">Jeune Public</option>
+							<option value="2">Collège/Lycée</option>
 						</select>
 					</div>
 				</div>

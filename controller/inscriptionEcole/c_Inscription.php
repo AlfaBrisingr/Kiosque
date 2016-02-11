@@ -61,7 +61,7 @@ switch ($action) {
                 $_SESSION['divers'] = $_POST['divers'];
             }
 
-            $_SESSION['directeur'] = MEnseignant::getEnseignantById($_SESSION['ecole']->getDirecteur()->getId());
+            $_SESSION['directeur'] = MEnseignant::getDirecteur($_SESSION['ecole']);
 
             if(isset($_POST['nomEns']) && !empty($_POST['nomEns'])){
                 if($_POST['nomEns'] != $_SESSION['directeur']->getNom()){
@@ -99,7 +99,7 @@ switch ($action) {
     case 'etape3' :
         try {
 
-            $enseignant = MEnseignant::getEnseignantById($_SESSION['ecole']->getDirecteur()->getId());
+            $enseignant = MEnseignant::getDirecteur($_SESSION['ecole']);
             $_SESSION['enseignant'] = $enseignant;
             if(isset($_POST['nomEns']) && !empty($_POST['nomEns'])){
                 if($_POST['nomEns'] != $_SESSION['enseignant']->getNom()){
@@ -137,7 +137,7 @@ switch ($action) {
                 }
             }
 
-            $lesSpectacles = MSpectacle::getSpectaclesSaisonCourante();
+            $lesSpectacles = MSpectacle::getSpectaclesSaisonCouranteJeunePublic();
 
             if(isset($_POST['nbrEnfants']) || isset($_POST['nbrAccom']) || isset($_POST['classe'])) {
                 $nbrEleve = $_POST['nbrEleve'];
@@ -156,7 +156,7 @@ switch ($action) {
 
     case 'etape4':
         try {
-            $lesSpectacles = MSpectacle::getSpectaclesSaisonCourante();
+            $lesSpectacles = MSpectacle::getSpectaclesSaisonCouranteJeunePublic();
 
             if(isset($_POST['choix1'])) {
                 $_SESSION['choix1'] = $_POST['choix1'];
@@ -170,7 +170,7 @@ switch ($action) {
 
     case 'etape5':
         try {
-            $lesSpectacles = MSpectacle::getSpectaclesSaisonCourante();
+            $lesSpectacles = MSpectacle::getSpectaclesSaisonCouranteJeunePublic();
             if(isset($_POST['choix2'])) {
                 $_SESSION['choix2'] = $_POST['choix2'];
                 $_SESSION['impo2'] = $_POST['impo2'];
@@ -190,7 +190,7 @@ switch ($action) {
 
     case 'etape6':
         try {
-            $lesSpectacles = MSpectacle::getSpectaclesSaisonCourante();
+            $lesSpectacles = MSpectacle::getSpectaclesSaisonCouranteJeunePublic();
             if (!isset($_POST['choix3'])) {
                 $_SESSION['choix3'] = 'non';
                 $_SESSION['impo3'] = null;
@@ -245,6 +245,7 @@ switch ($action) {
     case 'valider' :
         try {
             if (MEnseignant::isEnseignantExistant($_SESSION['enseignant']) == 0) {
+                $_SESSION['enseignant']->setTypeEnseignant(2);
                 MEnseignant::addEnseignant($_SESSION['enseignant']);
                 $unEnseignant = MEnseignant::getEnseignantByName($_SESSION['enseignant']->getNom(), $_SESSION['enseignant']->getPrenom());
                 $_SESSION['enseignant']->setId($unEnseignant->getId());

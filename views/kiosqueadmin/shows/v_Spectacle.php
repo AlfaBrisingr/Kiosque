@@ -33,6 +33,7 @@
 					<th>Nom</th>
 					<th>Nombre de places</th>
 					<th>Classes</th>
+					<th>Type de Spectacle</th>
 					<th>Options</th>
 				</tr>
 			</thead>
@@ -43,6 +44,7 @@
 					<td><?= $spectacle->getNom() ?></td>
 					<td><?= $spectacle->getNbPlace() ?></td>
 					<td><?= $spectacle->getTypeClasse() ?></td>
+					<td><?php if($spectacle->getTypeSpectacle() == '1') { echo 'Jeune Public'; } else { echo 'Collège/Lycée'; } ?></td>
 					<td>
 						<a title="Modifier <?= $spectacle->getNom() ?>" href="?uc=spectacle&action=voirModifierSpectacle&shows=<?= $spectacle->getId() ?>">
 							<span class="glyphicon glyphicon-pencil" aria-hidden="true">

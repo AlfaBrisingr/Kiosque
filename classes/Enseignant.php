@@ -40,6 +40,10 @@ class Enseignant
      * @var Collection
      */
     private $lesInscriptions;
+    /**
+     * @var int
+     */
+    private $typeEnseignant;
 
     /**
      * Enseignant constructor.
@@ -49,8 +53,9 @@ class Enseignant
      * @param string $prenom
      * @param string $mail
      * @param string $tel
+     * @param int $type
      */
-    public function __construct($id, $civilite, $nom, $prenom, $mail, $tel)
+    public function __construct($id, $civilite, $nom, $prenom, $mail, $tel, $type)
     {
         $this->id = (int) $id;
         $this->civilite = $civilite;
@@ -58,6 +63,7 @@ class Enseignant
         $this->prenom = ucfirst(strtolower($prenom));
         $this->mail = $mail;
         $this->tel = $tel;
+        $this->typeEnseignant = $type;
         $this->lesInscriptions = new Collection();
     }
 
@@ -203,6 +209,22 @@ class Enseignant
     {
         $this->lesInscriptions = $lesInscriptions;
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTypeEnseignant()
+    {
+        return $this->typeEnseignant;
+    }
+
+    /**
+     * @param int $typeEnseignant
+     */
+    public function setTypeEnseignant($typeEnseignant)
+    {
+        $this->typeEnseignant = $typeEnseignant;
     }
 
 }

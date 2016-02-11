@@ -75,15 +75,15 @@
                 </select><br>
             </div><br>
         </form>
-
-        <form action="?uc=admin&action=TableauPDF" method="POST">
-            <div class="form-group">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <input name="valider" type="submit" class="btn btn-primary" value="Télécharger le format PDF">
+        <?php if(isset($_GET['seance']) || isset($_SESSION['seance'])){ ?>
+            <form action="?uc=admin&action=TableauPDF" method="POST">
+                <div class="form-group">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <input name="valider" type="submit" class="btn btn-primary" value="Accès au format PDF">
+                    </div>
                 </div>
-            </div>
-        </form>
-
+            </form>
+        <?php } ?>
     </div>
     <div class="form-group">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

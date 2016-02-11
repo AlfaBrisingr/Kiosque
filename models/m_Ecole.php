@@ -15,14 +15,14 @@ class MEcole
         {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("
-                SELECT e.idEcole, typeEcole, nomEcole, adresseEcole, adresse2Ecole, cpEcole, villeEcole, mail_dir, civEns, nomEns, prenomEns, mailEns, telEns, idEns
+                SELECT *
                 FROM ecole e
-                INNER JOIN enseignant ens ON e.idDirecteur = ens.idEns");
+                INNER JOIN enseignant ens ON e.idEcole = ens.idEcole");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
             foreach ($tabs as $tab)
             {
-                $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
+                $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
                 $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
                 $coll->ajouter($ecole);
             }
@@ -44,15 +44,15 @@ class MEcole
         {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("
-                SELECT e.idEcole, typeEcole, nomEcole, adresseEcole, adresse2Ecole, cpEcole, villeEcole, mail_dir, civEns, nomEns, prenomEns, mailEns, telEns, idEns
+                SELECT *
                 FROM ecole e
-                INNER JOIN enseignant ens ON e.idDirecteur = ens.idEns
+                INNER JOIN enseignant ens ON e.idEcole = ens.idEcole
                 WHERE typeEcole = 1");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
             foreach ($tabs as $tab)
             {
-                $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
+                $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
                 $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
                 $coll->ajouter($ecole);
             }
@@ -74,15 +74,15 @@ class MEcole
         {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("
-                SELECT e.idEcole, typeEcole, nomEcole, adresseEcole, adresse2Ecole, cpEcole, villeEcole, mail_dir, civEns, nomEns, prenomEns, mailEns, telEns, idEns
+                SELECT *
                 FROM ecole e
-                INNER JOIN enseignant ens ON e.idDirecteur = ens.idEns
+                INNER JOIN enseignant ens ON e.idEcole = ens.idEcole
                 WHERE typeEcole = 3");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
             foreach ($tabs as $tab)
             {
-                $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
+                $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
                 $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
                 $coll->ajouter($ecole);
             }
@@ -104,15 +104,15 @@ class MEcole
         {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("
-                SELECT e.idEcole, typeEcole, nomEcole, adresseEcole, adresse2Ecole, cpEcole, villeEcole, mail_dir, civEns, nomEns, prenomEns, mailEns, telEns, idEns
+                SELECT *
                 FROM ecole e
-                INNER JOIN enseignant ens ON e.idDirecteur = ens.idEns
+                INNER JOIN enseignant ens ON e.idEcole = ens.idEcole
                 WHERE typeEcole = 4");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
             foreach ($tabs as $tab)
             {
-                $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
+                $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
                 $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
                 $coll->ajouter($ecole);
             }
@@ -134,15 +134,15 @@ class MEcole
         {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("
-                SELECT e.idEcole, typeEcole, nomEcole, adresseEcole, adresse2Ecole, cpEcole, villeEcole, mail_dir, civEns, nomEns, prenomEns, mailEns, telEns, idEns
+                SELECT *
                 FROM ecole e
-                INNER JOIN enseignant ens ON e.idDirecteur = ens.idEns
+                INNER JOIN enseignant ens ON e.idEcole = ens.idEcole
                 WHERE typeEcole = 2");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
             foreach ($tabs as $tab)
             {
-                $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
+                $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
                 $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
                 $coll->ajouter($ecole);
             }
@@ -168,13 +168,13 @@ class MEcole
         try
         {
             $conn = Main::bdd();
-            $reqPrepare = $conn->prepare("SELECT e.idEcole, typeEcole, nomEcole, adresseEcole, adresse2Ecole, cpEcole, villeEcole, mail_dir, civEns, nomEns, prenomEns, mailEns, telEns, idEns
+            $reqPrepare = $conn->prepare("SELECT *
                 FROM ecole e
-                INNER JOIN enseignant ens ON e.idDirecteur = ens.idEns
+                INNER JOIN enseignant ens ON e.idEcole = ens.idEcole
                 WHERE e.idEcole = ?");
             $reqPrepare->execute(array($codeEcole));
             $tab = $reqPrepare->fetch();
-            $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
+            $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
             $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
             return $ecole;
         }
@@ -196,13 +196,13 @@ class MEcole
       try
       {
         $conn = Main::bdd();
-        $reqPrepare = $conn->prepare("SELECT e.idEcole, typeEcole, nomEcole, adresseEcole, adresse2Ecole, cpEcole, villeEcole, mail_dir, civEns, nomEns, prenomEns, mailEns, telEns FROM ecole
+        $reqPrepare = $conn->prepare("SELECT *
             FROM ecole e
-            INNER JOIN enseignant ens ON e.idDirecteur = ens.idEns
+            INNER JOIN enseignant ens ON e.idEcole = ens.idEcole
             WHERE e.nomEcole = ?");
         $reqPrepare->execute(array($name));
         $tab = $reqPrepare->fetch();
-        $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
+        $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
         $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
         return $ecole;
     }
@@ -223,9 +223,9 @@ class MEcole
         try
         {
             $conn = Main::bdd();
-            $reqPrepare = $conn->prepare("SELECT e.idEcole, typeEcole, nomEcole, adresseEcole, adresse2Ecole, cpEcole, villeEcole, mail_dir, civEns, nomEns, prenomEns, mailEns, telEns FROM ecole
+            $reqPrepare = $conn->prepare("SELECT *
                 FROM ecole e
-                INNER JOIN enseignant ens ON e.idDirecteur = ens.idEns
+                INNER JOIN enseignant ens ON e.idEcole = ens.idEcole
                 WHERE e.typeEcole = ?
                 ORDER BY villeEcole");
             $reqPrepare->execute(array($type));
@@ -233,7 +233,7 @@ class MEcole
             $coll = new Collection();
             foreach ($tabs as $tab)
             {
-                $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns']);
+                $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
                 $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'], $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
                 $coll->ajouter($ecole);
                 return $coll;
@@ -258,7 +258,7 @@ class MEcole
         $conn = Main::bdd();
         try {
             $conn->beginTransaction();
-            $reqPrepare = $conn->prepare("INSERT INTO ecole (typeEcole, nomEcole, adresseEcole, adresse2Ecole, cpEcole, villeEcole, mail_dir, idDirecteur) VALUES (?,?,?,?,?,?,?,?)");
+            $reqPrepare = $conn->prepare("INSERT INTO ecole (typeEcole, nomEcole, adresseEcole, adresse2Ecole, cpEcole, villeEcole, mail_dir) VALUES (?,?,?,?,?,?,?)");
             $reqPrepare->execute(array(
                 $ecole->getType(),
                 $ecole->getNom(),
@@ -267,7 +267,6 @@ class MEcole
                 $ecole->getCp(),
                 $ecole->getVille(),
                 $ecole->getMailDirecteur(),
-                $ecole->getDirecteur()->getId()
                 ));
             $idEcole = $conn->lastInsertId();
             $conn->commit();
@@ -290,7 +289,7 @@ class MEcole
         try {
             $conn->beginTransaction();
             MEnseignant::editDirecteur($directeur);
-            $reqPrepare = $conn->prepare("UPDATE ecole SET typeEcole = ?, nomEcole = ?, adresseEcole = ?, adresse2Ecole = ?, cpEcole = ?, villeEcole = ?, mail_dir = ?, idDirecteur = ? WHERE idEcole = ?");
+            $reqPrepare = $conn->prepare("UPDATE ecole SET typeEcole = ?, nomEcole = ?, adresseEcole = ?, adresse2Ecole = ?, cpEcole = ?, villeEcole = ?, mail_dir = ? WHERE idEcole = ?");
             $reqPrepare->execute(array(
                 $ecole->getType(),
                 $ecole->getNom(),
@@ -299,7 +298,6 @@ class MEcole
                 $ecole->getCp(),
                 $ecole->getVille(),
                 $ecole->getMailDirecteur(),
-                $directeur->getId(),
                 $ecole->getId()
                 ));
             $conn->commit();
