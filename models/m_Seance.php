@@ -44,6 +44,82 @@ class MSeance
     }
 
     /**
+     * Récupère toutes les séances
+     * @return Collection
+     * @throws Exception
+     */
+    static public function getSeancesJeunePublic() {
+        try
+        {
+            $conn = Main::bdd();
+            $reqPrepare = $conn->query("SELECT * FROM seance s
+             INNER JOIN spectacle sp ON s.idSpectacle = sp.idSpectacle
+             WHERE typeSpectacle = 1");
+            $tabs = $reqPrepare->fetchAll();
+            $coll = new Collection();
+            foreach ($tabs as $tab)
+            {
+                $spectacle = MSpectacle::getSpectacleById($tab['idSpectacle']);
+                $lieu = MLieu::getLieuById($tab['idLieu']);
+                $seance = new Seance(
+                    $tab['idSeance'],
+                    $spectacle,
+                    new \DateTime($tab['date_heure']),
+                    $lieu
+                );
+                $coll->ajouter($seance);
+            }
+            return $coll;
+        }
+        catch (PDOException $e)
+        {
+            throw new Exception("Il n'y a aucune séance");
+        }
+        catch (KeyHasUseException $ex)
+        {
+            throw new Exception($ex->getMessage());
+        }
+    }
+
+    /**
+     * Récupère toutes les séances
+     * @return Collection
+     * @throws Exception
+     */
+    static public function getSeancesCollegeLycee() {
+        try
+        {
+            $conn = Main::bdd();
+            $reqPrepare = $conn->query("SELECT * FROM seance s
+             INNER JOIN spectacle sp ON s.idSpectacle = sp.idSpectacle
+             WHERE typeSpectacle = 2");
+            $tabs = $reqPrepare->fetchAll();
+            $coll = new Collection();
+            foreach ($tabs as $tab)
+            {
+                $spectacle = MSpectacle::getSpectacleById($tab['idSpectacle']);
+                $lieu = MLieu::getLieuById($tab['idLieu']);
+                $seance = new Seance(
+                    $tab['idSeance'],
+                    $spectacle,
+                    new \DateTime($tab['date_heure']),
+                    $lieu
+                );
+                $coll->ajouter($seance);
+            }
+            return $coll;
+        }
+        catch (PDOException $e)
+        {
+            throw new Exception("Il n'y a aucune séance");
+        }
+        catch (KeyHasUseException $ex)
+        {
+            throw new Exception($ex->getMessage());
+        }
+    }
+
+    /**
      * Récupère la séance numéro $id
      * @param int $id
      * @return Seance

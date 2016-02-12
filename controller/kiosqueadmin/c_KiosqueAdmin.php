@@ -43,12 +43,22 @@ switch($action) {
         break;
 
     case 'voirInscription':
-        $listIns = MInscription::getInscriptions();
-        $listPlan = MPlanning::getPlannings();
-        $listSpec = MSpectacle::getSpectacles();
-        $listSean = MSeance::getSeances();
+        $listIns = MInscription::getInscriptionsJeunePublic();
+        $listPlan = MPlanning::getPlanningsJeunePublic();
+        $listSpec = MSpectacle::getSpectaclesSaisonCouranteJeunePublic();
+        $listSean = MSeance::getSeancesJeunePublic();
         $listChoix = MChoix::getChoixs();
-        $listJauge = MPlanning::getJaugeRestante();
+        $listJauge = MPlanning::getJaugeRestanteJeunePublic();
+        include("views/kiosqueadmin/v_Inscription.php");
+        break;
+
+    case 'voirInscriptionCL' :
+        $listIns = MInscription::getInscriptionsCollegeLycee();
+        $listPlan = MPlanning::getPlanningsCollegeLycee();
+        $listSpec = MSpectacle::getSpectaclesSaisonCouranteCollegeLycee();
+        $listSean = MSeance::getSeancesCollegeLycee();
+        $listChoix = MChoix::getChoixs();
+        $listJauge = MPlanning::getJaugeRestanteCollegeLycee();
         include("views/kiosqueadmin/v_Inscription.php");
         break;
 

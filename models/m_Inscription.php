@@ -50,6 +50,106 @@ class MInscription
             throw new Exception($ex->getMessage());
         }
     }
+
+    /**
+     * Récupère toutes les inscriptions
+     * @return Collection
+     * @throws Exception
+     */
+    static public function getInscriptionsJeunePublic() {
+        try
+        {
+            $conn = Main::bdd();
+            $reqPrepare = $conn->query("SELECT * FROM inscription i
+             INNER JOIN enseignant en ON en.idEns = i.idEns
+             INNER JOIN ecole e ON e.idEcole = en.idEcole
+             WHERE typeEcole = 1 OR typeEcole = 2");
+            $tabs = $reqPrepare->fetchAll();
+            $coll = new Collection();
+
+            foreach ($tabs as $tab)
+            {
+                $enseignant = MEnseignant::getEnseignantById($tab['idEns']);
+                $inscription = new Inscription(
+                    $tab['idInscription'],
+                    $enseignant,
+                    new \DateTime($tab['dateInscription']),
+                    $tab['diversInscription'],
+                    $tab['impoInscription'],
+                    $tab['nbEnfantsInscription'],
+                    $tab['nbAdultesInscription'],
+                    $tab['classe']
+                );
+                if($tab['validationInscription'] == '1'){
+                    $inscription->setValidated(true);
+                }else{
+                    $inscription->setValidated(false);
+                }
+                $lesChoix = MChoix::getChoixBySub($inscription);
+                $inscription->setLesChoix($lesChoix);
+                $coll->ajouter($inscription);
+            }
+            return $coll;
+        }
+        catch (PDOException $e)
+        {
+            throw new Exception("Il n'y a aucune inscription validée");
+        }
+        catch (KeyHasUseException $ex)
+        {
+            throw new Exception($ex->getMessage());
+        }
+    }
+
+    /**
+     * Récupère toutes les inscriptions
+     * @return Collection
+     * @throws Exception
+     */
+    static public function getInscriptionsCollegeLycee() {
+        try
+        {
+            $conn = Main::bdd();
+            $reqPrepare = $conn->query("SELECT * FROM inscription i
+             INNER JOIN enseignant en ON en.idEns = i.idEns
+             INNER JOIN ecole e ON e.idEcole = en.idEcole
+             WHERE typeEcole = 3 OR typeEcole = 4");
+            $tabs = $reqPrepare->fetchAll();
+            $coll = new Collection();
+
+            foreach ($tabs as $tab)
+            {
+                $enseignant = MEnseignant::getEnseignantById($tab['idEns']);
+                $inscription = new Inscription(
+                    $tab['idInscription'],
+                    $enseignant,
+                    new \DateTime($tab['dateInscription']),
+                    $tab['diversInscription'],
+                    $tab['impoInscription'],
+                    $tab['nbEnfantsInscription'],
+                    $tab['nbAdultesInscription'],
+                    $tab['classe']
+                );
+                if($tab['validationInscription'] == '1'){
+                    $inscription->setValidated(true);
+                }else{
+                    $inscription->setValidated(false);
+                }
+                $lesChoix = MChoix::getChoixBySub($inscription);
+                $inscription->setLesChoix($lesChoix);
+                $coll->ajouter($inscription);
+            }
+            return $coll;
+        }
+        catch (PDOException $e)
+        {
+            throw new Exception("Il n'y a aucune inscription validée");
+        }
+        catch (KeyHasUseException $ex)
+        {
+            throw new Exception($ex->getMessage());
+        }
+    }
     /**
      * Récupère toutes les incriptions non validées
      * @return Collection
