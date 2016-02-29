@@ -41,7 +41,7 @@
 						<?php foreach ($listEcole->getCollection() as $ecole) { ?>
 						<tr>
 							<td><?= $ecole->getId() ?></td>
-							<td><?php if($ecole->getType() == '1') { echo 'Publique'; } else { echo 'Privée'; } ?></td>
+							<td><?php if($ecole->getType() == '1') { echo 'Ecole Publique'; } if($ecole->getType() == '2') { echo 'Ecole Privée'; } if($ecole->getType() == '3'){ echo 'Collège';} if($ecole->getType() == '4'){ echo 'Lycée';} ?></td>
 							<td><?= $ecole->getNom() ?></td>
 							<td><?= $ecole->getAdresse() ?></td>
 							<td><?= $ecole->getCp() ?></td>

@@ -54,7 +54,7 @@ session_start();
                 } ?>>
                     <?php if(Main::connexionExistantePublic())
                     { ?>
-                        <a href="?uc=jp&action=choisirEcole">Jeune Public</a>
+                        <a href="?uc=jp&action=choisirTypeEcole">Jeune Public</a>
                         <?php
                     }
                     else
@@ -67,7 +67,7 @@ session_start();
                 } ?>>
                     <?php if(Main::connexionExistantePublic())
                     { ?>
-                        <a href="?uc=cl&action=choisirEcole">Collège Lycée</a>
+                        <a href="?uc=cl&action=choisirTypeEcole">Collège Lycée</a>
                         <?php
                     }
                     else

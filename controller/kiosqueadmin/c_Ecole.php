@@ -48,7 +48,7 @@ switch($action) {
 
     case 'AjouterEcole' :
         try{
-            if(!is_numeric($_POST['nomEcole']) && is_numeric($_POST['cpEcole']) && is_numeric($_POST['telDir']) && !empty($_POST['nomEcole']) && !empty($_POST['adresseEcole']) && !empty($_POST['cpEcole']) && !empty($_POST['villeEcole']) && !empty($_POST['mailDir']) && !empty($_POST['telDir']) && !empty($_POST['nomDir']) && !empty($_POST['prenomDir'])) {
+            if(!is_numeric($_POST['nomEcole']) && is_numeric($_POST['cpEcole']) && is_numeric($_POST['telDir']) && !empty($_POST['nomEcole']) && !empty($_POST['adresseEcole']) && !empty($_POST['cpEcole']) && !empty($_POST['villeEcole']) && !empty($_POST['mailDir']) && !empty($_POST['telDir']) && !empty($_POST['nomDir'])) {
                 $directeur = new Enseignant(1,$_POST['civDir'],$_POST['nomDir'],$_POST['prenomDir'],$_POST['mailDir'],$_POST['telDir'],1);
                 $ecole = new Ecole(1,$_POST['typeEcole'],$_POST['nomEcole'],$_POST['adresseEcole'],1,$_POST['cpEcole'],$_POST['villeEcole'],$_POST['mailDir'],$directeur);
                 $idEcole = MEcole::setEcole($ecole);
@@ -61,12 +61,14 @@ switch($action) {
 
                 MEcole::editEcole($ecole,$directeur);
 
-                Main::setFlashMessage("L'écolé a bien été ajoutée", "valid");
+                Main::setFlashMessage("L'école a bien été ajoutée", "valid");
                 header("Location:?uc=ecole");
 
 
             }else{
+                header("Location:?uc=ecole");
                 throw new Exception ("Impossible d'ajouter l'école (mauvais formats entrés)");
+
             }
 
         }

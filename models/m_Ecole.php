@@ -17,7 +17,8 @@ class MEcole
             $reqPrepare = $conn->query("
                 SELECT *
                 FROM ecole e
-                INNER JOIN enseignant ens ON e.idEcole = ens.idEcole");
+                INNER JOIN enseignant ens ON e.idEcole = ens.idEcole
+                WHERE TypeEnseignant = 1");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
             foreach ($tabs as $tab)

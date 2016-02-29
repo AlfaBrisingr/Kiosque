@@ -11,8 +11,10 @@
 							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 								<label for="typeEcole">Type</label>
 								<select name="typeEcole" class="form-control">
-									<option value="1" selected="selected">Publique</option>
-									<option value="2">Privée</option>
+									<option value="1" selected="selected">Ecole Publique</option>
+									<option value="2">Ecole Privée</option>
+									<option value="3">Collège</option>
+									<option value="4">Lycée</option>
 								</select>
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">

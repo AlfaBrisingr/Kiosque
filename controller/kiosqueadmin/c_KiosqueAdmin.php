@@ -49,6 +49,7 @@ switch($action) {
         $listSean = MSeance::getSeancesJeunePublic();
         $listChoix = MChoix::getChoixs();
         $listJauge = MPlanning::getJaugeRestanteJeunePublic();
+        $enfant = MInscription::getNbEnfantsInscription();
         include("views/kiosqueadmin/v_Inscription.php");
         break;
 
@@ -80,6 +81,10 @@ switch($action) {
 
     case 'voirInfos':
         include("views/kiosqueadmin/infos/v_Infos.php");
+        break;
+
+    case 'voirCourrier' :
+        include("views/kiosqueadmin/v_Courrier.php");
         break;
 
 
@@ -208,13 +213,13 @@ switch($action) {
         }
         break;
 
-    case 'TableauPDF':
+    case 'PlanningPDF':
         try {
             if (isset($_GET['seance'])) {
                 $seance = MSeance::getSeance($_GET['seance']);
                 $listPlanSeance = MPlanning::getPlanningBySeance($seance);
                 $_SESSION['idSeance'] = $_GET['seance'];
-                $_SESSION['planning'] = $listPlanSeance = MPlanning::getPlanningBySeance($seance);;
+                $_SESSION['planning'] = $listPlanSeance;
 
             }
 
@@ -307,5 +312,184 @@ switch($action) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
+
+    case 'SeancePDF':
+        try {
+            if (isset($_GET['spectacle'])) {
+                $spectacle = MSpectacle::getSpectacleById($_GET['spectacle']);
+                $listSeanceSpectacle = MSeance::getSeancesBySpec($spectacle);
+                $_SESSION['idSpectacle'] = $_GET['spectacle'];
+                $_SESSION['seance'] = $listSeanceSpectacle;
+
+            }
+
+            if (isset($_POST['valider'])) {
+                $spectacle = MSpectacle::getSpectacleById($_SESSION['idSpectacle']);
+                $listSeanceSpectacle = MSeance::getSeancesBySpec($spectacle);
+
+
+                // get the HTML
+                ob_start(); ?>
+                <style type="text/css">
+
+                    table{
+                        text-align: center;
+                        vertical-align: middle;
+                        line-height: 6px;
+                        font-family: helvetica;
+                        font-size: 12pt;
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin:auto;
+                    }
+
+                    table td, table th {
+                        border: 1px solid;
+                        padding: 3mm 1mm;
+                    }
+                    h1{
+                        text-align: center;
+                        font-size: 20px;
+                        font-family: helvetica;
+                        font-style: inherit;
+                    }
+                </style>
+
+                <page>
+                    <h1>Séances du Spectacle : <?= $spectacle->getNom() ?> : <br>
+                        Niveau : <?= $spectacle->getTypeClasse() ?><br>
+                        Jauge Spectacle : <?= $spectacle->getNbPlace() ?> places</h1>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th style="width: 10%">N° Seance</th>
+                            <th style="width: 20%">Date/Heure</th>
+                            <th style="width: 20%">Lieu</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($listSeanceSpectacle->getCollection() as $seance) { ?>
+                            <tr>
+                                <td><?= $seance->getId() ?></td>
+                                <td><?= $seance->getDate()->format('d/m/Y - H:i')  ?></td>
+                                <td><?= $seance->getLieu()->getNom()?></td>
+                            </tr>
+                        <?php } ?>
+                        </tbody>
+                    </table>
+                </page>
+
+                <?php $content = ob_get_clean();
+
+                // convert in PDF
+                require("html2pdf/html2pdf.class.php");
+                try {
+                    ob_end_clean();
+                    $pdf = new HTML2PDF('L', 'A4', 'fr');
+                    $pdf->writeHTML($content);
+                    $pdf->Output('Planning.pdf');
+                } catch (HTML2PDF_exception $e) {
+                    echo $e;
+                    exit;
+                }
+            }
+            $listSeance = MSeance::getSeances();
+            $listSpectacle = MSpectacle::getSpectacles();
+            include("views/kiosqueadmin/v_SeancePDF.php");
+        }
+        catch (Exception $e){
+            Main::setFlashMessage($e->getMessage(), "error");
+        }
+        break;
+
+    case 'JaugePDF' :
+        try {
+            if (isset($_GET['spectacle'])) {
+                $spectacle = MSpectacle::getSpectacleById($_GET['spectacle']);
+                $listJaugeSpectacle = MPlanning::getJaugeRestanteJeunePublicbySpec($spectacle);
+                $_SESSION['idSpectacle'] = $_GET['spectacle'];
+                $_SESSION['seance'] = $listJaugeSpectacle;
+
+            }
+
+            if (isset($_POST['valider'])) {
+                $spectacle = MSpectacle::getSpectacleById($_SESSION['idSpectacle']);
+                $listJaugeSpectacle = MPlanning::getJaugeRestanteJeunePublicbySpec($spectacle);
+
+
+                // get the HTML
+                ob_start(); ?>
+                <style type="text/css">
+
+                    table{
+                        text-align: center;
+                        vertical-align: middle;
+                        line-height: 6px;
+                        font-family: helvetica;
+                        font-size: 12pt;
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin:auto;
+                    }
+
+                    table td, table th {
+                        border: 1px solid;
+                        padding: 3mm 1mm;
+                    }
+                    h1{
+                        text-align: center;
+                        font-size: 20px;
+                        font-family: helvetica;
+                        font-style: inherit;
+                    }
+                </style>
+
+                <page>
+                    <h1>Séances du Spectacle : <?= $spectacle->getNom() ?> : <br>
+                        Niveau : <?= $spectacle->getTypeClasse() ?><br>
+                        Jauge Spectacle : <?= $spectacle->getNbPlace() ?> places</h1>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th style="width: 10%">N° Seance</th>
+                            <th style="width: 20%">Date/Heure</th>
+                            <th style="width: 20%">Lieu</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($listSeanceSpectacle->getCollection() as $seance) { ?>
+                            <tr>
+                                <td><?= $seance->getId() ?></td>
+                                <td><?= $seance->getDate()->format('d/m/Y - H:i')  ?></td>
+                                <td><?= $seance->getLieu()->getNom()?></td>
+                            </tr>
+                        <?php } ?>
+                        </tbody>
+                    </table>
+                </page>
+
+                <?php $content = ob_get_clean();
+
+                // convert in PDF
+                require("html2pdf/html2pdf.class.php");
+                try {
+                    ob_end_clean();
+                    $pdf = new HTML2PDF('L', 'A4', 'fr');
+                    $pdf->writeHTML($content);
+                    $pdf->Output('Planning.pdf');
+                } catch (HTML2PDF_exception $e) {
+                    echo $e;
+                    exit;
+                }
+            }
+            $listJauge = MPlanning::getJaugeRestanteJeunePublic();
+            $listSpectacle = MSpectacle::getSpectacles();
+            include("views/kiosqueadmin/v_JaugePDF.php");
+        }
+        catch (Exception $e){
+            Main::setFlashMessage($e->getMessage(), "error");
+        }
+        break;
+
 
 }

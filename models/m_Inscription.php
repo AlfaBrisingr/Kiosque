@@ -302,6 +302,19 @@ class MInscription
             throw new Exception("L'inscription $id n'existe pas.");
         }
     }
+
+    static public function getNbEnfantsInscription(){
+        $conn = Main::bdd();
+        try{
+            $reqPrepare = $conn->prepare("SELECT SUM(nbEnfantsInscription) as 'nbEnfants' FROM inscription");
+            $req = $reqPrepare->fetch();
+            return $req['nbEnfants'];
+        }
+        catch (PDOException $e)
+        {
+            throw new Exception("Aucun Enfant.");
+        }
+    }
     /**
      * Ajoute une inscription
      * @param Inscription $inscription

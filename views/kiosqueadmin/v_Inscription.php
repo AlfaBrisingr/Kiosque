@@ -21,7 +21,7 @@
 		</div>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="inscription">
 			<div class="table-responsive">
-				<legend>Inscriptions</legend>
+				<legend>Inscriptions : NbEnfants : <?=$enfant?> NbAdultes :  </legend>
 				<div class="overflow-scroll-table">
 					<table class="table table-hover table-condensed table-bordered">
 						<thead>
@@ -82,7 +82,7 @@
 
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<legend>Planning <a title="Mettre le Tableau en PDF" href="?uc=admin&action=TableauPDF"><span class="pull-right glyphicon glyphicon-new-window" aria-hidden="true"></span></a></legend>
+				<legend>Planning <a title="Mettre le Tableau en PDF" href="?uc=admin&action=PlanningPDF"><span class="pull-right glyphicon glyphicon-new-window" aria-hidden="true"></span></a></legend>
 				<div class="overflow-scroll-table">
 					<table class="table table-striped table-hover table-bordered table-condensed">
 						<thead>
@@ -126,7 +126,7 @@
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9" id="jauge">
 				<table class="table table-striped table-hover table-bordered table-condensed">
-					<legend>Jauges</legend>
+					<legend>Jauges<a title="Mettre le Tableau en PDF" href="?uc=admin&action=JaugePDF"><span class="pull-right glyphicon glyphicon-new-window" aria-hidden="true"></span></a></legend>
 					<thead>
 					<tr>
 						<th>Séance</th>
@@ -182,7 +182,7 @@
 				</table>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-				<legend>Séance <a title="Ajouter une séance" href="?uc=admin&action=AjouterSeance"><span class="pull-right glyphicon glyphicon-plus" aria-hidden="true"></span></a></legend>
+				<legend>Séance <a title="Mettre le Tableau en PDF" href="?uc=admin&action=SeancePDF"><span class="pull-right glyphicon glyphicon-new-window" aria-hidden="true"></span></a> <a title="Ajouter une séance" href="?uc=admin&action=AjouterSeance"><span class="pull-right glyphicon glyphicon-plus" aria-hidden="true"></span></a></legend>
 				<div class="overflow-scroll-table">
 					<table class="clear table table-striped table-hover table-condensed table-bordered">
 						<thead>

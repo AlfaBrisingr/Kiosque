@@ -204,6 +204,44 @@ class MPlanning
      * @return Collection
      * @throws Exception
      */
+    static public function getJaugeRestanteJeunePublicbySpec(Spectacle $spectacle) {
+        try
+        {
+            $conn = Main::bdd();
+            $reqPrepare = $conn->query("SELECT *, SUM(i.nbAdultesInscription + i.nbEnfantsInscription) as jaugeUtilise, SUM(i.nbAdultesInscription) as nbAdultes, SUM(i.nbEnfantsInscription) as nbEnfants, spec.nbPlaceSpectacle as jaugeMax, (spec.nbPlaceSpectacle - SUM((i.nbAdultesInscription + i.nbEnfantsInscription))) as jaugeRestante FROM planning as p
+				INNER JOIN inscription as i ON i.idInscription = p.idInscription
+				INNER JOIN seance as s ON s.idSeance = p.idSeance
+				INNER JOIN spectacle as spec ON spec.idSpectacle = s.idSpectacle
+				WHERE i.validationInscription = 1
+				AND spec.typeSpectacle = 1
+				AND spec.idSpectacle = ?
+				GROUP BY s.idSeance");
+            $reqPrepare->execute(array($spectacle->getId()));
+            $tabs = $reqPrepare->fetchAll();
+            $coll = new Collection();
+            foreach ($tabs as $tab)
+            {
+                $seance = MSeance::getSeance($tab['idSeance']);
+                $jauge = new Jauge($tab['jaugeUtilise'], $tab['jaugeRestante'], $tab['nbEnfants'], $tab['nbAdultes'], $tab['jaugeMax'], $seance);
+                $coll->ajouter($jauge);
+            }
+            return $coll;
+        }
+        catch (PDOException $e)
+        {
+            throw new Exception($e->getMessage());
+        }
+        catch (KeyHasUseException $ex)
+        {
+            throw new Exception($ex->getMessage());
+        }
+    }
+
+    /**
+     * Récupère la jauge restante
+     * @return Collection
+     * @throws Exception
+     */
     static public function getJaugeRestanteCollegeLycee() {
         try
         {

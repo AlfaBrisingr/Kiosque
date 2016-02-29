@@ -17,7 +17,7 @@
         </div>
     <?php } ?>
     <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-centered">
-        <form action="?uc=connexion&action=login" method="POST" autocomplete="off">
+        <form action="?uc=connexionCL&action=login" method="POST" autocomplete="off">
             <div class="form-group">
                 <label for="login">Nom d'utilisateur</label>
                 <input class="form-control" required="" type="text" name="login" id="login" placeholder="Nom d'utilisateur">

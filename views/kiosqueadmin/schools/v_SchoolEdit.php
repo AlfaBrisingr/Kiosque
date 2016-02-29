@@ -10,6 +10,8 @@
 								<select name="typeEcole" class="form-control">
 									<option value="1" <?php if($listEcole->getType() == 1) { ?> selected="selected" <?php } ?>>Publique</option>
 									<option value="2" <?php if($listEcole->getType() == 2) { ?> selected="selected" <?php } ?>>Privée</option>
+									<option value="3" <?php if($listEcole->getType() == 3) { ?> selected="selected" <?php } ?>>Collège</option>
+									<option value="4" <?php if($listEcole->getType() == 4) { ?> selected="selected" <?php } ?>>Lycée</option>
 								</select>
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
