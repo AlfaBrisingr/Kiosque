@@ -48,7 +48,39 @@ class MEcole
                 SELECT *
                 FROM ecole e
                 INNER JOIN enseignant ens ON e.idEcole = ens.idEcole
-                WHERE typeEcole = 1");
+                WHERE typeEcole = 1
+                AND TypeEnseignant = 1");
+            $tabs = $reqPrepare->fetchAll();
+            $coll = new Collection();
+            foreach ($tabs as $tab)
+            {
+                $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
+                $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
+                $coll->ajouter($ecole);
+            }
+            return $coll;
+        }
+        catch (PDOException $e)
+        {
+            throw new Exception($e->getMessage());
+        }
+        catch (KeyHasUseException $ex)
+        {
+            throw new Exception($ex->getMessage());
+        }
+    }
+
+    static public function getEcolesJeunePublic()
+    {
+        try
+        {
+            $conn = Main::bdd();
+            $reqPrepare = $conn->query("
+                SELECT *
+                FROM ecole e
+                INNER JOIN enseignant ens ON e.idEcole = ens.idEcole
+                WHERE typeEcole = 1 or typeEcole = 2
+                AND TypeEnseignant = 1");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
             foreach ($tabs as $tab)
@@ -78,7 +110,8 @@ class MEcole
                 SELECT *
                 FROM ecole e
                 INNER JOIN enseignant ens ON e.idEcole = ens.idEcole
-                WHERE typeEcole = 3");
+                WHERE typeEcole = 3
+                AND TypeEnseignant = 1");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
             foreach ($tabs as $tab)
@@ -108,7 +141,8 @@ class MEcole
                 SELECT *
                 FROM ecole e
                 INNER JOIN enseignant ens ON e.idEcole = ens.idEcole
-                WHERE typeEcole = 4");
+                WHERE typeEcole = 4
+                AND TypeEnseignant = 1");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
             foreach ($tabs as $tab)
@@ -138,7 +172,8 @@ class MEcole
                 SELECT *
                 FROM ecole e
                 INNER JOIN enseignant ens ON e.idEcole = ens.idEcole
-                WHERE typeEcole = 2");
+                WHERE typeEcole = 2
+                AND TypeEnseignant = 1");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
             foreach ($tabs as $tab)
@@ -228,6 +263,7 @@ class MEcole
                 FROM ecole e
                 INNER JOIN enseignant ens ON e.idEcole = ens.idEcole
                 WHERE e.typeEcole = ?
+                AND TypeEnseignant = 1
                 ORDER BY villeEcole");
             $reqPrepare->execute(array($type));
             $tabs = $reqPrepare->fetchAll();

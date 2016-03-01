@@ -11,7 +11,7 @@
 				<a href="?uc=admin&action=voirSpectacle" class="btn btn-info">Gestion des spectacles</a>
 				<a href="?uc=admin&action=voirLieu" class="btn btn-info">Gestion des lieux</a>
 				<a href="?uc=admin&action=voirEcole" class="btn btn-info">Gestion des écoles</a>
-				<a href="?uc=admin&action=voirCourrier" class="btn btn-info">Gestion des courriers</a>
+				<a href="?uc=admin&action=CourrierPDF" class="btn btn-info">Gestion des courriers</a>
 			</p>
 		</div>
 	</div>

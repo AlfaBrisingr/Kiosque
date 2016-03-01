@@ -72,6 +72,44 @@ class MPlanning
     }
 
     /**
+     * Récupère les plannings d'une ecole
+     * @param Ecole $ecole
+     * @return Collection
+     * @throws Exception
+     */
+    static public function getPlanningsbyEcole(Ecole $ecole) {
+        try
+        {
+            $conn = Main::bdd();
+            $reqPrepare = $conn->prepare("SELECT * FROM planning p
+             INNER JOIN inscription i ON i.idInscription = p.idInscription
+             INNER JOIN enseignant en ON en.idEns = i.idEns
+             INNER JOIN ecole e ON e.idEcole = en.idEcole
+             WHERE e.idEcole = ? ");
+            $reqPrepare->execute(array($ecole->getId()));
+            $tabs = $reqPrepare->fetchAll();
+            $coll = new Collection();
+            foreach ($tabs as $tab)
+            {
+                $inscription = MInscription::getInscriptionByIdInscription($tab['idInscription']);
+                $seance = MSeance::getSeance($tab['idSeance']);
+                $planning = new Planning($seance, $inscription);
+                $coll->ajouter($planning);
+            }
+            return $coll;
+        }
+        catch (PDOException $e)
+        {
+            throw new Exception($e->getMessage());
+
+        }
+        catch (KeyHasUseException $ex)
+        {
+            throw new Exception($ex->getMessage());
+        }
+    }
+
+    /**
      * Récupère tous les plannings
      * @return Collection
      * @throws Exception
@@ -200,21 +238,20 @@ class MPlanning
     }
 
     /**
-     * Récupère la jauge restante
+     * Récupère la jauge restante par séance
+     * @param Spectacle $spectacle
      * @return Collection
      * @throws Exception
      */
-    static public function getJaugeRestanteJeunePublicbySpec(Spectacle $spectacle) {
+    static public function getJaugeRestanteJeunePublicBySpec(Spectacle $spectacle) {
         try
         {
             $conn = Main::bdd();
-            $reqPrepare = $conn->query("SELECT *, SUM(i.nbAdultesInscription + i.nbEnfantsInscription) as jaugeUtilise, SUM(i.nbAdultesInscription) as nbAdultes, SUM(i.nbEnfantsInscription) as nbEnfants, spec.nbPlaceSpectacle as jaugeMax, (spec.nbPlaceSpectacle - SUM((i.nbAdultesInscription + i.nbEnfantsInscription))) as jaugeRestante FROM planning as p
+            $reqPrepare = $conn->prepare("SELECT *, SUM(i.nbAdultesInscription + i.nbEnfantsInscription) as jaugeUtilise, SUM(i.nbAdultesInscription) as nbAdultes, SUM(i.nbEnfantsInscription) as nbEnfants, spec.nbPlaceSpectacle as jaugeMax, (spec.nbPlaceSpectacle - SUM((i.nbAdultesInscription + i.nbEnfantsInscription))) as jaugeRestante FROM planning as p
 				INNER JOIN inscription as i ON i.idInscription = p.idInscription
 				INNER JOIN seance as s ON s.idSeance = p.idSeance
 				INNER JOIN spectacle as spec ON spec.idSpectacle = s.idSpectacle
-				WHERE i.validationInscription = 1
-				AND spec.typeSpectacle = 1
-				AND spec.idSpectacle = ?
+				WHERE i.validationInscription = 1  and spec.typeSpectacle = 1 and s.idSpectacle = ?
 				GROUP BY s.idSeance");
             $reqPrepare->execute(array($spectacle->getId()));
             $tabs = $reqPrepare->fetchAll();
@@ -287,7 +324,7 @@ class MPlanning
 				INNER JOIN inscription as i ON i.idInscription = p.idInscription
 				INNER JOIN seance as s ON s.idSeance = p.idSeance
 				INNER JOIN spectacle as spec ON spec.idSpectacle = s.idSpectacle
-				WHERE i.validationInscription = 1 and s.isSeance = ?
+				WHERE i.validationInscription = 1 and s.idSeance = ?
 				GROUP BY s.idSeance");
             $reqPrepare->execute(array($seance->getId()));
             $tabs = $reqPrepare->fetchAll();

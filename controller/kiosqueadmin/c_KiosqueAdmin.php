@@ -83,11 +83,6 @@ switch($action) {
         include("views/kiosqueadmin/infos/v_Infos.php");
         break;
 
-    case 'voirCourrier' :
-        include("views/kiosqueadmin/v_Courrier.php");
-        break;
-
-
     case 'validerInscription':
         try {
             $inscription = MInscription::getInscriptionByIdInscription($_GET['ins']);
@@ -406,7 +401,7 @@ switch($action) {
         try {
             if (isset($_GET['spectacle'])) {
                 $spectacle = MSpectacle::getSpectacleById($_GET['spectacle']);
-                $listJaugeSpectacle = MPlanning::getJaugeRestanteJeunePublicbySpec($spectacle);
+                $listJaugeSpectacle = MPlanning::getJaugeRestanteJeunePublicBySpec($spectacle);
                 $_SESSION['idSpectacle'] = $_GET['spectacle'];
                 $_SESSION['seance'] = $listJaugeSpectacle;
 
@@ -414,7 +409,7 @@ switch($action) {
 
             if (isset($_POST['valider'])) {
                 $spectacle = MSpectacle::getSpectacleById($_SESSION['idSpectacle']);
-                $listJaugeSpectacle = MPlanning::getJaugeRestanteJeunePublicbySpec($spectacle);
+                $listJaugeSpectacle = MPlanning::getJaugeRestanteJeunePublicBySpec($spectacle);
 
 
                 // get the HTML
@@ -451,17 +446,25 @@ switch($action) {
                     <table>
                         <thead>
                         <tr>
-                            <th style="width: 10%">N° Seance</th>
-                            <th style="width: 20%">Date/Heure</th>
-                            <th style="width: 20%">Lieu</th>
+                            <th>Séance</th>
+                            <th>Spectacle</th>
+                            <th>Date Séance</th>
+                            <th>Nbr Enfants</th>
+                            <th>Nbr Adultes</th>
+                            <th>Jauge utilisée</th>
+                            <th>Jauge restante</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($listSeanceSpectacle->getCollection() as $seance) { ?>
+                        <?php foreach ($listJaugeSpectacle->getCollection() as $jauge) { ?>
                             <tr>
-                                <td><?= $seance->getId() ?></td>
-                                <td><?= $seance->getDate()->format('d/m/Y - H:i')  ?></td>
-                                <td><?= $seance->getLieu()->getNom()?></td>
+                                <td><?= $jauge->getSeance()->getId() ?></td>
+                                <td><?= $jauge->getSeance()->getSpectacle()->getNom() ?></td>
+                                <td><?= $jauge->getSeance()->getDate()->format('d/m/Y - H:i') ?></td>
+                                <td><?= $jauge->getNbEnfants() ?></td>
+                                <td><?= $jauge->getNbAdultes() ?></td>
+                                <td><?= $jauge->getUtilise() ?></td>
+                                <td><?= $jauge->getRestante() ?></td>
                             </tr>
                         <?php } ?>
                         </tbody>
@@ -491,5 +494,71 @@ switch($action) {
         }
         break;
 
+    case 'CourrierPDF' :
+        try {
+            if (isset($_GET['ecole'])) {
+                $ecole = MEcole::getEcoleById($_GET['ecole']);
+                $listInsEcole = MPlanning::getPlanningsbyEcole($ecole);
+                $_SESSION['idEcole'] = $_GET['ecole'];
+                $_SESSION['ecole'] = $listInsEcole;
 
+            }
+
+            if (isset($_POST['valider'])) {
+                $ecole = MEcole::getEcoleById($_SESSION['idEcole']);
+                $listInsEcole = MPlanning::getPlanningsbyEcole($ecole);
+
+
+                // get the HTML
+                ob_start(); ?>
+                <style type="text/css">
+                    table{
+                        text-align: center;
+                        vertical-align: middle;
+                        line-height: 6px;
+                        font-family: helvetica;
+                        font-size: 12pt;
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin:auto;
+                    }
+
+                    table td, table th {
+                        border: 1px solid;
+                        padding: 3mm 1mm;
+                    }
+                    h1{
+                        text-align: center;
+                        font-size: 20px;
+                        font-family: helvetica;
+                        font-style: inherit;
+                    }
+                </style>
+
+                <page>
+
+                </page>
+
+                <?php $content = ob_get_clean();
+
+                // convert in PDF
+                require("html2pdf/html2pdf.class.php");
+                try {
+                    ob_end_clean();
+                    $pdf = new HTML2PDF('L', 'A4', 'fr');
+                    $pdf->writeHTML($content);
+                    $pdf->Output('Planning.pdf');
+                } catch (HTML2PDF_exception $e) {
+                    echo $e;
+                    exit;
+                }
+            }
+            $listIns = MPlanning::getPlannings();
+            $listEcole = MEcole::getEcolesJeunePublic();
+            include("views/kiosqueadmin/v_Courrier.php");
+        }
+        catch (Exception $e){
+            Main::setFlashMessage($e->getMessage(), "error");
+        }
+        break;
 }
