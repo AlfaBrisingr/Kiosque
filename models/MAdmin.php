@@ -1,6 +1,9 @@
 <?php namespace Kiosque\Models;
 
-class Admin
+use Kiosque\Classes\Utilisateur;
+use Kiosque\Classes\Collection;
+
+class MAdmin
 {
     /**
      * Récupère les informations sur l'utilisateur via son code Utilisateur
@@ -8,18 +11,17 @@ class Admin
      * @return Utilisateur
      * @throws \Exception
      */
-    static public function getUserById($code){
-        try
-        {
+
+    public static function getUserById($code)
+    {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->prepare("SELECT * FROM admin WHERE code_user = ?");
             $reqPrepare->execute(array($code));
             $tab = $reqPrepare->fetch();
             $utilisateur = new Utilisateur($code, $tab['login'], $tab['password']);
             return $utilisateur;
-        }
-        catch (\PDOException $e)
-        {
+        } catch (\PDOException $e) {
             throw new \Exception("L'utilisateur n°$code n'existe pas");
         }
     }
@@ -30,7 +32,8 @@ class Admin
      * @return Utilisateur
      * @throws Exception
      */
-    static public function getUserByName($name) {
+    public static function getUserByName($name)
+    {
         $conn = Main::bdd();
         $reqPrepare = $conn->prepare("SELECT * FROM admin WHERE login = ?");
         $reqPrepare->execute(array($name));
@@ -45,13 +48,13 @@ class Admin
      * @throws \Exception
      * @throws \KeyHasUseException
      */
-    static public function getUsers() {
+    public static function getUsers()
+    {
         $conn = Main::bdd();
         $reqPrepare = $conn->query("SELECT * FROM admin");
         $tabs = $reqPrepare->fetchAll();
         $coll = new Collection();
-        foreach ($tabs as $tab)
-        {
+        foreach ($tabs as $tab) {
             $utilisateur = new Utilisateur($tab['code_user'], $tab['login'], $tab['password']);
             $coll->ajouter($utilisateur);
         }
