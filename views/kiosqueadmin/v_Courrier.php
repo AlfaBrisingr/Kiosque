@@ -21,7 +21,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php if(isset($_GET['ecole'])){ ?>
+                <?php if (isset($_GET['ecole'])) { ?>
                     <?php foreach ($listInsEcole->getCollection() as $planning) { ?>
                         <tr>
                             <td><?= $planning->getInscription()->getEnseignant()->getEcole()->getNom() ?> <?= '- '.$planning->getInscription()->getEnseignant()->getNom().' '.$planning->getInscription()->getEnseignant()->getPrenom() ?></td>
@@ -32,7 +32,7 @@
                             <td><?= $planning->getInscription()->getNbAdultes() ?></td>
                         </tr>
                     <?php }
-                }else{ ?>
+                } else { ?>
                     <?php foreach ($listIns->getCollection() as $planning) { ?>
                         <tr>
                             <td><?= $planning->getInscription()->getEnseignant()->getEcole()->getNom() ?> <?= '- '.$planning->getInscription()->getEnseignant()->getNom().' '.$planning->getInscription()->getEnseignant()->getPrenom() ?></td>
@@ -42,23 +42,44 @@
                             <td><?= $planning->getInscription()->getNbEnfants() ?></td>
                             <td><?= $planning->getInscription()->getNbAdultes() ?></td>
                         </tr>
-                    <?php } }?>
+                    <?php }
+                }?>
                 </tbody>
             </table>
         </div>
 
-        <form action="?uc=admin&action=CourrierPDF" method="POST">
-            <div class="clear col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                <label for="idEcole">Choisir Une Ecole :</label>
-                <select name="ecole"  id="inputID" class="form-control" onchange="voirEcole(this.form)">
-                    <option disabled selected>-- Sélectionner une école --</option>
-                    <?php foreach ($listEcole->getCollection() as $ecole) { ?>
-                        <option value="<?= $ecole->getId() ?>"><?php if($ecole->getType() == '1') { echo 'Ecole Publique'; } if($ecole->getType() == '2') { echo 'Ecole Privée'; }?> <?=  '- '.$ecole->getNom() ?></option>
-                    <?php } ?>
-                </select><br>
-            </div><br>
-        </form>
-        <?php if(isset($_GET['ecole']) || isset($_SESSION['ecole'])){ ?>
+        <?php if (!$_GET['ecole']) {
+            ?>
+            <form action="?uc=admin&action=CourrierPDF" method="POST">
+                <div class="clear col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <label for="idEcole">Choisir Une Ecole :</label>
+                    <select name="ecole"  id="inputID" class="form-control" onchange="voirEcole(this.form)">
+                        <option disabled selected>-- Sélectionner une école --</option>
+                        <?php foreach ($listEcole->getCollection() as $ecole) { ?>
+                            <option value="<?= $ecole->getId() ?>">
+                                <?php
+                                if ($ecole->getType() == '1') {
+                                    echo 'Ecole Publique';
+                                }
+                                if ($ecole->getType() == '2') {
+                                    echo 'Ecole Privée';
+                                }
+                                if ($ecole->getType() == '3') {
+                                    echo 'Collège';
+                                }
+                                if ($ecole->getType() == '4') {
+                                    echo 'Lycée';
+                                }
+                                ?>
+                                <?= '- '.$ecole->getNom() ?></option>
+                        <?php } ?>
+                    </select><br>
+                </div><br>
+            </form>
+            <?php
+        }else{
+        } ?>
+        <?php if (isset($_GET['ecole']) || isset($_SESSION['ecole'])) { ?>
             <form action="?uc=admin&action=CourrierPDF" method="POST">
                 <div class="form-group">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

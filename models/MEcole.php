@@ -1,6 +1,4 @@
-<?php
-
-require_once 'm_Main.php';
+<?php namespace Kiosque\Models;
 
 class MEcole
 {
@@ -18,7 +16,8 @@ class MEcole
                 SELECT *
                 FROM ecole e
                 INNER JOIN enseignant ens ON e.idEcole = ens.idEcole
-                WHERE TypeEnseignant = 1");
+                WHERE TypeEnseignant = 1
+                ORDER BY TypeEcole");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
             foreach ($tabs as $tab)

@@ -1,4 +1,5 @@
-<?php
+<?php namespace Kiosque\Models;
+
 class Main
 {
     /**
@@ -7,23 +8,20 @@ class Main
      * @throws Exception
      */
     static public function bdd() {
-        try
-        {
-            $host = "db615238031.db.1and1.com";
-            $dbname = 'db615238031';
-            $user = "dbo615238031";
-            $mdp = "BcW&n7,4";
-            /*$host = "localhost";
-            $dbname = "db576425814";
-            $user = "root";
-            $mdp = "";*/
-            $pdo = new PDO('mysql:host='.$host.';dbname='.$dbname.';charset=utf8',
-                $user, $mdp, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        try {
+            /*$host_name  = "localhost"; db615238031.db.1and1.com
+            $database   = "db615238031";
+            $user_name  = "dbo615238031";
+            $password   = "M@rtin53";*/
+            $host_name = "localhost";
+            $database = "db576425814";
+            $user_name = "root";
+            $password = "";
+            $pdo = new PDO('mysql:host='.$host_name.';dbname='.$database.';charset=utf8', $user_name, $password, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
             return $pdo;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception($e->getMessage());
+        } catch (PDOException $e) {
+            var_dump($e);
+            /*throw new Exception($e->getMessage());*/
         }
     }
 
@@ -31,9 +29,8 @@ class Main
      * Vérifie si l'utilisateur est connecté ou non
      * @return bool
      */
-    static public function connexionExistante()
-    {
-        if(isset($_SESSION['utilisateur']))
+    static public function connexionExistante() {
+        if (isset($_SESSION['utilisateur']))
             if($_SESSION['utilisateur']->getUsername() != "jeunePublic")
                 return true;
             else

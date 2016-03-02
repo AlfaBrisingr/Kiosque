@@ -1,6 +1,4 @@
-<?php
-
-require_once 'm_Main.php';
+<?php namespace Kiosque\Models;
 
 class MEnseignant
 {

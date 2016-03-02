@@ -1,6 +1,6 @@
 <?php
 
-require_once ROOT.'models/m_Admin.php';
+require_once ROOT . 'models/MAdmin.php';
 require_once ROOT.'classes/Utilisateur.php';
 
 if (isset($_GET['action'])) {
@@ -957,7 +957,7 @@ switch ($action) {
                 }
             }
             $listIns = MPlanning::getPlannings();
-            $listEcole = MEcole::getEcolesJeunePublic();
+            $listEcole = MEcole::getEcoles();
             require_once ROOT.'views/kiosqueadmin/v_Courrier.php';
         } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");

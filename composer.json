@@ -1,0 +1,17 @@
+{
+    "name": "alfabrisingr/kiosque",
+    "authors": [
+        {
+            "name": "alfabrisingr",
+            "email": "email@hote.com"
+        }
+    ],
+    "require": {},
+
+    "autoload":{
+
+        "psr-4": {
+
+        }
+    }
+}

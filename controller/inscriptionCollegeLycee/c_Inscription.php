@@ -6,7 +6,7 @@
  * Time: 14:00
  */
 
-require_once ROOT.'models/m_Admin.php';
+require_once ROOT . 'models/MAdmin.php';
 require_once ROOT.'classes/Utilisateur.php';
 if (isset($_GET['action'])) {
     $action = $_GET['action'];
