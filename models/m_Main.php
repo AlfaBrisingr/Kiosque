@@ -9,9 +9,9 @@ class Main
     static public function bdd() {
         try
         {
-            $host = "db576425814.db.1and1.com";
-            $dbname = 'db576425814';
-            $user = "dbo576425814";
+            $host = "db615238031.db.1and1.com";
+            $dbname = 'db615238031';
+            $user = "dbo615238031";
             $mdp = "BcW&n7,4";
             /*$host = "localhost";
             $dbname = "db576425814";
