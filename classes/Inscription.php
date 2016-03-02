@@ -61,7 +61,7 @@ class Inscription
      * @param int $nbAdultes
      * @param String $classe
      */
-    public function Inscription ($id, Enseignant $enseignant, \DateTime $date, $divers, $impo, $nbEnfants, $nbAdultes, $classe)
+    public function __construct($id, Enseignant $enseignant, \DateTime $date, $divers, $impo, $nbEnfants, $nbAdultes, $classe)
     {
         $this->id = (int) $id;
         $this->enseignant = $enseignant;
@@ -77,7 +77,7 @@ class Inscription
     /**
      * @return String
      */
-    public function getClasse(){
+    public function getClasse() {
         return $this->classe;
     }
 
@@ -85,7 +85,7 @@ class Inscription
      * @param String $classe
      * @return Inscription
      */
-    public function setClasse($classe){
+    public function setClasse($classe) {
         $this->classe = $classe;
         return $this;
     }

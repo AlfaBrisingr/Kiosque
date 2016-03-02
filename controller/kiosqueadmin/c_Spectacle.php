@@ -1,35 +1,33 @@
 <?php
 
-require_once ('models/m_Admin.php');
-require_once ('classes/Utilisateur.php');
+require_once ROOT.'models/m_Admin.php';
+require_once ROOT.'classes/Utilisateur.php';
 
-if(isset($_GET['action'])){
+if (isset($_GET['action'])) {
     $action = $_GET['action'];
-}else{
+} else {
     $action = "voirSpectacle";
 }
 
-switch($action) {
+switch ($action) {
     case 'voirSpectacle':
         $listSpec = MSpectacle::getSpectaclesSaisonCourante();
         $actuel = MSaison::getSaisonCourante();
-        include("views/kiosqueadmin/shows/v_Spectacle.php");
+        require_once ROOT.'views/kiosqueadmin/shows/v_Spectacle.php';
         break;
 
     case 'voirChangerSaison':
         try {
             $actuel = MSaison::getSaisonCourante();
             $listSaison = MSaison::getSaisonNonCourante();
-            include("views/kiosqueadmin/shows/v_SaisonEdit.php");
-        }
-        catch (Exception $e)
-        {
+            require_once ROOT.'views/kiosqueadmin/shows/v_SaisonEdit.php';
+        } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
 
-    case 'ChangerSaison' :
-        try{
+    case 'ChangerSaison':
+        try {
             $actuel = MSaison::getSaisonCourante();
             if ($_POST['nouvelleSaison']) {
                 $nouvelle = MSaison::getSaisonById($_POST['nouvelleSaison']);
@@ -37,14 +35,12 @@ switch($action) {
                 $saison = MSaison::getSaisonCourante();
                 Main::setFlashMessage("La nouvelle saison est désormais " . $saison->getNom(), "valid");
                 header("Location:?uc=admin&action=voirSpectacle");
-            }else{
+            } else {
                 throw new Exception ("Une erreur s'est produite lors du changement de saison");
             }
 
 
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -52,11 +48,11 @@ switch($action) {
     case 'voirAjouterSpectacle':
         $listSaison = MSaison::getSaisons();
         $actuel = MSaison::getSaisonCourante();
-        include ("views/kiosqueadmin/shows/v_SpectacleAdd.php");
+        require_once ROOT.'views/kiosqueadmin/shows/v_SpectacleAdd.php';
         break;
 
     case 'AjouterSpectacle':
-        try{
+        try {
             if( !is_numeric($_POST['nomSpectacle']) && is_numeric($_POST['nbPlaceSpectacle']) && !is_numeric($_POST['typeClasse']) && (!empty($_POST['typeClasse']) && !empty($_POST['nomSpectacle']) && !empty($_POST['nbPlaceSpectacle']) && !empty($_POST['idSaison']) && !empty($_POST['typeClasse']))) {
                 $saison = MSaison::getSaisonById($_POST['idSaison']);
                 $spectacle = new Spectacle(1, $_POST['nomSpectacle'], $_POST['nbPlaceSpectacle'], $_POST['typeClasse'], $saison,$_POST['typeSpectacle']);
@@ -67,13 +63,11 @@ switch($action) {
                 Main::setFlashMessage("Le spectacle a bien été ajouté à la saison " . $saison->getNom(), "valid");
                 header("Location:?uc=spectacle");
 
-            }else{
+            } else {
                 throw new Exception ("Impossible d'ajouter le spectacle (mauvais formats entrés)");
             }
 
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
 
             Main::setFlashMessage($e->getMessage(), "error");
         }
@@ -85,9 +79,7 @@ switch($action) {
             MSpectacle::rmSpectacle($spectacle);
             Main::setFlashMessage("Le spectacle $spectacle->getId() a bien été supprimé", "valid");
             header("Location:?uc=spectacle");
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -96,24 +88,22 @@ switch($action) {
         $listSpec = MSpectacle::getSpectacleById($_GET['shows']);
         $listSaison = MSaison::getSaisons();
         $actuel = MSaison::getSaisonCourante();
-        include("views/kiosqueadmin/shows/v_SpectacleEdit.php");
+        require_once ROOT.'views/kiosqueadmin/shows/v_SpectacleEdit.php';
         break;
 
-    case 'ModifierSpectacle' :
+    case 'ModifierSpectacle':
         try {
             if (!is_numeric($_POST['nomSpectacle']) && is_numeric($_POST['nbPlaceSpectacle']) && !is_numeric($_POST['typeClasse']) && (!empty($_POST['typeClasse']) && !empty($_POST['nomSpectacle']) && !empty($_POST['nbPlaceSpectacle']) && !empty($_POST['idSaison']) && !empty($_POST['typeClasse']))) {
                 $saison = MSaison::getSaisonById($_POST['idSaison']);
                 $spectacle = new Spectacle($_GET['shows'], $_POST['nomSpectacle'], $_POST['nbPlaceSpectacle'], $_POST['typeClasse'], $saison,$_POST['typeSpectacle']);
-                MSpectacle::editSpectacle($saison,$spectacle);
+                MSpectacle::editSpectacle($saison, $spectacle);
 
                 Main::setFlashMessage("Le spectacle a bien été modifié à la saison " . $saison->getNom(), "valid");
                 header("Location:?uc=spectacle");
-            }else{
+            } else {
                 throw new Exception ("Impossible de modifier le spectacle (mauvais formats entrés)");
             }
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
 
         }

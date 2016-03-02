@@ -101,6 +101,37 @@ class MEcole
         }
     }
 
+    static public function getEcolesCollegeLycee()
+    {
+        try
+        {
+            $conn = Main::bdd();
+            $reqPrepare = $conn->query("
+                SELECT *
+                FROM ecole e
+                INNER JOIN enseignant ens ON e.idEcole = ens.idEcole
+                WHERE typeEcole = 3 or typeEcole = 4
+                AND TypeEnseignant = 1");
+            $tabs = $reqPrepare->fetchAll();
+            $coll = new Collection();
+            foreach ($tabs as $tab)
+            {
+                $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
+                $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
+                $coll->ajouter($ecole);
+            }
+            return $coll;
+        }
+        catch (PDOException $e)
+        {
+            throw new Exception($e->getMessage());
+        }
+        catch (KeyHasUseException $ex)
+        {
+            throw new Exception($ex->getMessage());
+        }
+    }
+
     static public function getColleges()
     {
         try

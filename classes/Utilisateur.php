@@ -26,7 +26,7 @@ class Utilisateur
      * @param String $username
      * @param String $password
      */
-    public function Utilisateur($id, $username, $password)
+    public function __construct($id, $username, $password)
     {
         $this->id = (int) $id;
         $this->username = $username;

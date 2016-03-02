@@ -19,6 +19,18 @@
 			<?php } ?>
 		</div>
 	</div>
+
+	<form action="?uc=admin&action=Ecole" method="POST">
+		<div class="clear col-xs-12 col-sm-12 col-md-4 col-lg-4">
+			<label for="idType">Choisir Une Ecole :</label>
+			<select name="type"  id="inputID" class="form-control" onchange="voirGestionEcole(this.form)">
+				<option disabled selected>-- Sélectionner un type d'école --</option>
+				<option value="1">Jeune Public</option>
+				<option value="2">Collège/Lycée</option>
+			</select><br>
+		</div><br>
+	</form>
+
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="ecoles">
 		<legend>Ecoles <a title="Ajouter une école" href="?uc=ecole&action=voirAjouterEcole"><span class="pull-right glyphicon glyphicon-plus" aria-hidden="true"></span></a></legend>
 		<div class="table-responsive">
@@ -38,6 +50,29 @@
 						</tr>
 					</thead>
 					<tbody>
+					<?php if(isset($_GET['type'])){ ?>
+					<?php foreach ($ListEcoleChoix->getCollection() as $ecole) { ?>
+						<tr>
+							<td><?= $ecole->getId() ?></td>
+							<td><?php if($ecole->getType() == '1') { echo 'Ecole Publique'; } if($ecole->getType() == '2') { echo 'Ecole Privée'; } if($ecole->getType() == '3'){ echo 'Collège';} if($ecole->getType() == '4'){ echo 'Lycée';} ?></td>
+							<td><?= $ecole->getNom() ?></td>
+							<td><?= $ecole->getAdresse() ?></td>
+							<td><?= $ecole->getCp() ?></td>
+							<td><?= $ecole->getVille() ?></td>
+							<td><?= $ecole->getMailDirecteur() ?></td>
+							<td><?= $ecole->getDirecteur()->getNom().' '.$ecole->getDirecteur()->getPrenom() ?>
+							</td>
+							<td>
+								<a href="?uc=ecole&action=voirModifierEcole&schools=<?= $ecole->getId() ?>" title="Modifier l'école n° <?= $ecole->getId() ?>">
+									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+								</a>
+								<a onclick="return sure()" href="?uc=ecole&action=SupprimerEcole&schools=<?= $ecole->getId() ?>" title="Supprimer l'école n° <?= $ecole->getId() ?>">
+									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+								</a>
+							</td>
+						</tr>
+						<?php }
+					}else{ ?>
 						<?php foreach ($listEcole->getCollection() as $ecole) { ?>
 						<tr>
 							<td><?= $ecole->getId() ?></td>
@@ -58,7 +93,7 @@
 								</a>
 							</td>
 						</tr>
-						<?php } ?>
+						<?php } } ?>
 					</tbody>
 				</table>
 			</div>

@@ -56,7 +56,7 @@ class Ecole
      * @param string     $mail
      * @param Enseignant $directeur
      */
-    public function Ecole($id, $type, $nom, $adresse, $adresse2, $cp, $ville, $mail, Enseignant $directeur)
+    public function __construct($id, $type, $nom, $adresse, $adresse2, $cp, $ville, $mail, Enseignant $directeur)
     {
         $this->id =            (int) $id;
         $this->type =          $type;

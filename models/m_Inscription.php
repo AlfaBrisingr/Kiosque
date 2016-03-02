@@ -29,7 +29,7 @@ class MInscription
                     $tab['nbEnfantsInscription'],
                     $tab['nbAdultesInscription'],
                     $tab['classe']
-                    );
+                );
                 if($tab['validationInscription'] == '1'){
                     $inscription->setValidated(true);
                 }else{
@@ -174,7 +174,7 @@ class MInscription
                     $tab['nbEnfantsInscription'],
                     $tab['nbAdultesInscription'],
                     $tab['classe']
-                    );
+                );
                 $lesChoix = MChoix::getChoixBySub($inscription);
                 $inscription->setLesChoix($lesChoix);
                 $coll->ajouter($inscription);
@@ -215,7 +215,7 @@ class MInscription
                     $tab['nbEnfantsInscription'],
                     $tab['nbAdultesInscription'],
                     $tab['classe']
-                    );
+                );
                 $lesChoix = MChoix::getChoixBySub($inscription);
                 $inscription->setLesChoix($lesChoix);
                 $coll->ajouter($inscription);
@@ -256,7 +256,7 @@ class MInscription
                     $tab['nbEnfantsInscription'],
                     $tab['nbAdultesInscription'],
                     $tab['classe']
-                    );
+                );
                 $lesChoix = MChoix::getChoixBySub($inscription);
                 $inscription->setLesChoix($lesChoix);
                 $coll->ajouter($inscription);
@@ -292,7 +292,7 @@ class MInscription
                 $tab['nbEnfantsInscription'],
                 $tab['nbAdultesInscription'],
                 $tab['classe']
-                );
+            );
             $lesChoix = MChoix::getChoixBySub($inscription);
             $inscription->setLesChoix($lesChoix);
             return $inscription;
@@ -306,13 +306,13 @@ class MInscription
     static public function getNbEnfantsInscription(){
         $conn = Main::bdd();
         try{
-            $reqPrepare = $conn->prepare("SELECT SUM(nbEnfantsInscription) as 'nbEnfants' FROM inscription");
+            $reqPrepare = $conn->query("SELECT SUM(nbEnfantsInscription) as 'nbEnfants' FROM inscription GROUP BY idInscription ");
             $req = $reqPrepare->fetch();
             return $req['nbEnfants'];
         }
         catch (PDOException $e)
         {
-            throw new Exception("Aucun Enfant.");
+            throw new Exception($e->getMessage());
         }
     }
     /**
@@ -340,7 +340,7 @@ class MInscription
                 $inscription->getNbEnfants(),
                 $inscription->getNbAdultes(),
                 $inscription->getClasse()
-                ));
+            ));
             $id = $conn->lastInsertId();
 
             $conn->commit();
@@ -381,7 +381,7 @@ class MInscription
                 $inscription->getNbAdultes(),
                 $inscription->getClasse(),
                 $inscription->getId()
-                ));
+            ));
             $conn->commit();
         }
         catch (PDOException $e)

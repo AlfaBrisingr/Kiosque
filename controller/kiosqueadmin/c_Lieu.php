@@ -1,26 +1,26 @@
 <?php
 
-require_once ('models/m_Admin.php');
-require_once ('classes/Utilisateur.php');
+require_once ROOT.'models/m_Admin.php';
+require_once ROOT.'classes/Utilisateur.php';
 
-if(isset($_GET['action'])){
+if (isset($_GET['action'])) {
     $action = $_GET['action'];
-}else{
+} else {
     $action = "voirLieu";
 }
 
-switch($action) {
+switch ($action) {
     case 'voirLieu':
         $listLieu = MLieu::getLieux();
-        include("views/kiosqueadmin/locations/v_Lieu.php");
+        require_once ROOT.'views/kiosqueadmin/locations/v_Lieu.php';
         break;
 
-    case 'voirModifierLieu' :
+    case 'voirModifierLieu':
         $listLieu =  MLieu::getLieuById($_GET['locations']);
-        include("views/kiosqueadmin/locations/v_LieuEdit.php");
+        require_once ROOT.'views/kiosqueadmin/locations/v_LieuEdit.php';
         break;
 
-    case 'ModifierLieu' :
+    case 'ModifierLieu':
         try {
             if (!is_numeric($_POST['nomLieu']) && !is_numeric($_POST['adrLieu']) && is_numeric($_POST['cpLieu']) && !is_numeric($_POST['villeLieu']) && (!empty($_POST['nomLieu']) && !empty($_POST['adrLieu']) && !empty($_POST['cpLieu']) && !empty($_POST['villeLieu']))) {
                 $lieu = new Lieu($_GET['locations'],$_POST['nomLieu'],$_POST['adrLieu'],$_POST['cpLieu'],$_POST['villeLieu']);
@@ -28,48 +28,42 @@ switch($action) {
 
                 Main::setFlashMessage("Le lieu a bien été modifié", "valid");
                 header("Location:?uc=lieu");
-            }else{
+            } else {
                 throw new Exception ("Impossible de modifier le lieu (mauvais formats entrés)");
             }
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
 
-    case 'voirAjouterLieu' :
-        include("views/kiosqueadmin/locations/v_LieuAdd.php");
+    case 'voirAjouterLieu':
+        require_once ROOT.'views/kiosqueadmin/locations/v_LieuAdd.php';
         break;
 
-    case 'AjouterLieu' :
+    case 'AjouterLieu':
         try {
             if (!is_numeric($_POST['nomLieu']) && !is_numeric($_POST['adrLieu']) && is_numeric($_POST['cpLieu']) && !is_numeric($_POST['villeLieu']) && (!empty($_POST['nomLieu']) && !empty($_POST['adrLieu']) && !empty($_POST['cpLieu']) && !empty($_POST['villeLieu']))) {
-                $lieu = new Lieu(1,$_POST['nomLieu'],$_POST['adrLieu'],$_POST['cpLieu'],$_POST['villeLieu']);
+                $lieu = new Lieu(1, $_POST['nomLieu'], $_POST['adrLieu'], $_POST['cpLieu'], $_POST['villeLieu']);
                 MLieu::addLieu($lieu);
 
                 Main::setFlashMessage("Le lieu a bien été ajouté", "valid");
                 header("Location:?uc=lieu");
-            }else{
+            } else {
                 throw new Exception ("Impossible d'ajouter le lieu (mauvais formats entrés)");
             }
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
 
-    case 'SupprimerLieu' :
-        try{
+    case 'SupprimerLieu':
+        try {
             $lieu = MLieu::getLieuById($_GET['locations']);
             MLieu::rmLieu($lieu);
 
             Main::setFlashMessage("Le lieu : " .$lieu->getNom(). " a bien été supprimé", "valid");
             header("Location:?uc=lieu");
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
 
         }

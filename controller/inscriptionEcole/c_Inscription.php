@@ -1,29 +1,27 @@
 <?php
-require_once ('models/m_Admin.php');
-require_once ('classes/Utilisateur.php');
-if(isset($_GET['action']))
-{
+require_once ROOT.'models/m_Admin.php';
+require_once ROOT.'classes/Utilisateur.php';
+
+if (isset($_GET['action'])) {
     $action = $_GET['action'];
-}
-else
-{
+} else {
     $action = "login";
 }
 switch ($action) {
-    case 'login' :
+    case 'login':
         header("Location:?uc=connexion&action=login");
         break;
 
-    case 'choisirTypeEcole' :
+    case 'choisirTypeEcole':
         try {
             $saisonCourante = MSaison::getSaisonCourante();
-            include("views/inscriptionEcole/v_EcoleTypeChoix.php");
+            require_once ROOT.'views/inscriptionEcole/v_EcoleTypeChoix.php';
         } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
 
-    case 'choisirEcole' :
+    case 'choisirEcole':
         try {
             $saisonCourante = MSaison::getSaisonCourante();
             if (!isset($_POST['typeEcole'])) {
@@ -34,7 +32,7 @@ switch ($action) {
             } else {
                 $listEcole = MEcole::getEcolesPrive();
             }
-            include("views/inscriptionEcole/v_EcoleChoix.php");
+            require_once ROOT.'views/inscriptionEcole/v_EcoleChoix.php';
         } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
@@ -48,7 +46,7 @@ switch ($action) {
             } else {
                 header("Location:?uc=jp&action=choisirTypeEcole");
             }
-            include("views/inscriptionEcole/v_Etape1.php");
+            require_once ROOT.'views/inscriptionEcole/v_Etape1.php';
         } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
@@ -63,83 +61,83 @@ switch ($action) {
 
             $_SESSION['directeur'] = MEnseignant::getDirecteur($_SESSION['ecole']);
 
-            if(isset($_POST['nomEns']) && !empty($_POST['nomEns'])){
-                if($_POST['nomEns'] != $_SESSION['directeur']->getNom()){
+            if (isset($_POST['nomEns']) && !empty($_POST['nomEns'])) {
+                if ($_POST['nomEns'] != $_SESSION['directeur']->getNom()) {
                     $_SESSION['directeur']->setNom($_POST['nomEns']);
                 }
             }
 
-            if(isset($_POST['prenomEns']) && !empty($_POST['prenomEns'])){
-                if($_POST['prenomEns'] != $_SESSION['directeur']->getPrenom()){
+            if (isset($_POST['prenomEns']) && !empty($_POST['prenomEns'])) {
+                if ($_POST['prenomEns'] != $_SESSION['directeur']->getPrenom()) {
                     $_SESSION['directeur']->setPrenom($_POST['prenomEns']);
                 }
             }
 
-            if(isset($_POST['mailEns']) && !empty($_POST['mailEns'])){
-                if($_POST['mailEns'] != $_SESSION['directeur']->getMail()){
+            if (isset($_POST['mailEns']) && !empty($_POST['mailEns'])) {
+                if ($_POST['mailEns'] != $_SESSION['directeur']->getMail()) {
                     $_SESSION['directeur']->setMail($_POST['mailEns']);
                 }
             }
 
-            if(isset($_POST['civEns']) && !empty($_POST['civEns'])){
-                if($_POST['civEns'] != $_SESSION['directeur']->getCivilite()){
+            if (isset($_POST['civEns']) && !empty($_POST['civEns'])) {
+                if ($_POST['civEns'] != $_SESSION['directeur']->getCivilite()) {
                     $_SESSION['directeur']->setCivilite($_POST['civEns']);
                 }
             }
 
             MEnseignant::editDirecteur($_SESSION['directeur']);
 
-            include("views/inscriptionEcole/v_Etape2.php");
+            require_once ROOT.'views/inscriptionEcole/v_Etape2.php';
 
         } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
 
-    case 'etape3' :
+    case 'etape3':
         try {
 
             $enseignant = MEnseignant::getDirecteur($_SESSION['ecole']);
             $_SESSION['enseignant'] = $enseignant;
-            if(isset($_POST['nomEns']) && !empty($_POST['nomEns'])){
-                if($_POST['nomEns'] != $_SESSION['enseignant']->getNom()){
+            if (isset($_POST['nomEns']) && !empty($_POST['nomEns'])) {
+                if ($_POST['nomEns'] != $_SESSION['enseignant']->getNom()) {
                     $_SESSION['enseignant']->setNom($_POST['nomEns']);
                 }
             }
 
-            if(isset($_POST['prenomEns']) && !empty($_POST['prenomEns'])){
-                if($_POST['prenomEns'] != $_SESSION['enseignant']->getPrenom()){
+            if (isset($_POST['prenomEns']) && !empty($_POST['prenomEns'])) {
+                if ($_POST['prenomEns'] != $_SESSION['enseignant']->getPrenom()) {
                     $_SESSION['enseignant']->setPrenom($_POST['prenomEns']);
                 }
             }
 
-            if(isset($_POST['mailEns']) && !empty($_POST['mailEns'])){
-                if($_POST['mailEns'] != $_SESSION['enseignant']->getMail()){
+            if (isset($_POST['mailEns']) && !empty($_POST['mailEns'])) {
+                if ($_POST['mailEns'] != $_SESSION['enseignant']->getMail()) {
                     $_SESSION['enseignant']->setMail($_POST['mailEns']);
                 }
             }
 
-            if(isset($_POST['civEns']) && !empty($_POST['civEns'])){
-                if($_POST['civEns'] != $_SESSION['enseignant']->getCivilite()){
+            if (isset($_POST['civEns']) && !empty($_POST['civEns'])) {
+                if ($_POST['civEns'] != $_SESSION['enseignant']->getCivilite()) {
                     $_SESSION['enseignant']->setCivilite($_POST['civEns']);
                 }
             }
 
-            if(isset($_POST['telEns']) && !empty($_POST['telEns'])){
-                if($_POST['telEns'] != $_SESSION['enseignant']->getTel()){
+            if (isset($_POST['telEns']) && !empty($_POST['telEns'])) {
+                if ($_POST['telEns'] != $_SESSION['enseignant']->getTel()) {
                     $_SESSION['enseignant']->setTel($_POST['telEns']);
                 }
             }
 
-            if(isset($_POST['mailEns']) && !empty($_POST['mailEns'])){
-                if($_POST['mailEns'] != $_SESSION['enseignant']->getMail()){
+            if (isset($_POST['mailEns']) && !empty($_POST['mailEns'])) {
+                if ($_POST['mailEns'] != $_SESSION['enseignant']->getMail()) {
                     $_SESSION['enseignant']->setMail($_POST['mailEns']);
                 }
             }
 
             $lesSpectacles = MSpectacle::getSpectaclesSaisonCouranteJeunePublic();
 
-            if(isset($_POST['nbrEnfants']) || isset($_POST['nbrAccom']) || isset($_POST['classe'])) {
+            if (isset($_POST['nbrEnfants']) || isset($_POST['nbrAccom']) || isset($_POST['classe'])) {
                 $nbrEleve = $_POST['nbrEleve'];
                 $nbrAccom = $_POST['nbrAccom'];
                 $classe = $_POST['classe'];
@@ -147,7 +145,7 @@ switch ($action) {
                 $_SESSION['nbrAccom'] = $nbrAccom;
                 $_SESSION['classe'] = $classe;
             }
-            include("views/inscriptionEcole/v_Etape3.php");
+            require_once ROOT.'views/inscriptionEcole/v_Etape3.php';
 
         } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
@@ -158,11 +156,11 @@ switch ($action) {
         try {
             $lesSpectacles = MSpectacle::getSpectaclesSaisonCouranteJeunePublic();
 
-            if(isset($_POST['choix1'])) {
+            if (isset($_POST['choix1'])) {
                 $_SESSION['choix1'] = $_POST['choix1'];
                 $_SESSION['impo1'] = $_POST['impo1'];
             }
-            include("views/inscriptionEcole/v_Etape4.php");
+            require_once ROOT.'views/inscriptionEcole/v_Etape4.php';
         } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
@@ -171,7 +169,7 @@ switch ($action) {
     case 'etape5':
         try {
             $lesSpectacles = MSpectacle::getSpectaclesSaisonCouranteJeunePublic();
-            if(isset($_POST['choix2'])) {
+            if (isset($_POST['choix2'])) {
                 $_SESSION['choix2'] = $_POST['choix2'];
                 $_SESSION['impo2'] = $_POST['impo2'];
             }
@@ -182,7 +180,7 @@ switch ($action) {
                 $_SESSION['choix3'] = 'non';
                 $_SESSION['impo3'] = null;
             }
-            include("views/inscriptionEcole/v_Etape5.php");
+            require_once ROOT.'views/inscriptionEcole/v_Etape5.php';
         } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
@@ -237,12 +235,12 @@ switch ($action) {
                 'Choisi' => $_SESSION['choix3'],
                 'Impossibilités' => $_SESSION['impo3']
             );
-            include("views/inscriptionEcole/v_Recap.php");
+            require_once ROOT.'views/inscriptionEcole/v_Recap.php';
         } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
-    case 'valider' :
+    case 'valider':
         try {
             if (MEnseignant::isEnseignantExistant($_SESSION['enseignant']) == 0) {
                 $_SESSION['enseignant']->setTypeEnseignant(2);
@@ -343,10 +341,9 @@ switch ($action) {
                 // ===
             }
 
-            include("views/inscriptionEcole/v_Fin.php");
-        }
-        catch (Exception $e)
-        {
+            require_once ROOT.'views/inscriptionEcole/v_Fin.php';
+        } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
-        } break;
+        }
+        break;
 }

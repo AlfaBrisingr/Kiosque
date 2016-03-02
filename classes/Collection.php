@@ -14,18 +14,12 @@ class Collection
      */
     public function ajouter($obj, $key = null)
     {
-        if ($key == null)
-        {
+        if ($key == null) {
             $this->tab[] = $obj;
-        }
-        else
-        {
-            if (isset($this->tab[$key]))
-            {
+        } else {
+            if (isset($this->tab[$key])) {
                 throw new KeyHasUseException("Key $key already in use.");
-            }
-            else
-            {
+            } else {
                 $this->tab[$key] = $obj;
             }
         }
@@ -37,25 +31,19 @@ class Collection
      */
     public function getElement($key)
     {
-        if (isset($this->tab[$key]))
-        {
+        if (isset($this->tab[$key])) {
             return $this->tab[$key];
-        }
-        else
-        {
-            Return("Vide");
+        } else {
+            return("Vide");
         }
     }
 
 
     public function supprimer($key)
     {
-        if (isset($this->tab[$key]))
-        {
+        if (isset($this->tab[$key])) {
             unset($this->tab[$key]);
-        }
-        else
-        {
+        } else {
             throw new KeyInvalidException("Invalid key $key.");
         }
     }

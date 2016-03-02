@@ -21,7 +21,7 @@
 		</div>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="inscription">
 			<div class="table-responsive">
-				<legend>Inscriptions : NbEnfants : <?=$enfant?> NbAdultes :  </legend>
+				<legend>Inscriptions : NbEnfants : <?= $enfant ?> NbAdultes :  </legend>
 				<div class="overflow-scroll-table">
 					<table class="table table-hover table-condensed table-bordered">
 						<thead>

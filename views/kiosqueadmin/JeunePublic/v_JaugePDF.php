@@ -22,7 +22,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php if(isset($_GET['spectacle']) || isset($_SESSION['spectacle'])){ ?>
+                <?php if(isset($_GET['spectacle'])){ ?>
                     <?php foreach ($listJaugeSpectacle->getCollection() as $jauge) { ?>
                         <tr>
                             <td><?= $jauge->getSeance()->getId() ?></td>

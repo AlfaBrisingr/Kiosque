@@ -10,7 +10,7 @@ class Admin
      * @return Utilisateur
      * @throws Exception
      */
-	static public function getUserById($code) {
+    static public function getUserById($code){
         try
         {
             $conn = Main::bdd();
@@ -24,7 +24,7 @@ class Admin
         {
             throw new Exception("L'utilisateur n°$code n'existe pas");
         }
-	}
+    }
 
     /**
      * Récupère les informations sur l'utilisateur via son nom
@@ -32,14 +32,14 @@ class Admin
      * @return Utilisateur
      * @throws Exception
      */
-	static public function getUserByName($name) {
+    static public function getUserByName($name) {
         $conn = Main::bdd();
         $reqPrepare = $conn->prepare("SELECT * FROM admin WHERE login = ?");
         $reqPrepare->execute(array($name));
         $tab = $reqPrepare->fetch();
         $utilisateur = new Utilisateur($tab['code_user'], $name, $tab['password']);
         return $utilisateur;
-	}
+    }
 
     /**
      * Récupère tous les utilisateurs
@@ -47,8 +47,8 @@ class Admin
      * @throws Exception
      * @throws KeyHasUseException
      */
-	static public function getUsers() {
-		$conn = Main::bdd();
+    static public function getUsers() {
+        $conn = Main::bdd();
         $reqPrepare = $conn->query("SELECT * FROM admin");
         $tabs = $reqPrepare->fetchAll();
         $coll = new Collection();
@@ -58,5 +58,5 @@ class Admin
             $coll->ajouter($utilisateur);
         }
         return $coll;
-	}
+    }
 }

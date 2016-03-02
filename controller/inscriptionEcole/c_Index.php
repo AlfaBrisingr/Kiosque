@@ -1,15 +1,12 @@
 <?php
-if(isset($_GET['action']))
-{
+if (isset($_GET['action'])) {
     $action = $_GET['action'];
-}
-else
-{
+} else {
     $action = "voirIndex";
 }
 
-switch ($action)
-{
-    case 'voirIndex' :
-        include("views/v_Accueil.php"); break;
+switch ($action) {
+    case 'voirIndex':
+        require_once ROOT.'views/v_Accueil.php';
+        break;
 }

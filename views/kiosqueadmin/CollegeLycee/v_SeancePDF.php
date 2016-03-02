@@ -19,7 +19,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php if(isset($_GET['spectacle']) || isset($_SESSION['spectacle'])){ ?>
+                <?php if(isset($_GET['spectacle'])){ ?>
                     <?php foreach ($listSeanceSpectacle->getCollection() as $seance) { ?>
                         <tr>
                             <td><?= $seance->getId() ?></td>
@@ -41,7 +41,7 @@
             </table>
         </div>
 
-        <form action="?uc=admin&action=SeancePDF" method="POST">
+        <form action="?uc=admin&action=SeancePDFCL" method="POST">
             <div class="clear col-xs-12 col-sm-12 col-md-4 col-lg-4">
                 <label for="idSpectacle">Choisir Un Spectacle :</label>
                 <select name="spectacle"  id="inputID" class="form-control" onchange="voirSeanceSpectacle(this.form)">
@@ -53,7 +53,7 @@
             </div><br>
         </form>
         <?php if(isset($_GET['spectacle']) || isset($_SESSION['spectacle'])){ ?>
-            <form action="?uc=admin&action=SeancePDF" method="POST">
+            <form action="?uc=admin&action=SeancePDFCL" method="POST">
                 <div class="form-group">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <input name="valider" type="submit" class="btn btn-primary" value="Accès au format PDF">
@@ -64,7 +64,7 @@
     </div>
     <div class="form-group">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <a href="?uc=admin&action=voirInscription" class="btn btn-link">Retour</a>
+            <a href="?uc=admin&action=voirInscriptionCL" class="btn btn-link">Retour</a>
         </div>
     </div>
 </div>

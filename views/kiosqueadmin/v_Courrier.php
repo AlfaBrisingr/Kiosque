@@ -21,7 +21,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php if(isset($_GET['ecole']) || isset($_SESSION['ecole'])){ ?>
+                <?php if(isset($_GET['ecole'])){ ?>
                     <?php foreach ($listInsEcole->getCollection() as $planning) { ?>
                         <tr>
                             <td><?= $planning->getInscription()->getEnseignant()->getEcole()->getNom() ?> <?= '- '.$planning->getInscription()->getEnseignant()->getNom().' '.$planning->getInscription()->getEnseignant()->getPrenom() ?></td>

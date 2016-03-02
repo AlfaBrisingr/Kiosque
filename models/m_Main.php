@@ -9,14 +9,14 @@ class Main
     static public function bdd() {
         try
         {
-            /*$host = "db576425814.db.1and1.com";
+            $host = "db576425814.db.1and1.com";
             $dbname = 'db576425814';
             $user = "dbo576425814";
-            $mdp = "BcW&n7,4";*/
-            $host = "localhost";
+            $mdp = "BcW&n7,4";
+            /*$host = "localhost";
             $dbname = "db576425814";
             $user = "root";
-            $mdp = "";
+            $mdp = "";*/
             $pdo = new PDO('mysql:host='.$host.';dbname='.$dbname.';charset=utf8',
                 $user, $mdp, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
             return $pdo;

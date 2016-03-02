@@ -87,6 +87,4 @@ class Choix
         $this->priorite = (int) $priorite;
         return $this;
     }
-
-
 }
