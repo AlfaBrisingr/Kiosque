@@ -1,26 +1,4 @@
 <?php
-require_once('models/MMain.php');
-require_once('models/MChoix.php');
-require_once('models/MEcole.php');
-require_once('models/MEnseignant.php');
-require_once('models/MInscription.php');
-require_once('models/MLieu.php');
-require_once('models/MPlanning.php');
-require_once('models/MSaison.php');
-require_once('models/MSeance.php');
-require_once('models/MSpectacle.php');
-require_once('classes/Choix.php');
-require_once('classes/Collection.php');
-require_once('classes/Ecole.php');
-require_once('classes/Enseignant.php');
-require_once('classes/Inscription.php');
-require_once('classes/Jauge.php');
-require_once('classes/Lieu.php');
-require_once('classes/Planning.php');
-require_once('classes/Saison.php');
-require_once('classes/Seance.php');
-require_once('classes/Spectacle.php');
-require_once('classes/Utilisateur.php');
 
 
 define('DS', DIRECTORY_SEPARATOR);
