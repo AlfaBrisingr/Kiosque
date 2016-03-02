@@ -11,7 +11,7 @@ class Collection
      * Ajpouter un elément à la collection
      * @param object $obj
      * @param null $key
-     * @throws KeyHasUseException
+     * @throws \InvalidArgumentException
      */
     public function ajouter($obj, $key = null)
     {
@@ -19,7 +19,7 @@ class Collection
             $this->tab[] = $obj;
         } else {
             if (isset($this->tab[$key])) {
-                throw new KeyHasUseException("Key $key already in use.");
+                throw new \InvalidArgumentException("Key $key already in use.");
             } else {
                 $this->tab[$key] = $obj;
             }
@@ -45,7 +45,7 @@ class Collection
         if (isset($this->tab[$key])) {
             unset($this->tab[$key]);
         } else {
-            throw new KeyInvalidException("Invalid key $key.");
+            throw new \InvalidArgumentException("Invalid key $key.");
         }
     }
 

@@ -29,10 +29,10 @@ class Seance
      * Seance constructor.
      * @param int $id
      * @param Spectacle $spectacle
-     * @param DateTime $date
+     * @param \DateTime $date
      * @param Lieu $lieu
      */
-    public function __construct($id, Spectacle $spectacle, DateTime $date, Lieu $lieu)
+    public function __construct($id, Spectacle $spectacle, \DateTime $date, Lieu $lieu)
     {
         $this->id = (int) $id;
         $this->spectacle = $spectacle;
@@ -77,7 +77,7 @@ class Seance
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -85,7 +85,7 @@ class Seance
     }
 
     /**
-     * @param DateTime $date
+     * @param \DateTime $date
      * @return Seance
      */
     public function setDate($date)

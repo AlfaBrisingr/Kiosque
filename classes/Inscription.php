@@ -54,7 +54,7 @@ class Inscription
     /**
      * @param int $id
      * @param Enseignant $enseignant
-     * @param DateTime $date
+     * @param \DateTime $date
      * @param String $divers
      * @param String $impo
      * @param int $nbEnfants
@@ -127,7 +127,7 @@ class Inscription
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -135,7 +135,7 @@ class Inscription
     }
 
     /**
-     * @param DateTime $date
+     * @param \DateTime $date
      * @return Inscription
      */
     public function setDate($date)

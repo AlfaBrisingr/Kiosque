@@ -6,7 +6,7 @@ class Admin
      * Récupère les informations sur l'utilisateur via son code Utilisateur
      * @param int $code
      * @return Utilisateur
-     * @throws Exception
+     * @throws \Exception
      */
     static public function getUserById($code){
         try
@@ -18,9 +18,9 @@ class Admin
             $utilisateur = new Utilisateur($code, $tab['login'], $tab['password']);
             return $utilisateur;
         }
-        catch (PDOException $e)
+        catch (\PDOException $e)
         {
-            throw new Exception("L'utilisateur n°$code n'existe pas");
+            throw new \Exception("L'utilisateur n°$code n'existe pas");
         }
     }
 
@@ -42,8 +42,8 @@ class Admin
     /**
      * Récupère tous les utilisateurs
      * @return Collection Utilisateurs
-     * @throws Exception
-     * @throws KeyHasUseException
+     * @throws \Exception
+     * @throws \KeyHasUseException
      */
     static public function getUsers() {
         $conn = Main::bdd();
