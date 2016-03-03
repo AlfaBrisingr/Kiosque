@@ -10,18 +10,18 @@ class Main
     public static function bdd()
     {
         try {
-            /*$host_name  = "localhost"; db615238031.db.1and1.com
+            $host_name  = "db615238031.db.1and1.com";
             $database   = "db615238031";
             $user_name  = "dbo615238031";
-            $password   = "M@rtin53";*/
-            $host_name = "localhost";
+            $password   = "M@rtin53";
+            /*$host_name = "localhost";
             $database = "db576425814";
             $user_name = "root";
-            $password = "";
+            $password = "";*/
             $pdo = new \PDO('mysql:host='.$host_name.';dbname='.$database.';charset=utf8', $user_name, $password, array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION));
             return $pdo;
         } catch (\PDOException $e) {
-            var_dump($e);
+            echo '<pre>'; var_dump($e); echo '</pre>';
             /*throw new Exception($e->getMessage());*/
         }
     }

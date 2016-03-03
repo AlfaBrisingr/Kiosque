@@ -2478,7 +2478,7 @@ if (!class_exists('QRcode', false)) {
 		}
 
 		/**
-		 * Return BCH encoded version information pattern that is used for the symbol of version 7 or greater. Use lower 18 bits.
+		 * Return BCH encoded version information pattern that is used for the symbol of version 7 or greater. use lower 18 bits.
 		 * @param int $version version
 		 * @return BCH encoded version information pattern
 		 */

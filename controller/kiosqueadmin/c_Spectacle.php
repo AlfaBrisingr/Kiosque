@@ -36,7 +36,7 @@ switch ($action) {
                 $d = MSaison::setSaisonCourante($actuel, $nouvelle);
                 $saison = MSaison::getSaisonCourante();
                 Main::setFlashMessage("La nouvelle saison est désormais " . $saison->getNom(), "valid");
-                header("Location:?uc=admin&action=voirSpectacle");
+                echo '<script>redirection("?uc=admin&action=voirSpectacle")</script>';
             } else {
                 throw new \Exception ("Une erreur s'est produite lors du changement de saison");
             }
@@ -63,7 +63,7 @@ switch ($action) {
                 MSaison::AjoutSaisonSpectacle($saison, $spec);
 
                 Main::setFlashMessage("Le spectacle a bien été ajouté à la saison " . $saison->getNom(), "valid");
-                header("Location:?uc=spectacle");
+                echo '<script>redirection("?uc=spectacle")</script>';
 
             } else {
                 throw new \Exception ("Impossible d'ajouter le spectacle (mauvais formats entrés)");
@@ -80,7 +80,7 @@ switch ($action) {
             $spectacle = MSpectacle::getSpectacleById($_GET['shows']);
             MSpectacle::rmSpectacle($spectacle);
             Main::setFlashMessage("Le spectacle $spectacle->getId() a bien été supprimé", "valid");
-            header("Location:?uc=spectacle");
+            echo '<script>redirection("?uc=spectacle")</script>';
         } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
@@ -101,7 +101,7 @@ switch ($action) {
                 MSpectacle::editSpectacle($saison, $spectacle);
 
                 Main::setFlashMessage("Le spectacle a bien été modifié à la saison " . $saison->getNom(), "valid");
-                header("Location:?uc=spectacle");
+                echo '<script>redirection("?uc=spectacle")</script>';
             } else {
                 throw new \Exception ("Impossible de modifier le spectacle (mauvais formats entrés)");
             }

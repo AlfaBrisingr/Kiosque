@@ -38,3 +38,8 @@ function voirGestionSpectacle(form)
 	var type = form.elements["type"].value;
 	document.location.href = "?uc=admin&action=Spectacle&type="+type;
 }
+
+function redirection($path)
+{
+	document.location.href = $path;
+}

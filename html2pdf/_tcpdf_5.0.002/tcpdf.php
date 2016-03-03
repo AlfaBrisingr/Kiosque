@@ -8871,7 +8871,7 @@ if (!class_exists('TCPDF', false)) {
 		/**
 		 * Starts a 2D tranformation saving current graphic state.
 		 * This function must be called before scaling, mirroring, translation, rotation and skewing.
-		 * Use StartTransform() before, and StopTransform() after the transformations to restore the normal behavior.
+		 * use StartTransform() before, and StopTransform() after the transformations to restore the normal behavior.
 		 * @access public
 		 * @since 2.1.000 (2008-01-07)
 		 * @see StartTransform(), StopTransform()
@@ -8886,7 +8886,7 @@ if (!class_exists('TCPDF', false)) {
 		/**
 		 * Stops a 2D tranformation restoring previous graphic state.
 		 * This function must be called after scaling, mirroring, translation, rotation and skewing.
-		 * Use StartTransform() before, and StopTransform() after the transformations to restore the normal behavior.
+		 * use StartTransform() before, and StopTransform() after the transformations to restore the normal behavior.
 		 * @access public
 		 * @since 2.1.000 (2008-01-07)
 		 * @see StartTransform(), StopTransform()
@@ -11623,7 +11623,7 @@ if (!class_exists('TCPDF', false)) {
 		 * @param int $w width
 		 * @param int $h height
 		 * @param string $caption caption.
-		 * @param mixed $action action triggered by pressing the button. Use a string to specify a javascript action. Use an array to specify a form action options as on section 12.7.5 of PDF32000_2008.
+		 * @param mixed $action action triggered by pressing the button. use a string to specify a javascript action. use an array to specify a form action options as on section 12.7.5 of PDF32000_2008.
 		 * @param array $prop javascript field properties. Possible values are described on official Javascript for Acrobat API reference.
 		 * @param array $opt annotation parameters. Possible values are described on official PDF32000_2008 reference.
 		 * @param float $x Abscissa of the upper-left corner of the rectangle
@@ -16576,7 +16576,7 @@ if (!class_exists('TCPDF', false)) {
 
         /**
 		 * Set custom width for list indentation.
-		 * @param float $width width of the indentation. Use negative value to disable it.
+		 * @param float $width width of the indentation. use negative value to disable it.
 		 * @access public
 		 * @since 4.2.007 (2008-11-12)
 		 */

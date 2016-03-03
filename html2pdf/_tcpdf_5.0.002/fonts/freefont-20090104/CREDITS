@@ -147,7 +147,7 @@ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 IN NO EVENT SHALL S.R.HAQUE BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE use OR
 OTHER DEALINGS IN THE SOFTWARE.
 
 Except as contained in this notice, the name of S.R.Haque shall not be
@@ -238,7 +238,7 @@ redundant control points with PfaEdit.
 In 1991, Hardip Singh Pannu has created a free Gurmukhi TrueType font,
 available as regular, bold, oblique and bold oblique form. Its license
 says "Please remember that these fonts are copyrighted (by me) and are
-for non-profit use only." 
+for non-profit use only."
 
 	Gurmukhi				(U+0A00-U+0A7F)
 
@@ -353,7 +353,8 @@ please contact mssridhar AT vsnl.com.
 
 Noah Levitt found out that the Sinhalese fonts available on the site
 <http://www.metta.lk/fonts/> are released under GNU GPL, or,
-precisely, "Public Domain under GNU Licence Produced by DMS
+precisely, "Public Domain under GNU Licence
+ Produced by DMS
 Electronics for The Sri Lanka Tipitaka Project" (taken from the font
 comment), and took the effort of recoding the font to Unicode.
 

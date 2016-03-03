@@ -17,7 +17,7 @@ if (isset($_GET['action'])) {
 }
 switch ($action) {
     case 'login':
-        header("Location:?uc=connexion&action=login");
+        echo '<script>redirection("?uc=connexion&action=login")</script>';
         break;
 
     case 'choisirTypeEcole':
@@ -33,7 +33,7 @@ switch ($action) {
         try {
             $saisonCourante = MSaison::getSaisonCourante();
             if (!isset($_POST['typeEcole'])) {
-                header("Location:?uc=jp&action=choisirTypeEcole");
+                echo '<script>redirection("?uc=jp&action=choisirTypeEcole")</script>';
             }
             if ($_POST['typeEcole'] == '1') {
                 $listEcole = MEcole::getEcolesPublique();
@@ -52,7 +52,7 @@ switch ($action) {
                 $ecole = MEcole::getEcoleById($_POST['choix']);
                 $_SESSION['ecole'] = $ecole;
             } else {
-                header("Location:?uc=jp&action=choisirTypeEcole");
+                echo '<script>redirection("?uc=jp&action=choisirTypeEcole")</script>';
             }
             require_once ROOT.'views/inscriptionEcole/v_Etape1.php';
         } catch (\Exception $e) {

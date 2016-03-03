@@ -35,14 +35,14 @@ switch ($action) {
                     $_SESSION['utilisateur'] = MAdmin::getUserByName($_POST['login']);
                     if (isset($_POST['password']) == $_SESSION['utilisateur']->getPassword()) {
                         Main::setFlashMessage("Connecté avec succès", "valid");
-                        header("Location:?uc=admin&action=voirAdmin");
+                        echo '<script>redirection("?uc=admin&action=voirAdmin")</script>';
                     } else {
 
                         Main::launchWrongUserPwd();
-                        header("Location:?uc=admin");
+                        echo '<script>redirection("?uc=admin")</script>';
                     }
                 } else {
-                    header("Location:?uc=admin");
+                    echo '<script>redirection("?uc=admin")</script>';
                 }
 
             }
@@ -104,7 +104,7 @@ switch ($action) {
                 MInscription::validerInscription($inscription);
 
                 Main::setFlashMessage("La panification de l'inscription a été faite", "valid");
-                header("Location:?uc=admin&action=voirInscription");
+                echo '<script>redirection("?uc=admin&action=voirInscription")</script>';
             } else {
 
                 $listChoix = MChoix::getChoixByIns($_GET['ins']);
@@ -121,7 +121,7 @@ switch ($action) {
             MInscription::rmInscription($inscription);
 
             Main::setFlashMessage("La suppression de l'inscription a été faite", "valid");
-            header("Location:?uc=admin&action=voirInscription");
+            echo '<script>redirection("?uc=admin&action=voirInscription")</script>';
 
         } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
@@ -157,7 +157,7 @@ switch ($action) {
                 MInscription::editInscription($inscription);
 
                 Main::setFlashMessage("La modification de l'inscription a réussi", "valid");
-                header("Location:?uc=admin&action=voirInscription");
+                echo '<script>redirection("?uc=admin&action=voirInscription")</script>';
             } else {
                 $listIns = MInscription::getInscriptionByIdInscription($_GET['ins']);
                 $listSpec = MSpectacle::getSpectacles();
@@ -179,7 +179,7 @@ switch ($action) {
             MInscription::editInscription($inscription);
 
             Main::setFlashMessage("La suppression du planning a été faite", "valid");
-            header("Location:?uc=admin&action=voirInscription");
+            echo '<script>redirection("?uc=admin&action=voirInscription")</script>';
 
         } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
@@ -195,7 +195,7 @@ switch ($action) {
                 $seance = new Seance(1, $spectacle, $date, $lieu);
                 MSeance::addSeance($seance);
                 Main::setFlashMessage("L'ajout de la séance a été faite", "valid");
-                header("Location:?uc=admin&action=voirInscription");
+                echo '<script>redirection("?uc=admin&action=voirInscription")</script>';
             } else {
                 $listLieu = MLieu::getLieux() ;
                 $listSpec = MSpectacle::getSpectacles();
@@ -212,7 +212,7 @@ switch ($action) {
             MSeance::rmSeance($seance);
 
             Main::setFlashMessage("La suppression de la séance a été faite", "valid");
-            header("Location:?uc=admin&action=voirInscription");
+            echo '<script>redirection("?uc=admin&action=voirInscription")</script>';
         } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
@@ -511,7 +511,7 @@ switch ($action) {
                 MInscription::validerInscription($inscription);
 
                 Main::setFlashMessage("La panification de l'inscription a été faite", "valid");
-                header("Location:?uc=admin&action=voirInscriptionCL");
+                echo '<script>redirection("?uc=admin&action=voirInscriptionCL")</script>';
             } else {
 
                 $listChoix = MChoix::getChoixByIns($_GET['ins']);
@@ -528,7 +528,7 @@ switch ($action) {
             MInscription::rmInscription($inscription);
 
             Main::setFlashMessage("La suppression de l'inscription a été faite", "valid");
-            header("Location:?uc=admin&action=voirInscriptionCL");
+            echo '<script>redirection("?uc=admin&action=voirInscriptionCL")</script>';
 
         } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
@@ -564,7 +564,7 @@ switch ($action) {
                 MInscription::editInscription($inscription);
 
                 Main::setFlashMessage("La modification de l'inscription a réussi", "valid");
-                header("Location:?uc=admin&action=voirInscriptionCL");
+                echo '<script>redirection("?uc=admin&action=voirInscriptionCL")</script>';
             } else {
                 $listIns = MInscription::getInscriptionByIdInscription($_GET['ins']);
                 $listSpec = MSpectacle::getSpectacles();
@@ -586,7 +586,7 @@ switch ($action) {
             MInscription::editInscription($inscription);
 
             Main::setFlashMessage("La suppression du planning a été faite", "valid");
-            header("Location:?uc=admin&action=voirInscriptionCL");
+            echo '<script>redirection("?uc=admin&action=voirInscriptionCL")</script>';
 
         } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
@@ -602,7 +602,7 @@ switch ($action) {
                 $seance = new Seance(1, $spectacle, $date, $lieu);
                 MSeance::addSeance($seance);
                 Main::setFlashMessage("L'ajout de la séance a été faite", "valid");
-                header("Location:?uc=admin&action=voirInscriptionCL");
+                echo '<script>redirection("?uc=admin&action=voirInscriptionCL")</script>';
             } else {
                 $listLieu = MLieu::getLieux() ;
                 $listSpec = MSpectacle::getSpectacles();
@@ -619,7 +619,7 @@ switch ($action) {
             MSeance::rmSeance($seance);
 
             Main::setFlashMessage("La suppression de la séance a été faite", "valid");
-            header("Location:?uc=admin&action=voirInscriptionCL");
+            echo '<script>redirection("?uc=admin&action=voirInscriptionCL")</script>';
         } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }

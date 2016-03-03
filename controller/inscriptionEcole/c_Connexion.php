@@ -18,20 +18,21 @@ switch ($action) {
         try {
 
             if (Main::connexionExistantePublic()) {
-                header("Location:?uc=jp&action=choisirTypeEcole");
+                echo '<script>redirection("?uc=jp&action=choisirTypeEcole")</script>';
             }
             if (isset($_POST['login'])) {
                 $pwd = sha1($_POST['password']);
                 if (strtolower($_POST['login']) == "jeunepublic" && $pwd == "120525d1a28d39f78ef479b07011de199c5c2e92") {
                     $_SESSION['utilisateur'] = new Utilisateur(3,"jeunePublic","120525d1a28d39f78ef479b07011de199c5c2e92");
                     Main::setFlashMessage("Connecté avec succès", "valid");
-                    header("Location:?uc=jp&action=choisirTypeEcole");
+                    echo '<script>redirection("?uc=jp&action=choisirTypeEcole")</script>';
                 } else {
                     Main::launchWrongUserPwd();
-                    header("Location:?uc=connexion");
+                    echo '<script>redirection("?uc=connexion")</script>';
                 }
             } else {
-                header("Location:?uc=index");
+                echo '<script>redirection("?uc=index")</script>';
+                exit();
             }
         } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
@@ -41,10 +42,10 @@ switch ($action) {
     case 'logout':
         session_destroy();
         Main::setFlashMessage("Déconnecté avec succès", "valid");
-        header("Location:?uc=index");
+        echo '<script>redirection("?uc=index")</script>';
         break;
 
     default:
-        header("Location:?uc=index");
+        echo '<script>redirection("?uc=index")</script>';
         break;
 }

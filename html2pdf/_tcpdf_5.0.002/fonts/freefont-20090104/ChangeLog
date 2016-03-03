@@ -1115,7 +1115,7 @@ $Id: ChangeLog,v 1.254 2009/01/04 16:12:59 Stevan_White Exp $
 
 	* FreeSansOblique.sfd:
 
-	Numerous cases of glyphs in Private Use area incorrectly assigned
+	Numerous cases of glyphs in Private use area incorrectly assigned
 	Unicode numbers and names.  Gave all -1 for Unicode and named like
 	"slot.XXXX".
 
@@ -1156,7 +1156,7 @@ $Id: ChangeLog,v 1.254 2009/01/04 16:12:59 Stevan_White Exp $
 	Sans names them like uni0A30_uni0A4D.blwf: they are in range
 	ECC6 to ED06
 	
-	I meant to move this range into Private Use in last release, and
+	I meant to move this range into Private use in last release, and
 	missed it.  So now it is moved, into same range as Sans.
 	
 	Both Sans and SansBold in nukt table for Gurmukhi have duplicate
@@ -1429,7 +1429,7 @@ $Id: ChangeLog,v 1.254 2009/01/04 16:12:59 Stevan_White Exp $
 	representing ligatures and alternative forms without their own Unicode,
 	were moved from
 	ranges above 0xFFFF (which ought to have been slots for other defined
-	Unicode ranges) into the Private Use area.
+	Unicode ranges) into the Private use area.
 	
 	In Serif, I segregated the scripts, in Sans it was hard to see where one
 	began and another ended, so I moved them en masse.
@@ -1968,7 +1968,7 @@ $Id: ChangeLog,v 1.254 2009/01/04 16:12:59 Stevan_White Exp $
 2008-05-03 Steve White
 	* FreeMono.sfd, FreeSans.sfd, FreeSansBold.sfd, FreeSansBoldOblique.sfd, FreeSansOblique.sfd, FreeSerif.sfd, FreeSerifBold.sfd, FreeSerifBoldItalic.sfd, FreeSerifItalic.sfd:
 
-	Removed digits from Private Use Area.
+	Removed digits from Private use Area.
 	See bug 23050.
 
 	* FreeMono.sfd, FreeSans.sfd:
@@ -2718,7 +2718,7 @@ $Id: ChangeLog,v 1.254 2009/01/04 16:12:59 Stevan_White Exp $
 
 	Added some arrows, and a couple of blackboard bold characters
 
-	Several characters in U+F600 Corporate Use range
+	Several characters in U+F600 Corporate use range
 	        dotlessj, onefitted, commaaccent
 
 		dotlessj referred to by: jcircumflex, uni01F0:  

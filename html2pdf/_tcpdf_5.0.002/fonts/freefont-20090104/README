@@ -95,7 +95,7 @@ TrueType fonts for immediate consumption are the files with the .ttf
 (TrueType Font) suffix.  These are ready to use in Xwindows based
 systems using FreeType, on Mac OS, and on older Windows systems.
 
-OpenType fonts (with suffix .otf) are for use in Windows Vista. 
+OpenType fonts (with suffix .otf) are for use in Windows Vista.
 Note that although they can be installed on Linux, but many applications
 in Linux still don't support them.
 

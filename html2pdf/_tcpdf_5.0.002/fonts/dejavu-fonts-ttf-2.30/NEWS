@@ -511,7 +511,7 @@ Changes from 2.12 to 2.13
   U+021E-U+021F, U+0245, U+02BD, U+02C9, U+1E9B, U+2045-U+2046, U+2213, U+22C5,
   U+22EF to Sans Mono (by Roozbeh Pournader)
 - added U+04FA-U+04FD to Sans (by Michael Everson)
-- removed U+2329 and U+232A because of their CJK properties, added U+27E8 
+- removed U+2329 and U+232A because of their CJK properties, added U+27E8
   and U+27E9 in their stead, fixing part of bug #9038 (by Roozbeh Pournader)
 - corrected and improvised U+0466-U+0469, U+046E-U+0471, U+047C-U+047D, U+0482, 
   U+0484-U+0486, U+0492-U+0493, U+04B0-U+04B1, U+050C-U+050D, and U+204A 
@@ -527,11 +527,11 @@ Changes from 2.12 to 2.13
   U+02B9 = U+0374, U+0343 = U+0313, and U+0387 = U+00B7 also adjusting U+02BA 
   to look like double U+02B9, fixing parts of bug #9038 (by Roozbeh Pournader)
 - changed shapes for U+0478 and U+0479 in Sans to those in the Unicode charts, 
-  based on a recent decision by Unicode Technical Committee to only use 
+  based on a recent decision by Unicode Technical Committee to only use
   the digraph form (by Michael Everson)
 - adjusted width of NBSP U+00A0 and NNBSP U+202F, fixing bug #8401 
   (by Denis Jacquerye)
-- fixed several contours to not intersect, use horizontal or vertical tangents, 
+- fixed several contours to not intersect, use horizontal or vertical tangents,
   use integer coordinates, etc (by Roozbeh Pournader and Denis Jacquerye)
 - added U+1402, U+1430, U+144D, U+146C, U+148A, U+14A4, U+14C1, U+14D4, U+14EE, 
   U+1527, U+1545, U+157E, U+158E, U+15AF to Sans (by Eugeniy Meshcheryakov)
@@ -1109,8 +1109,8 @@ Changes from 1.11 to 1.12:
 Changes from 1.10 to 1.11:
 
 - kerning updates (by Sander Vesik)
-- added Iogonek, iogonek, IJ, ij, Uogonek, uogonek (from SuSE standard fonts
-  by Adrian Schroeter, SuSE AG)
+- added Iogonek, iogonek, IJ, ij, Uogonek, uogonek (from Suse standard fonts
+  by Adrian Schroeter, Suse AG)
 - added Gcommaaccent, gcommaaccent, Kcommaaccent, kcommaaccent,
   Lcommaaccent, lcommaaccent, Ncommaaccent, ncommaaccent, Rcommaaccent,
   rcommaaccent (by Stepan Roh)
