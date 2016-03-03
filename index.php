@@ -3,6 +3,8 @@ namespace Kiosque;
 
 use Kiosque\Models\Main;
 
+require_once 'vendor/autoload.php';
+
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', __DIR__.DS);
 
