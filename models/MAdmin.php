@@ -46,7 +46,6 @@ class MAdmin
      * Récupère tous les utilisateurs
      * @return Collection Utilisateurs
      * @throws \Exception
-     * @throws \KeyHasUseException
      */
     public static function getUsers()
     {

@@ -1,22 +1,25 @@
 <?php namespace Kiosque\Models;
 
+use Kiosque\Classes\Collection;
+use Kiosque\Classes\Inscription;
+use Kiosque\Classes\Enseignant;
+
 class MInscription
 {
     /**
      * Récupère toutes les inscriptions
      * @return Collection
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function getInscriptions() {
-        try
-        {
+    public static function getInscriptions()
+    {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("SELECT * FROM inscription");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
 
-            foreach ($tabs as $tab)
-            {
+            foreach ($tabs as $tab) {
                 $enseignant = MEnseignant::getEnseignantById($tab['idEns']);
                 $inscription = new Inscription(
                     $tab['idInscription'],
@@ -28,9 +31,9 @@ class MInscription
                     $tab['nbAdultesInscription'],
                     $tab['classe']
                 );
-                if($tab['validationInscription'] == '1'){
+                if ($tab['validationInscription'] == '1') {
                     $inscription->setValidated(true);
-                }else{
+                } else {
                     $inscription->setValidated(false);
                 }
                 $lesChoix = MChoix::getChoixBySub($inscription);
@@ -38,25 +41,21 @@ class MInscription
                 $coll->ajouter($inscription);
             }
             return $coll;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("Il n'y a aucune inscription validée");
-        }
-        catch (KeyHasUseException $ex)
-        {
-            throw new Exception($ex->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception("Il n'y a aucune inscription validée");
+        } catch (KeyHasUseException $ex) {
+            throw new \Exception($ex->getMessage());
         }
     }
 
     /**
      * Récupère toutes les inscriptions
      * @return Collection
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function getInscriptionsJeunePublic() {
-        try
-        {
+    public static function getInscriptionsJeunePublic()
+    {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("SELECT * FROM inscription i
              INNER JOIN enseignant en ON en.idEns = i.idEns
@@ -65,8 +64,7 @@ class MInscription
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
 
-            foreach ($tabs as $tab)
-            {
+            foreach ($tabs as $tab) {
                 $enseignant = MEnseignant::getEnseignantById($tab['idEns']);
                 $inscription = new Inscription(
                     $tab['idInscription'],
@@ -78,9 +76,9 @@ class MInscription
                     $tab['nbAdultesInscription'],
                     $tab['classe']
                 );
-                if($tab['validationInscription'] == '1'){
+                if ($tab['validationInscription'] == '1') {
                     $inscription->setValidated(true);
-                }else{
+                } else {
                     $inscription->setValidated(false);
                 }
                 $lesChoix = MChoix::getChoixBySub($inscription);
@@ -88,25 +86,21 @@ class MInscription
                 $coll->ajouter($inscription);
             }
             return $coll;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("Il n'y a aucune inscription validée");
-        }
-        catch (KeyHasUseException $ex)
-        {
-            throw new Exception($ex->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception("Il n'y a aucune inscription validée");
+        } catch (KeyHasUseException $ex) {
+            throw new \Exception($ex->getMessage());
         }
     }
 
     /**
      * Récupère toutes les inscriptions
      * @return Collection
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function getInscriptionsCollegeLycee() {
-        try
-        {
+    public static function getInscriptionsCollegeLycee()
+    {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("SELECT * FROM inscription i
              INNER JOIN enseignant en ON en.idEns = i.idEns
@@ -115,8 +109,7 @@ class MInscription
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
 
-            foreach ($tabs as $tab)
-            {
+            foreach ($tabs as $tab) {
                 $enseignant = MEnseignant::getEnseignantById($tab['idEns']);
                 $inscription = new Inscription(
                     $tab['idInscription'],
@@ -128,9 +121,9 @@ class MInscription
                     $tab['nbAdultesInscription'],
                     $tab['classe']
                 );
-                if($tab['validationInscription'] == '1'){
+                if ($tab['validationInscription'] == '1') {
                     $inscription->setValidated(true);
-                }else{
+                } else {
                     $inscription->setValidated(false);
                 }
                 $lesChoix = MChoix::getChoixBySub($inscription);
@@ -138,30 +131,25 @@ class MInscription
                 $coll->ajouter($inscription);
             }
             return $coll;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("Il n'y a aucune inscription validée");
-        }
-        catch (KeyHasUseException $ex)
-        {
-            throw new Exception($ex->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception("Il n'y a aucune inscription validée");
+        } catch (KeyHasUseException $ex) {
+            throw new \Exception($ex->getMessage());
         }
     }
     /**
      * Récupère toutes les incriptions non validées
      * @return Collection
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function getInscriptionsNonValide() {
-        try
-        {
+    public static function getInscriptionsNonValide()
+    {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("SELECT * FROM inscription WHERE validationInscription = 0");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
-            foreach ($tabs as $tab)
-            {
+            foreach ($tabs as $tab) {
                 $enseignant = MEnseignant::getEnseignantById($tab['idEns']);
                 $inscription = new Inscription(
                     $tab['idInscription'],
@@ -178,31 +166,26 @@ class MInscription
                 $coll->ajouter($inscription);
             }
             return $coll;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("Il n'y a aucune inscription non validée");
-        }
-        catch (KeyHasUseException $ex)
-        {
-            throw new Exception($ex->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception("Il n'y a aucune inscription non validée");
+        } catch (KeyHasUseException $ex) {
+            throw new \Exception($ex->getMessage());
         }
     }
 
     /**
      * Récupère toutes les inscriptions validées
      * @return Collection
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function getInscriptionsValide() {
-        try
-        {
+    public static function getInscriptionsValide()
+    {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("SELECT * FROM inscription WHERE validationInscription = 1");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
-            foreach ($tabs as $tab)
-            {
+            foreach ($tabs as $tab) {
                 $enseignant = MEnseignant::getEnseignantById($tab['idEns']);
                 $inscription = new Inscription(
                     $tab['idInscription'],
@@ -219,32 +202,27 @@ class MInscription
                 $coll->ajouter($inscription);
             }
             return $coll;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("Il n'y a aucune inscription validée");
-        }
-        catch (KeyHasUseException $ex)
-        {
-            throw new Exception($ex->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception("Il n'y a aucune inscription validée");
+        } catch (KeyHasUseException $ex) {
+            throw new \Exception($ex->getMessage());
         }
     }
     /**
      * Récupère les inscriptions d'un enseignant
      * @param Enseignant $enseignant
      * @return Inscription
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function getInscriptionByEnseignant(Enseignant $enseignant) {
-        try
-        {
+    public static function getInscriptionByEnseignant(Enseignant $enseignant)
+    {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->prepare("SELECT * FROM inscription WHERE idEns = ?");
             $reqPrepare->execute(array($enseignant->getId()));
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
-            foreach ($tabs as $tab)
-            {
+            foreach ($tabs as $tab) {
                 $inscription = new Inscription(
                     $tab['idInscription'],
                     $enseignant,
@@ -260,10 +238,8 @@ class MInscription
                 $coll->ajouter($inscription);
             }
             return $coll;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("L'enseignant ".$enseignant->getId()." n'a aucune inscription.");
+        } catch (\PDOException $e) {
+            throw new \Exception("L'enseignant ".$enseignant->getId()." n'a aucune inscription.");
         }
     }
 
@@ -271,11 +247,11 @@ class MInscription
      * Récupère l'inscription dont le numéro est passé en paramètre
      * @param int $id idInscription
      * @return Inscription
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function getInscriptionByIdInscription($id) {
-        try
-        {
+    public static function getInscriptionByIdInscription($id)
+    {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->prepare("SELECT * FROM inscription WHERE idInscription = ?");
             $reqPrepare->execute(array($id));
@@ -294,40 +270,40 @@ class MInscription
             $lesChoix = MChoix::getChoixBySub($inscription);
             $inscription->setLesChoix($lesChoix);
             return $inscription;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("L'inscription $id n'existe pas.");
+        } catch (\PDOException $e) {
+            throw new \Exception("L'inscription $id n'existe pas.");
         }
     }
 
-    static public function getNbEnfantsInscription(){
+    public static function getNbEnfantsInscription()
+    {
         $conn = Main::bdd();
-        try{
+        try {
             $reqPrepare = $conn->query("SELECT SUM(nbEnfantsInscription) as 'nbEnfants' FROM inscription GROUP BY idInscription ");
             $req = $reqPrepare->fetch();
             return $req['nbEnfants'];
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception($e->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception($e->getMessage());
         }
     }
+
     /**
      * Ajoute une inscription
      * @param Inscription $inscription
-     * @throws Exception
+     * @return int $id
+     * @throws \Exception
      */
-    static public function addInscription(Inscription $inscription){
+    public static function addInscription(Inscription $inscription)
+    {
         $conn = Main::bdd();
-        try
-        {
+        try {
             $conn->beginTransaction();
             $validated = null;
-            if($inscription->isValidated())
+            if ($inscription->isValidated()) {
                 $validated = 1;
-            else
+            } else {
                 $validated = 0;
+            }
             $reqPrepare = $conn->prepare("INSERT INTO inscription (validationInscription, idEns, dateInscription, diversInscription, impoInscription, nbEnfantsInscription, nbAdultesInscription, classe) VALUES (?,?,?,?,?,?,?,?)");
             $reqPrepare->execute(array(
                 $validated,
@@ -344,30 +320,28 @@ class MInscription
             $conn->commit();
 
             return $id;
-        }
-        catch (PDOException $e)
-        {
+        } catch (\PDOException $e) {
             $conn->rollBack();
-            throw new Exception("L'ajout de l'inscription ".$inscription->getId()." a échouée. Détails : <p>".$e->getMessage()."</p>");
+            throw new \Exception("L'ajout de l'inscription ".$inscription->getId()." a échouée. Détails : <p>".$e->getMessage()."</p>");
         }
     }
 
     /**
      * Modifie une inscription
      * @param Inscription $inscription
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function editInscription(Inscription $inscription)
+    public static function editInscription(Inscription $inscription)
     {
         $conn = Main::bdd();
-        try
-        {
+        try {
             $conn->beginTransaction();
             $validated = null;
-            if($inscription->isValidated())
+            if ($inscription->isValidated()) {
                 $validated = 1;
-            else
+            } else {
                 $validated = 0;
+            }
             $reqPrepare = $conn->prepare("UPDATE inscription SET validationInscription = ?, idEns = ?, dateInscription = ?, diversInscription = ?, impoInscription = ?, nbEnfantsInscription = ?, nbAdultesInscription = ?, classe = ? WHERE idInscription = ?");
             $reqPrepare->execute(array(
                 $validated,
@@ -381,20 +355,19 @@ class MInscription
                 $inscription->getId()
             ));
             $conn->commit();
-        }
-        catch (PDOException $e)
-        {
+        } catch (\PDOException $e) {
             $conn->rollBack();
-            throw new Exception("L'inscription ".$inscription->getId()." n'a pas pu être modifiée. Détails : <p>".$e->getMessage()."</p>");
+            throw new \Exception("L'inscription ".$inscription->getId()." n'a pas pu être modifiée. Détails : <p>".$e->getMessage()."</p>");
         }
     }
 
     /**
      * Supprime une inscription
      * @param Inscription $inscription
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function rmInscription(Inscription $inscription) {
+    public static function rmInscription(Inscription $inscription)
+    {
         $conn = Main::bdd();
         try {
             $conn->beginTransaction();
@@ -404,14 +377,14 @@ class MInscription
             $reqPrepare = $conn->prepare("DELETE FROM inscription WHERE idInscription = ?");
             $reqPrepare->execute(array($inscription->getId()));
             $conn->commit();
-        }
-        catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $conn->rollBack();
-            throw new Exception("L'inscription ".$inscription->getId()." n'a pas pu être supprimée. Détails : <p>".$e->getMessage()."</p>");
+            throw new \Exception("L'inscription ".$inscription->getId()." n'a pas pu être supprimée. Détails : <p>".$e->getMessage()."</p>");
         }
     }
 
-    static public function getInscriptionByIdEnseignantNonJoin(Enseignant $enseignant){
+    public static function getInscriptionByIdEnseignantNonJoin(Enseignant $enseignant)
+    {
         $conn = Main::bdd();
         try {
 
@@ -419,38 +392,35 @@ class MInscription
             $reqPrepare->execute(array($enseignant->getId()));
             $tab = $reqPrepare->fetchall();
             return $tab;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("L'enseignant ".$enseignant->getId()." n'a aucune inscription.");
+        } catch (\PDOException $e) {
+            throw new \Exception("L'enseignant ".$enseignant->getId()." n'a aucune inscription.");
         }
     }
 
-    static public function getIdInscription(Inscription $inscription){
+    public static function getIdInscription(Inscription $inscription)
+    {
         $conn = Main::bdd();
-        try{
+        try {
             $reqPrepare = $conn->prepare("SELECT idIscription FROM inscription");
             $reqPrepare->execute(array(Main::bdd()->lastInsertId($inscription->getId())));
             $req = $reqPrepare->fetch();
             return $req;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("L'id de l'inscription n° ".$inscription->getId()." n'a pas été retrouvé.");
+        } catch (\PDOException $e) {
+            throw new \Exception("L'id de l'inscription n° ".$inscription->getId()." n'a pas été retrouvé.");
         }
     }
 
-    static public function validerInscription(Inscription $inscription){
+    public static function validerInscription(Inscription $inscription)
+    {
         $conn = Main::bdd();
-        try{
+        try {
             $conn->beginTransaction();
             $reqPrepare = $conn->prepare("UPDATE inscription SET validationInscription = 1 WHERE idInscription = ?");
             $reqPrepare->execute(array($inscription->getId()));
             $conn->commit();
-        }
-        catch (PDOException $e){
+        } catch (\PDOException $e) {
             $conn->rollBack();
-            throw new Exception("l'inscription n° ".$inscription->getId()." n'a pas été valider.");
+            throw new \Exception("l'inscription n° ".$inscription->getId()." n'a pas été valider.");
         }
     }
 }

@@ -1,16 +1,19 @@
 <?php namespace Kiosque\Models;
 
+use Kiosque\Classes\Collection;
+use Kiosque\Classes\Ecole;
+use Kiosque\Classes\Enseignant;
+
 class MEcole
 {
     /**
      * Récupère toutes les écoles
      * @return Collection
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function getEcoles()
+    public static function getEcoles()
     {
-        try
-        {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("
                 SELECT *
@@ -20,28 +23,22 @@ class MEcole
                 ORDER BY TypeEcole");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
-            foreach ($tabs as $tab)
-            {
+            foreach ($tabs as $tab) {
                 $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
                 $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
                 $coll->ajouter($ecole);
             }
             return $coll;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception($e->getMessage());
-        }
-        catch (KeyHasUseException $ex)
-        {
-            throw new Exception($ex->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception($e->getMessage());
+        } catch (KeyHasUseException $ex) {
+            throw new \Exception($ex->getMessage());
         }
     }
 
-    static public function getEcolesPublique()
+    public static function getEcolesPublique()
     {
-        try
-        {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("
                 SELECT *
@@ -51,28 +48,22 @@ class MEcole
                 AND TypeEnseignant = 1");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
-            foreach ($tabs as $tab)
-            {
+            foreach ($tabs as $tab) {
                 $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
                 $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
                 $coll->ajouter($ecole);
             }
             return $coll;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception($e->getMessage());
-        }
-        catch (KeyHasUseException $ex)
-        {
-            throw new Exception($ex->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception($e->getMessage());
+        } catch (KeyHasUseException $ex) {
+            throw new \Exception($ex->getMessage());
         }
     }
 
-    static public function getEcolesJeunePublic()
+    public static function getEcolesJeunePublic()
     {
-        try
-        {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("
                 SELECT *
@@ -82,28 +73,23 @@ class MEcole
                 AND TypeEnseignant = 1");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
-            foreach ($tabs as $tab)
-            {
+            foreach ($tabs as $tab) {
                 $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
                 $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
                 $coll->ajouter($ecole);
             }
             return $coll;
+        } catch (\PDOException $e) {
+            throw new \Exception($e->getMessage());
         }
-        catch (PDOException $e)
-        {
-            throw new Exception($e->getMessage());
-        }
-        catch (KeyHasUseException $ex)
-        {
-            throw new Exception($ex->getMessage());
+        catch (KeyHasUseException $ex) {
+            throw new \Exception($ex->getMessage());
         }
     }
 
-    static public function getEcolesCollegeLycee()
+    public static function getEcolesCollegeLycee()
     {
-        try
-        {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("
                 SELECT *
@@ -113,28 +99,22 @@ class MEcole
                 AND TypeEnseignant = 1");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
-            foreach ($tabs as $tab)
-            {
+            foreach ($tabs as $tab) {
                 $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
                 $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
                 $coll->ajouter($ecole);
             }
             return $coll;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception($e->getMessage());
-        }
-        catch (KeyHasUseException $ex)
-        {
-            throw new Exception($ex->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception($e->getMessage());
+        } catch (KeyHasUseException $ex) {
+            throw new \Exception($ex->getMessage());
         }
     }
 
-    static public function getColleges()
+    public static function getColleges()
     {
-        try
-        {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("
                 SELECT *
@@ -144,28 +124,22 @@ class MEcole
                 AND TypeEnseignant = 1");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
-            foreach ($tabs as $tab)
-            {
+            foreach ($tabs as $tab) {
                 $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
                 $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
                 $coll->ajouter($ecole);
             }
             return $coll;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception($e->getMessage());
-        }
-        catch (KeyHasUseException $ex)
-        {
-            throw new Exception($ex->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception($e->getMessage());
+        } catch (KeyHasUseException $ex) {
+            throw new \Exception($ex->getMessage());
         }
     }
 
-    static public function getLycees()
+    public static function getLycees()
     {
-        try
-        {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("
                 SELECT *
@@ -175,28 +149,22 @@ class MEcole
                 AND TypeEnseignant = 1");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
-            foreach ($tabs as $tab)
-            {
+            foreach ($tabs as $tab) {
                 $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
                 $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
                 $coll->ajouter($ecole);
             }
             return $coll;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception($e->getMessage());
-        }
-        catch (KeyHasUseException $ex)
-        {
-            throw new Exception($ex->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception($e->getMessage());
+        } catch (KeyHasUseException $ex) {
+            throw new \Exception($ex->getMessage());
         }
     }
 
-    static public function getEcolesPrive()
+    public static function getEcolesPrive()
     {
-        try
-        {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("
                 SELECT *
@@ -206,33 +174,27 @@ class MEcole
                 AND TypeEnseignant = 1");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
-            foreach ($tabs as $tab)
-            {
+            foreach ($tabs as $tab) {
                 $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
                 $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
                 $coll->ajouter($ecole);
             }
             return $coll;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception($e->getMessage());
-        }
-        catch (KeyHasUseException $ex)
-        {
-            throw new Exception($ex->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception($e->getMessage());
+        } catch (KeyHasUseException $ex) {
+            throw new \Exception($ex->getMessage());
         }
     }
     /**
      * Récupère l'école avec le numéro $codeEcole
      * @param int $codeEcole
      * @return Ecole
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function getEcoleById($codeEcole)
+    public static function getEcoleById($codeEcole)
     {
-        try
-        {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->prepare("SELECT *
                 FROM ecole e
@@ -243,11 +205,9 @@ class MEcole
             $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
             $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
             return $ecole;
-        }
-        catch (PDOException $e)
-        {
+        } catch (\PDOException $e) {
             //throw new Exception("L'école $codeEcole n'existe pas");
-            throw new Exception($e->getMessage());
+            throw new \Exception($e->getMessage());
         }
     }
 
@@ -255,39 +215,35 @@ class MEcole
      * Récupère l'école avec le nom $name
      * @param string $name
      * @return Ecole
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function getEcoleByName($name)
+    public static function getEcoleByName($name)
     {
-      try
-      {
-        $conn = Main::bdd();
-        $reqPrepare = $conn->prepare("SELECT *
+        try {
+            $conn = Main::bdd();
+            $reqPrepare = $conn->prepare("SELECT *
             FROM ecole e
             INNER JOIN enseignant ens ON e.idEcole = ens.idEcole
             WHERE e.nomEcole = ?");
-        $reqPrepare->execute(array($name));
-        $tab = $reqPrepare->fetch();
-        $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
-        $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
-        return $ecole;
+            $reqPrepare->execute(array($name));
+            $tab = $reqPrepare->fetch();
+            $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
+            $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'],  $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
+            return $ecole;
+        } catch (\PDOException $e) {
+            throw new \Exception("L'école '$name' n'existe pas");
+        }
     }
-    catch (PDOException $e)
-    {
-        throw new Exception("L'école '$name' n'existe pas");
-    }
-}
 
     /**
      * Récupère les écoles avec comme type $type
      * @param int $type
      * @return Collection
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function getEcoleByType($type)
+    public static function getEcoleByType($type)
     {
-        try
-        {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->prepare("SELECT *
                 FROM ecole e
@@ -298,30 +254,26 @@ class MEcole
             $reqPrepare->execute(array($type));
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
-            foreach ($tabs as $tab)
-            {
+            foreach ($tabs as $tab) {
                 $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
                 $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'], $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
                 $coll->ajouter($ecole);
                 return $coll;
             }
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("Il n'y a aucune école de type $type");
-        }
-        catch (KeyHasUseException $ex)
-        {
-            throw new Exception($ex->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception("Il n'y a aucune école de type $type");
+        } catch (KeyHasUseException $ex) {
+            throw new \Exception($ex->getMessage());
         }
     }
 
     /**
      * Ajoute une école
      * @param Ecole $ecole
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function setEcole(Ecole $ecole) {
+    public static function setEcole(Ecole $ecole)
+    {
         $conn = Main::bdd();
         try {
             $conn->beginTransaction();
@@ -334,24 +286,24 @@ class MEcole
                 $ecole->getCp(),
                 $ecole->getVille(),
                 $ecole->getMailDirecteur(),
-                ));
+            ));
             $idEcole = $conn->lastInsertId();
             $conn->commit();
 
             return $idEcole;
-        }
-        catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $conn->rollBack();
-            throw new Exception("L'ajout de l'école ".$ecole->getId()." a échoué. Détails : <p>".$e->getMessage()."</p>");
+            throw new \Exception("L'ajout de l'école ".$ecole->getId()." a échoué. Détails : <p>".$e->getMessage()."</p>");
         }
     }
 
     /**
      * Modifie une école
      * @param Ecole $ecole
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function editEcole(Ecole $ecole, Enseignant $directeur) {
+    public static function editEcole(Ecole $ecole, Enseignant $directeur)
+    {
         $conn = Main::bdd();
         try {
             $conn->beginTransaction();
@@ -366,21 +318,21 @@ class MEcole
                 $ecole->getVille(),
                 $ecole->getMailDirecteur(),
                 $ecole->getId()
-                ));
+            ));
             $conn->commit();
-        }
-        catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $conn->rollBack();
-            throw new Exception("L'école ".$ecole->getId()." n'a pas pu être modifiée. Détails : <p>".$e->getMessage()."</p>");
+            throw new \Exception("L'école ".$ecole->getId()." n'a pas pu être modifiée. Détails : <p>".$e->getMessage()."</p>");
         }
     }
 
     /**
      * Supprime une école et ses enseignant en cascade
      * @param Ecole $ecole
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function rmEcole(Ecole $ecole) {
+    public static function rmEcole(Ecole $ecole)
+    {
         $conn = Main::bdd();
         try {
             $conn->beginTransaction();
@@ -389,10 +341,9 @@ class MEcole
             $reqPrepare = $conn->prepare("DELETE FROM ecole WHERE idEcole = ?");
             $reqPrepare->execute(array($ecole->getId()));
             $conn->commit();
-        }
-        catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $conn->rollBack();
-            throw new Exception("L'école ".$ecole->getId()." n'a pas pu être supprimée. Détails : <p>".$e->getMessage()."</p>");
+            throw new \Exception("L'école ".$ecole->getId()." n'a pas pu être supprimée. Détails : <p>".$e->getMessage()."</p>");
         }
     }
 }

@@ -1,5 +1,10 @@
 <?php namespace Kiosque\Models;
 
+use Kiosque\Classes\Collection;
+use Kiosque\Classes\Seance;
+use Kiosque\Classes\Lieu;
+use Kiosque\Classes\Spectacle;
+
 /**
  *
  */
@@ -8,17 +13,16 @@ class MSeance
     /**
      * Récupère toutes les séances
      * @return Collection
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function getSeances() {
-        try
-        {
+    public static function getSeances()
+    {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("SELECT * FROM seance");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
-            foreach ($tabs as $tab)
-            {
+            foreach ($tabs as $tab) {
                 $spectacle = MSpectacle::getSpectacleById($tab['idSpectacle']);
                 $lieu = MLieu::getLieuById($tab['idLieu']);
                 $seance = new Seance(
@@ -30,33 +34,28 @@ class MSeance
                 $coll->ajouter($seance);
             }
             return $coll;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("Il n'y a aucune séance");
-        }
-        catch (KeyHasUseException $ex)
-        {
-            throw new Exception($ex->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception("Il n'y a aucune séance");
+        } catch (KeyHasUseException $ex) {
+            throw new \Exception($ex->getMessage());
         }
     }
 
     /**
      * Récupère toutes les séances
      * @return Collection
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function getSeancesJeunePublic() {
-        try
-        {
+    public static function getSeancesJeunePublic()
+    {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("SELECT * FROM seance s
              INNER JOIN spectacle sp ON s.idSpectacle = sp.idSpectacle
              WHERE typeSpectacle = 1");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
-            foreach ($tabs as $tab)
-            {
+            foreach ($tabs as $tab) {
                 $spectacle = MSpectacle::getSpectacleById($tab['idSpectacle']);
                 $lieu = MLieu::getLieuById($tab['idLieu']);
                 $seance = new Seance(
@@ -68,33 +67,28 @@ class MSeance
                 $coll->ajouter($seance);
             }
             return $coll;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("Il n'y a aucune séance");
-        }
-        catch (KeyHasUseException $ex)
-        {
-            throw new Exception($ex->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception("Il n'y a aucune séance");
+        } catch (KeyHasUseException $ex) {
+            throw new \Exception($ex->getMessage());
         }
     }
 
     /**
      * Récupère toutes les séances
      * @return Collection
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function getSeancesCollegeLycee() {
-        try
-        {
+    public static function getSeancesCollegeLycee()
+    {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("SELECT * FROM seance s
              INNER JOIN spectacle sp ON s.idSpectacle = sp.idSpectacle
              WHERE typeSpectacle = 2");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
-            foreach ($tabs as $tab)
-            {
+            foreach ($tabs as $tab) {
                 $spectacle = MSpectacle::getSpectacleById($tab['idSpectacle']);
                 $lieu = MLieu::getLieuById($tab['idLieu']);
                 $seance = new Seance(
@@ -106,14 +100,10 @@ class MSeance
                 $coll->ajouter($seance);
             }
             return $coll;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("Il n'y a aucune séance");
-        }
-        catch (KeyHasUseException $ex)
-        {
-            throw new Exception($ex->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception("Il n'y a aucune séance");
+        } catch (KeyHasUseException $ex) {
+            throw new \Exception($ex->getMessage());
         }
     }
 
@@ -121,11 +111,11 @@ class MSeance
      * Récupère la séance numéro $id
      * @param int $id
      * @return Seance
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function getSeance($id) {
-        try
-        {
+    public static function getSeance($id)
+    {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->prepare("SELECT * FROM seance WHERE idSeance = ?");
             $reqPrepare->execute(array($id));
@@ -139,10 +129,8 @@ class MSeance
                 $lieu
             );
             return $seance;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("La séance $id n'existe pas.");
+        } catch (\PDOException $e) {
+            throw new \Exception("La séance $id n'existe pas.");
         }
     }
 
@@ -150,18 +138,17 @@ class MSeance
      * Récupère les séances dans le lieu $lieu
      * @param Lieu $lieu
      * @return Collection
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function getSeanceByLocation(Lieu $lieu) {
-        try
-        {
+    public static function getSeanceByLocation(Lieu $lieu)
+    {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->prepare("SELECT * FROM seance WHERE idLieu = ?");
             $reqPrepare->execute(array($lieu->getId()));
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
-            foreach ($tabs as $tab)
-            {
+            foreach ($tabs as $tab) {
                 $spectacle = MSpectacle::getSpectacleById($tab['idSpectacle']);
                 $seance = new Seance(
                     $tab['idSeance'],
@@ -172,14 +159,10 @@ class MSeance
                 $coll->ajouter($seance);
             }
             return $coll;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("Il n'y a aucune séance dans le lieu ".$lieu->getId().".");
-        }
-        catch (KeyHasUseException $ex)
-        {
-            throw new Exception($ex->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception("Il n'y a aucune séance dans le lieu ".$lieu->getId().".");
+        } catch (KeyHasUseException $ex) {
+            throw new \Exception($ex->getMessage());
         }
     }
 
@@ -187,18 +170,17 @@ class MSeance
      * Récupère les séances du spectacle $spectacle
      * @param Spectacle $spectacle
      * @return Collection
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function getSeancesBySpec(Spectacle $spectacle) {
-        try
-        {
+    public static function getSeancesBySpec(Spectacle $spectacle)
+    {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->prepare("SELECT * FROM seance WHERE idSpectacle = ?");
             $reqPrepare->execute(array($spectacle->getId()));
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
-            foreach ($tabs as $tab)
-            {
+            foreach ($tabs as $tab) {
                 $lieu = MLieu::getLieuById($tab['idLieu']);
                 $seance = new Seance(
                     $tab['idSeance'],
@@ -209,26 +191,21 @@ class MSeance
                 $coll->ajouter($seance);
             }
             return $coll;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("Il n'y a aucune séance pour le spectacle ".$spectacle->getNom());
-        }
-        catch (KeyHasUseException $ex)
-        {
-            throw new Exception($ex->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception("Il n'y a aucune séance pour le spectacle ".$spectacle->getNom());
+        } catch (KeyHasUseException $ex) {
+            throw new \Exception($ex->getMessage());
         }
     }
-    static public function getSeancesByLieu(Lieu $lieu) {
-        try
-        {
+    public static function getSeancesByLieu(Lieu $lieu)
+    {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->prepare("SELECT * FROM seance WHERE idLieu = ?");
             $reqPrepare->execute(array($lieu->getId()));
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
-            foreach ($tabs as $tab)
-            {
+            foreach ($tabs as $tab) {
                 $spectacle = MSpectacle::getSpectacleById($tab['idSpectacle']);
                 $seance = new Seance(
                     $tab['idSeance'],
@@ -239,23 +216,20 @@ class MSeance
                 $coll->ajouter($seance);
             }
             return $coll;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("Il n'y a aucune séance pour le spectacle ".$spectacle->getNom());
-        }
-        catch (KeyHasUseException $ex)
-        {
-            throw new Exception($ex->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception("Il n'y a aucune séance pour le spectacle ".$spectacle->getNom());
+        } catch (KeyHasUseException $ex) {
+            throw new \Exception($ex->getMessage());
         }
     }
 
     /**
      * Supprime la séance $seance
      * @param Seance $seance
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function rmSeance(Seance $seance) {
+    public static function rmSeance(Seance $seance)
+    {
         $conn = Main::bdd();
         try {
             $conn->beginTransaction();
@@ -264,19 +238,19 @@ class MSeance
             $reqPrepare = $conn->prepare("DELETE FROM seance WHERE idSeance = ?");
             $reqPrepare->execute(array($seance->getId()));
             $conn->commit();
-        }
-        catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $conn->rollBack();
-            throw new Exception("La séance ".$seance->getId()." n'a pas pu être supprimée. Détails : <p>".$e->getMessage()."</p>");
+            throw new \Exception("La séance ".$seance->getId()." n'a pas pu être supprimée. Détails : <p>".$e->getMessage()."</p>");
         }
     }
 
     /**
      * Supprime les séances du spectacle $spectacle
      * @param Spectacle $spectacle
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function rmSeancesSpec(Spectacle $spectacle) {
+    public static function rmSeancesSpec(Spectacle $spectacle)
+    {
         $conn = Main::bdd();
         try {
             $conn->beginTransaction();
@@ -288,17 +262,16 @@ class MSeance
             $reqPrepare->execute(array($spectacle->getId()));
             $conn->commit();
             return true;
-        }
-        catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $conn->rollBack();
-            throw new Exception("Les séances du spectacle ".$spectacle->getId()." n'ont pas pu être supprimées. Détails : <p>".$e->getMessage()."</p>");
+            throw new \Exception("Les séances du spectacle ".$spectacle->getId()." n'ont pas pu être supprimées. Détails : <p>".$e->getMessage()."</p>");
             return false;
         }
     }
-    static public function addSeance(Seance $seance) {
+    public static function addSeance(Seance $seance)
+    {
         $conn = Main::bdd();
-        try
-        {
+        try {
             $conn->beginTransaction();
             $reqPrepare = $conn->prepare("INSERT INTO seance (idSpectacle, date_heure, idLieu) VALUES (?,?,?)");
             $reqPrepare->execute(array(
@@ -307,20 +280,17 @@ class MSeance
                 $seance->getLieu()->getId()
             ));
             $conn->commit();
-        }
-        catch (PDOException $e)
-        {
+        } catch (\PDOException $e) {
             $conn->rollBack();
-            throw new Exception("L'ajout de la séance ".$seance->getId()." a échouée. Détails : <p>".$e->getMessage()."</p>");
+            throw new \Exception("L'ajout de la séance ".$seance->getId()." a échouée. Détails : <p>".$e->getMessage()."</p>");
         }
     }
 
-    static public function getSeanceByIns($idInscription)
+    public static function getSeanceByIns($idInscription)
     {
         $conn = Main::bdd();
         $lesSeances = new Collection();
-        try
-        {
+        try {
             $reqPrepare = $conn->prepare("SELECT choix.idInscription, spectacle.idSpectacle, seance.idSeance, seance.idLieu, seance.date_heure, choix.prioriteChoix
             FROM choix
             INNER JOIN spectacle ON choix.idSpectacle = spectacle.idSpectacle
@@ -338,10 +308,8 @@ class MSeance
                 $choix = MChoix::getChoixBySub($inscription);
                 $lesSeances->ajouter($seance);
 }
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception($e->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception($e->getMessage());
         }
         return $lesSeances;
     }
