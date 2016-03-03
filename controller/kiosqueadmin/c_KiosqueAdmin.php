@@ -46,7 +46,7 @@ switch ($action) {
                 }
 
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
 
             Main::setFlashMessage($e->getMessage(), "error");
         }
@@ -110,7 +110,7 @@ switch ($action) {
                 $listChoix = MChoix::getChoixByIns($_GET['ins']);
                 require_once ROOT.'views/kiosqueadmin/JeunePublic/v_InscriptionValidated.php';
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -123,7 +123,7 @@ switch ($action) {
             Main::setFlashMessage("La suppression de l'inscription a été faite", "valid");
             header("Location:?uc=admin&action=voirInscription");
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -166,7 +166,7 @@ switch ($action) {
                 require_once ROOT.'views/kiosqueadmin/JeunePublic/v_InscriptionEdit.php';
             }
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -181,7 +181,7 @@ switch ($action) {
             Main::setFlashMessage("La suppression du planning a été faite", "valid");
             header("Location:?uc=admin&action=voirInscription");
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -201,7 +201,7 @@ switch ($action) {
                 $listSpec = MSpectacle::getSpectacles();
                 require_once ROOT.'views/kiosqueadmin/JeunePublic/v_SeanceAdd.php';
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -213,7 +213,7 @@ switch ($action) {
 
             Main::setFlashMessage("La suppression de la séance a été faite", "valid");
             header("Location:?uc=admin&action=voirInscription");
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -312,7 +312,7 @@ switch ($action) {
             $listSpectacle = MSpectacle::getSpectacles();
             $listPlan = MPlanning::getPlannings();
             require_once ROOT.'views/kiosqueadmin/JeunePublic/v_PlanningPDF.php';
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -400,7 +400,7 @@ switch ($action) {
             $listSeance = MSeance::getSeances();
             $listSpectacle = MSpectacle::getSpectacles();
             require_once ROOT.'views/kiosqueadmin/JeunePublic/v_SeancePDF.php';
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -496,7 +496,7 @@ switch ($action) {
             $listJauge = MPlanning::getJaugeRestanteJeunePublic();
             $listSpectacle = MSpectacle::getSpectacles();
             require_once ROOT.'views/kiosqueadmin/JeunePublic/v_JaugePDF.php';
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -517,7 +517,7 @@ switch ($action) {
                 $listChoix = MChoix::getChoixByIns($_GET['ins']);
                 require_once ROOT.'views/kiosqueadmin/CollegeLycee/v_InscriptionValidated.php';
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -530,7 +530,7 @@ switch ($action) {
             Main::setFlashMessage("La suppression de l'inscription a été faite", "valid");
             header("Location:?uc=admin&action=voirInscriptionCL");
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -573,7 +573,7 @@ switch ($action) {
                 require_once ROOT.'views/kiosqueadmin/CollegeLycee/v_InscriptionEdit.php';
             }
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -588,7 +588,7 @@ switch ($action) {
             Main::setFlashMessage("La suppression du planning a été faite", "valid");
             header("Location:?uc=admin&action=voirInscriptionCL");
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -608,7 +608,7 @@ switch ($action) {
                 $listSpec = MSpectacle::getSpectacles();
                 require_once ROOT.'views/kiosqueadmin/CollegeLycee/v_SeanceAdd.php';
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -620,7 +620,7 @@ switch ($action) {
 
             Main::setFlashMessage("La suppression de la séance a été faite", "valid");
             header("Location:?uc=admin&action=voirInscriptionCL");
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -719,7 +719,7 @@ switch ($action) {
             $listSpectacle = MSpectacle::getSpectacles();
             $listPlan = MPlanning::getPlannings();
             require_once ROOT.'views/kiosqueadmin/CollegeLycee/v_PlanningPDF.php';
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -807,7 +807,7 @@ switch ($action) {
             $listSeance = MSeance::getSeances();
             $listSpectacle = MSpectacle::getSpectacles();
             require_once ROOT.'views/kiosqueadmin/CollegeLycee/v_SeancePDF.php';
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -903,7 +903,7 @@ switch ($action) {
             $listJauge = MPlanning::getJaugeRestanteJeunePublic();
             $listSpectacle = MSpectacle::getSpectacles();
             require_once ROOT.'views/kiosqueadmin/CollegeLycee/v_JaugePDF.php';
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -970,7 +970,7 @@ switch ($action) {
             $listIns = MPlanning::getPlannings();
             $listEcole = MEcole::getEcoles();
             require_once ROOT.'views/kiosqueadmin/v_Courrier.php';
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;

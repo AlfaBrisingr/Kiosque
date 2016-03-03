@@ -35,11 +35,11 @@ switch ($action) {
                 header("Location:?uc=ecole");
 
             } else {
-                throw new Exception ("Impossible de modifier l'école (mauvais formats entrés)");
+                throw new \Exception ("Impossible de modifier l'école (mauvais formats entrés)");
             }
 
         }
-        catch (Exception $e) {
+        catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -69,11 +69,11 @@ switch ($action) {
 
             } else {
                 header("Location:?uc=ecole");
-                throw new Exception ("Impossible d'ajouter l'école (mauvais formats entrés)");
+                throw new \Exception ("Impossible d'ajouter l'école (mauvais formats entrés)");
 
             }
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -85,7 +85,7 @@ switch ($action) {
 
             Main::setFlashMessage("L'école : " .$ecole->getNom(). " a bien été supprimée", "valid");
             header("Location:?uc=ecole");
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
 

@@ -23,7 +23,7 @@ switch ($action) {
             $actuel = MSaison::getSaisonCourante();
             $listSaison = MSaison::getSaisonNonCourante();
             require_once ROOT.'views/kiosqueadmin/shows/v_SaisonEdit.php';
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -38,11 +38,11 @@ switch ($action) {
                 Main::setFlashMessage("La nouvelle saison est désormais " . $saison->getNom(), "valid");
                 header("Location:?uc=admin&action=voirSpectacle");
             } else {
-                throw new Exception ("Une erreur s'est produite lors du changement de saison");
+                throw new \Exception ("Une erreur s'est produite lors du changement de saison");
             }
 
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -66,10 +66,10 @@ switch ($action) {
                 header("Location:?uc=spectacle");
 
             } else {
-                throw new Exception ("Impossible d'ajouter le spectacle (mauvais formats entrés)");
+                throw new \Exception ("Impossible d'ajouter le spectacle (mauvais formats entrés)");
             }
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
 
             Main::setFlashMessage($e->getMessage(), "error");
         }
@@ -81,7 +81,7 @@ switch ($action) {
             MSpectacle::rmSpectacle($spectacle);
             Main::setFlashMessage("Le spectacle $spectacle->getId() a bien été supprimé", "valid");
             header("Location:?uc=spectacle");
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -103,9 +103,9 @@ switch ($action) {
                 Main::setFlashMessage("Le spectacle a bien été modifié à la saison " . $saison->getNom(), "valid");
                 header("Location:?uc=spectacle");
             } else {
-                throw new Exception ("Impossible de modifier le spectacle (mauvais formats entrés)");
+                throw new \Exception ("Impossible de modifier le spectacle (mauvais formats entrés)");
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
 
         }

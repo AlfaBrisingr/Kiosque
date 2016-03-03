@@ -18,7 +18,7 @@ class Main
             $database = "db576425814";
             $user_name = "root";
             $password = "";
-            $pdo = new \PDO('mysql:host='.$host_name.';dbname='.$database.';charset=utf8', $user_name, $password, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+            $pdo = new \PDO('mysql:host='.$host_name.';dbname='.$database.';charset=utf8', $user_name, $password, array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION));
             return $pdo;
         } catch (\PDOException $e) {
             var_dump($e);

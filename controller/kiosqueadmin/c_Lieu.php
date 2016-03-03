@@ -30,9 +30,9 @@ switch ($action) {
                 Main::setFlashMessage("Le lieu a bien été modifié", "valid");
                 header("Location:?uc=lieu");
             } else {
-                throw new Exception ("Impossible de modifier le lieu (mauvais formats entrés)");
+                throw new \Exception ("Impossible de modifier le lieu (mauvais formats entrés)");
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -50,9 +50,9 @@ switch ($action) {
                 Main::setFlashMessage("Le lieu a bien été ajouté", "valid");
                 header("Location:?uc=lieu");
             } else {
-                throw new Exception ("Impossible d'ajouter le lieu (mauvais formats entrés)");
+                throw new \Exception ("Impossible d'ajouter le lieu (mauvais formats entrés)");
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -64,7 +64,7 @@ switch ($action) {
 
             Main::setFlashMessage("Le lieu : " .$lieu->getNom(). " a bien été supprimé", "valid");
             header("Location:?uc=lieu");
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
 
         }

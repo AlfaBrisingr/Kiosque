@@ -39,7 +39,7 @@ switch ($action) {
             } else {
                 header("Location:?uc=index");
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;

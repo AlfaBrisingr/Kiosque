@@ -31,7 +31,7 @@ switch ($action) {
         try {
             $saisonCourante = MSaison::getSaisonCourante();
             require_once ROOT.'views/inscriptionCollegeLycee/v_EcoleTypeChoix.php';
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -48,7 +48,7 @@ switch ($action) {
                 $listEcole = MEcole::getLycees();
             }
             require_once ROOT.'views/inscriptionCollegeLycee/v_EcoleChoix.php';
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -62,7 +62,7 @@ switch ($action) {
                 header("Location:?uc=cl&action=choisirTypeEcole");
             }
             require_once ROOT.'views/inscriptionCollegeLycee/v_Etape1.php';
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -104,7 +104,7 @@ switch ($action) {
 
             require_once ROOT.'views/inscriptionCollegeLycee/v_Etape2.php';
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -162,7 +162,7 @@ switch ($action) {
             }
             require_once ROOT.'views/inscriptionCollegeLycee/v_Etape3.php';
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -176,7 +176,7 @@ switch ($action) {
                 $_SESSION['impo1'] = $_POST['impo1'];
             }
             require_once ROOT.'views/inscriptionCollegeLycee/v_Etape4.php';
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -196,7 +196,7 @@ switch ($action) {
                 $_SESSION['impo3'] = null;
             }
             require_once ROOT.'views/inscriptionCollegeLycee/v_Etape5.php';
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -251,7 +251,7 @@ switch ($action) {
                 'Impossibilités' => $_SESSION['impo3']
             );
             require_once ROOT.'views/inscriptionCollegeLycee/v_Recap.php';
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
@@ -357,7 +357,7 @@ switch ($action) {
             }
 
             require_once ROOT.'views/inscriptionEcole/v_Fin.php';
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
         break;
