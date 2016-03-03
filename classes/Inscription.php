@@ -1,4 +1,5 @@
-<?php namespace Kiosque\Classes;
+<?php
+namespace Kiosque\Classes;
 
 /**
  * Created by PhpStorm.
@@ -21,11 +22,11 @@ class Inscription
      */
     private $date;
     /**
-     * @var String
+     * @var string
      */
     private $divers;
     /**
-     * @var String
+     * @var string
      */
     private $impo;
     /**
@@ -47,7 +48,7 @@ class Inscription
     private $lesChoix;
 
     /**
-     * @var String
+     * @var string
      */
     private $classe;
 
@@ -55,13 +56,13 @@ class Inscription
      * @param int $id
      * @param Enseignant $enseignant
      * @param \DateTime $date
-     * @param String $divers
-     * @param String $impo
+     * @param string $divers
+     * @param string $impo
      * @param int $nbEnfants
      * @param int $nbAdultes
-     * @param String $classe
+     * @param string $classe
      */
-    public function __construct($id, Enseignant $enseignant, \DateTime $date, $divers, $impo, $nbEnfants, $nbAdultes, $classe)
+    public function __construct($id = 0, Enseignant $enseignant = null, \DateTime $date = null, $divers = '', $impo = '', $nbEnfants = 0, $nbAdultes = 0, $classe = '')
     {
         $this->id = (int) $id;
         $this->enseignant = $enseignant;
@@ -75,14 +76,14 @@ class Inscription
     }
 
     /**
-     * @return String
+     * @return string
      */
     public function getClasse() {
         return $this->classe;
     }
 
     /**
-     * @param String $classe
+     * @param string $classe
      * @return Inscription
      */
     public function setClasse($classe) {
@@ -145,7 +146,7 @@ class Inscription
     }
 
     /**
-     * @return String
+     * @return string
      */
     public function getDivers()
     {
@@ -153,7 +154,7 @@ class Inscription
     }
 
     /**
-     * @param String $divers
+     * @param string $divers
      * @return Inscription
      */
     public function setDivers($divers)
@@ -163,7 +164,7 @@ class Inscription
     }
 
     /**
-     * @return String
+     * @return string
      */
     public function getImpo()
     {
@@ -171,7 +172,7 @@ class Inscription
     }
 
     /**
-     * @param String $impo
+     * @param string $impo
      * @return Inscription
      */
     public function setImpo($impo)

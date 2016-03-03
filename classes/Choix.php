@@ -1,4 +1,5 @@
-<?php namespace Kiosque\Classes;
+<?php
+namespace Kiosque\Classes;
 
 /**
  * Created by PhpStorm.
@@ -27,7 +28,7 @@ class Choix
      * @param Spectacle $spectacle
      * @param int $priorite
      */
-    public function __construct(Inscription $inscription, Spectacle $spectacle, $priorite)
+    public function __construct(Inscription $inscription = null, Spectacle $spectacle = null, $priorite = 0)
     {
         $this->inscription = $inscription;
         $this->spectacle = $spectacle;
