@@ -1,16 +1,19 @@
 <?php namespace Kiosque\Models;
 
+use Kiosque\Classes\Collection;
+use Kiosque\Classes\Enseignant;
+use Kiosque\Classes\Ecole;
+
 class MEnseignant
 {
     /**
      * Récupère tous les enseignants
      * @return Collection
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function getEnseignants()
+    public static function getEnseignants()
     {
-        try
-        {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->query("
                 SELECT *
@@ -18,8 +21,7 @@ class MEnseignant
                 INNER JOIN ecole e ON e.idEcole = ens.idEcole");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
-            foreach ($tabs as $tab)
-            {
+            foreach ($tabs as $tab) {
                 $directeur = new Enseignant($tab['idEns'], $tab['civEns'], $tab['nomEns'], $tab['prenomEns'], $tab['mailEns'], $tab['telEns'], $tab['TypeEnseignant']);
                 $ecole = new Ecole($tab['idEcole'], $tab['typeEcole'], $tab['nomEcole'], $tab['adresseEcole'], $tab['adresse2Ecole'], $tab['cpEcole'], $tab['villeEcole'], $tab['mail_dir'], $directeur);
                 $lesInscriptions = MInscription::getInscriptionByEnseignant($directeur);
@@ -28,14 +30,10 @@ class MEnseignant
                 $coll->ajouter($directeur);
             }
             return $coll;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("Il n'y a aucun enseignant");
-        }
-        catch (KeyHasUseException $ex)
-        {
-            throw new Exception($ex->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception("Il n'y a aucun enseignant");
+        } catch (KeyHasUseException $ex) {
+            throw new \Exception($ex->getMessage());
         }
     }
 
@@ -43,12 +41,11 @@ class MEnseignant
      * Récupère l'enseignant dont le numéro est passé en paramètres
      * @param int $codeEnseignant
      * @return Enseignant
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function getEnseignantById($codeEnseignant)
+    public static function getEnseignantById($codeEnseignant)
     {
-        try
-        {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->prepare("SELECT *
                 FROM enseignant ens
@@ -62,10 +59,8 @@ class MEnseignant
             $directeur->setEcole($ecole);
             $directeur->setLesInscriptions($lesInscriptions);
             return $directeur;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("L'enseignant n°$codeEnseignant n'existe pas");
+        } catch (\PDOException $e) {
+            throw new \Exception("L'enseignant n°$codeEnseignant n'existe pas");
         }
     }
 
@@ -73,12 +68,11 @@ class MEnseignant
      * Récupère le directeur dont l'ecole est passé en paramètres
      * @param Ecole $ecole
      * @return Enseignant
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function getDirecteur(Ecole $ecole)
+    public static function getDirecteur(Ecole $ecole)
     {
-        try
-        {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->prepare("SELECT *
                 FROM enseignant ens
@@ -93,10 +87,8 @@ class MEnseignant
             $directeur->setEcole($ecole);
             $directeur->setLesInscriptions($lesInscriptions);
             return $directeur;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("Le directeur n'existe pas");
+        } catch (\PDOException $e) {
+            throw new \Exception("Le directeur n'existe pas");
         }
     }
 
@@ -105,12 +97,11 @@ class MEnseignant
      * @param string $name
      * @param string $prenom
      * @return Enseignant
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function getEnseignantByName($name,$prenom)
+    public static function getEnseignantByName($name, $prenom)
     {
-        try
-        {
+        try {
             $conn = Main::bdd();
             $reqPrepare = $conn->prepare("SELECT *
                 FROM enseignant ens
@@ -124,15 +115,14 @@ class MEnseignant
             $directeur->setEcole($ecole);
             $directeur->setLesInscriptions($lesInscriptions);
             return $directeur;
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("L'enseignant '$name $prenom' n'existe pas");
+        } catch (\PDOException $e) {
+            throw new \Exception("L'enseignant '$name $prenom' n'existe pas");
         }
     }
 
-    static public function isEnseignantExistant(Enseignant $enseignant){
-        try{
+    public static function isEnseignantExistant(Enseignant $enseignant)
+    {
+        try {
 
             $conn = Main::bdd();
             $reqPrepare = $conn->prepare("SELECT count(*) as 'NbEnseignant', nomEns, prenomEns
@@ -146,23 +136,20 @@ class MEnseignant
             $reqPrepare=$reqPrepare->fetch();
             return $reqPrepare['NbEnseignant'];
 
-        }
-        catch (PDOException $e)
-        {
-            throw new Exception("L'enseignant ".$enseignant->getNom()." ".$enseignant->getPrenom()." n'existe pas");
+        } catch (\PDOException $e) {
+            throw new \Exception("L'enseignant ".$enseignant->getNom()." ".$enseignant->getPrenom()." n'existe pas");
         }
     }
 
     /**
      * Ajoute un enseignant
      * @param Enseignant $enseignant
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function addEnseignant(Enseignant $enseignant)
+    public static function addEnseignant(Enseignant $enseignant)
     {
         $conn = Main::bdd();
-        try
-        {
+        try {
             $conn->beginTransaction();
             $reqPrepare = $conn->prepare("INSERT INTO enseignant (civEns, nomEns, prenomEns, mailEns, telEns, idEcole, TypeEnseignant) VALUES (?,?,?,?,?,?,?)");
             $reqPrepare->execute(array(
@@ -178,17 +165,16 @@ class MEnseignant
             $conn->commit();
 
             return $idEnseignant;
-        }
-        catch (PDOException $e)
-        {
+        } catch (\PDOException $e) {
             $conn->rollBack();
-            throw new Exception("L'ajout de l'enseignant ".$enseignant->getId()." a échoué. Détails : <p>".$e->getMessage()."</p>");
+            throw new \Exception("L'ajout de l'enseignant ".$enseignant->getId()." a échoué. Détails : <p>".$e->getMessage()."</p>");
         }
     }
 
-    static public function editDirecteur(Enseignant $directeur){
+    public static function editDirecteur(Enseignant $directeur)
+    {
         $conn = Main::bdd();
-        try{
+        try {
             $conn->beginTransaction();
             $reqPrepare = $conn->prepare("UPDATE enseignant SET civEns = ?, nomEns = ?, prenomEns = ?, mailEns = ? WHERE idEns = ?");
             $reqPrepare->execute(array(
@@ -199,20 +185,18 @@ class MEnseignant
                 $directeur->getId()
             ));
             $conn->commit();
-        }
-        catch (PDOException $e)
-        {
+        } catch (\PDOException $e) {
             $conn->rollBack();
-            throw new Exception("Le directeur ".$directeur->getId()." n'a pas pu être modifiée. Détails : <p>".$e->getMessage()."</p>");
+            throw new \Exception("Le directeur ".$directeur->getId()." n'a pas pu être modifiée. Détails : <p>".$e->getMessage()."</p>");
         }
     }
 
     /**
      * Modifie un enseignant
      * @param Enseignant $enseignant
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function editEnseignant(Enseignant $enseignant)
+    public static function editEnseignant(Enseignant $enseignant)
     {
         $conn = Main::bdd();
         try {
@@ -228,24 +212,22 @@ class MEnseignant
                 $enseignant->getId()
                 ));
             $conn->commit();
-        }
-        catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $conn->rollBack();
-            throw new Exception("L'enseignant ".$enseignant->getId()." n'a pas pu être modifiée. Détails : <p>".$e->getMessage()."</p>");
+            throw new \Exception("L'enseignant ".$enseignant->getId()." n'a pas pu être modifiée. Détails : <p>".$e->getMessage()."</p>");
         }
     }
     /**
      * Supprime un enseignant et ses inscriptions en cascade
      * @param Enseignant $enseignant
-     * @throws Exception
+     * @throws \Exception
      */
-    static public function rmEnseignant(Enseignant $enseignant)
+    public static function rmEnseignant(Enseignant $enseignant)
     {
         $conn = Main::bdd();
         try {
             $conn->beginTransaction();
-            foreach ($enseignant->getLesInscriptions()->getCollection() as $inscription)
-            {
+            foreach ($enseignant->getLesInscriptions()->getCollection() as $inscription) {
                 $reqPrepare = $conn->prepare("DELETE FROM choix WHERE idInscription = ?");
                 $reqPrepare->execute(array($inscription->getId()));
             }
@@ -254,10 +236,9 @@ class MEnseignant
             $reqPrepare = $conn->prepare("DELETE FROM enseignant WHERE idEns = ?");
             $reqPrepare->execute(array($enseignant->getId()));
             $conn->commit();
-        }
-        catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $conn->rollBack();
-            throw new Exception("L'enseignant ".$enseignant->getId()." n'a pas pu être supprimé. Détails : <p>".$e->getMessage()."</p>");
+            throw new \Exception("L'enseignant ".$enseignant->getId()." n'a pas pu être supprimé. Détails : <p>".$e->getMessage()."</p>");
         }
     }
 }

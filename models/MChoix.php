@@ -3,7 +3,6 @@
 use Kiosque\Classes\Collection;
 use Kiosque\Classes\Choix;
 use Kiosque\Classes\Inscription;
-use Kiosque\Classes\Spectacle;
 
 class MChoix
 {

@@ -1,11 +1,13 @@
 <?php
+namespace Kiosque;
 
+use Kiosque\Models\Main;
 
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', __DIR__.DS);
 
-session_start();
-?>
+session_start(); ?>
+
 <!DOCTYPE html>
 <html>
 <head>
