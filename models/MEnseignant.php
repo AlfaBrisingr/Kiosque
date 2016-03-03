@@ -36,7 +36,6 @@ class MEnseignant
             throw new \Exception($ex->getMessage());
         }
     }
-
     /**
      * Récupère l'enseignant dont le numéro est passé en paramètres
      * @param int $codeEnseignant
@@ -63,7 +62,6 @@ class MEnseignant
             throw new \Exception("L'enseignant n°$codeEnseignant n'existe pas");
         }
     }
-
     /**
      * Récupère le directeur dont l'ecole est passé en paramètres
      * @param Ecole $ecole
@@ -91,7 +89,6 @@ class MEnseignant
             throw new \Exception("Le directeur n'existe pas");
         }
     }
-
     /**
      * Récupère l'enseignant dont le nom et prénom sont passés en paramètres
      * @param string $name
@@ -119,11 +116,9 @@ class MEnseignant
             throw new \Exception("L'enseignant '$name $prenom' n'existe pas");
         }
     }
-
     public static function isEnseignantExistant(Enseignant $enseignant)
     {
         try {
-
             $conn = Main::bdd();
             $reqPrepare = $conn->prepare("SELECT count(*) as 'NbEnseignant', nomEns, prenomEns
                 FROM enseignant 
@@ -132,15 +127,13 @@ class MEnseignant
             $reqPrepare->execute(array(
                 $enseignant->getNom(),
                 $enseignant->getPrenom()
-                ));
+            ));
             $reqPrepare=$reqPrepare->fetch();
             return $reqPrepare['NbEnseignant'];
-
         } catch (\PDOException $e) {
             throw new \Exception("L'enseignant ".$enseignant->getNom()." ".$enseignant->getPrenom()." n'existe pas");
         }
     }
-
     /**
      * Ajoute un enseignant
      * @param Enseignant $enseignant
@@ -160,17 +153,15 @@ class MEnseignant
                 $enseignant->getTel(),
                 $enseignant->getEcole()->getId(),
                 $enseignant->getTypeEnseignant()
-                ));
+            ));
             $idEnseignant = $conn->lastInsertId();
             $conn->commit();
-
             return $idEnseignant;
         } catch (\PDOException $e) {
             $conn->rollBack();
             throw new \Exception("L'ajout de l'enseignant ".$enseignant->getId()." a échoué. Détails : <p>".$e->getMessage()."</p>");
         }
     }
-
     public static function editDirecteur(Enseignant $directeur)
     {
         $conn = Main::bdd();
@@ -190,7 +181,6 @@ class MEnseignant
             throw new \Exception("Le directeur ".$directeur->getId()." n'a pas pu être modifiée. Détails : <p>".$e->getMessage()."</p>");
         }
     }
-
     /**
      * Modifie un enseignant
      * @param Enseignant $enseignant
@@ -210,7 +200,7 @@ class MEnseignant
                 $enseignant->getTel(),
                 $enseignant->getEcole()->getId(),
                 $enseignant->getId()
-                ));
+            ));
             $conn->commit();
         } catch (\PDOException $e) {
             $conn->rollBack();
