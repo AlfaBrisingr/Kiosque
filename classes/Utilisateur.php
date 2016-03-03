@@ -1,4 +1,5 @@
 <?php namespace Kiosque\Classes;
+
 /**
  * Created by PhpStorm.
  * User: Kiyoz

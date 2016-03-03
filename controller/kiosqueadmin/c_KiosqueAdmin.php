@@ -35,14 +35,14 @@ switch ($action) {
                     $_SESSION['utilisateur'] = MAdmin::getUserByName($_POST['login']);
                     if (isset($_POST['password']) == $_SESSION['utilisateur']->getPassword()) {
                         Main::setFlashMessage("Connecté avec succès", "valid");
-                        echo '<script>redirection("?uc=admin&action=voirAdmin")</script>';
+                        echo '<script>document.location.href ="?uc=admin&action=voirAdmin"</script>';
                     } else {
 
                         Main::launchWrongUserPwd();
-                        echo '<script>redirection("?uc=admin")</script>';
+                        echo '<script>document.location.href ="?uc=admin"</script>';
                     }
                 } else {
-                    echo '<script>redirection("?uc=admin")</script>';
+                    echo '<script>document.location.href ="?uc=admin"</script>';
                 }
 
             }
@@ -104,7 +104,7 @@ switch ($action) {
                 MInscription::validerInscription($inscription);
 
                 Main::setFlashMessage("La panification de l'inscription a été faite", "valid");
-                echo '<script>redirection("?uc=admin&action=voirInscription")</script>';
+                echo '<script>document.location.href ="?uc=admin&action=voirInscription"</script>';
             } else {
 
                 $listChoix = MChoix::getChoixByIns($_GET['ins']);
@@ -121,7 +121,7 @@ switch ($action) {
             MInscription::rmInscription($inscription);
 
             Main::setFlashMessage("La suppression de l'inscription a été faite", "valid");
-            echo '<script>redirection("?uc=admin&action=voirInscription")</script>';
+            echo '<script>document.location.href ="?uc=admin&action=voirInscription"</script>';
 
         } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
@@ -157,7 +157,7 @@ switch ($action) {
                 MInscription::editInscription($inscription);
 
                 Main::setFlashMessage("La modification de l'inscription a réussi", "valid");
-                echo '<script>redirection("?uc=admin&action=voirInscription")</script>';
+                echo '<script>document.location.href ="?uc=admin&action=voirInscription"</script>';
             } else {
                 $listIns = MInscription::getInscriptionByIdInscription($_GET['ins']);
                 $listSpec = MSpectacle::getSpectacles();
@@ -179,7 +179,7 @@ switch ($action) {
             MInscription::editInscription($inscription);
 
             Main::setFlashMessage("La suppression du planning a été faite", "valid");
-            echo '<script>redirection("?uc=admin&action=voirInscription")</script>';
+            echo '<script>document.location.href ="?uc=admin&action=voirInscription"</script>';
 
         } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
@@ -195,7 +195,7 @@ switch ($action) {
                 $seance = new Seance(1, $spectacle, $date, $lieu);
                 MSeance::addSeance($seance);
                 Main::setFlashMessage("L'ajout de la séance a été faite", "valid");
-                echo '<script>redirection("?uc=admin&action=voirInscription")</script>';
+                echo '<script>document.location.href ="?uc=admin&action=voirInscription"</script>';
             } else {
                 $listLieu = MLieu::getLieux() ;
                 $listSpec = MSpectacle::getSpectacles();
@@ -212,7 +212,7 @@ switch ($action) {
             MSeance::rmSeance($seance);
 
             Main::setFlashMessage("La suppression de la séance a été faite", "valid");
-            echo '<script>redirection("?uc=admin&action=voirInscription")</script>';
+            echo '<script>document.location.href ="?uc=admin&action=voirInscription"</script>';
         } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
@@ -297,7 +297,7 @@ switch ($action) {
                 <?php $content = ob_get_clean();
 
                 // convert in PDF
-                require_once ROOT.'html2pdf/html2pdf.class.php';
+                require_once ROOT.'vendor/spipu/html2pdf/html2pdf.class.php';
                 try {
                     $pdf = new HTML2PDF('L', 'A4', 'fr');
                     $pdf->writeHTML($content);
@@ -386,7 +386,7 @@ switch ($action) {
                 <?php $content = ob_get_clean();
 
                 // convert in PDF
-                require_once ROOT.'html2pdf/html2pdf.class.php';
+                require_once ROOT.'vendor/spipu/html2pdf/html2pdf.class.php';
                 try {
                     $pdf = new HTML2PDF('L', 'A4', 'fr');
                     $pdf->writeHTML($content);
@@ -482,7 +482,7 @@ switch ($action) {
                 <?php $content = ob_get_clean();
 
                 // convert in PDF
-                require_once ROOT.'html2pdf/html2pdf.class.php';
+                require_once ROOT.'vendor/spipu/html2pdf/html2pdf.class.php';
                 try {
                     $pdf = new HTML2PDF('L', 'A4', 'fr');
                     $pdf->writeHTML($content);
@@ -511,7 +511,7 @@ switch ($action) {
                 MInscription::validerInscription($inscription);
 
                 Main::setFlashMessage("La panification de l'inscription a été faite", "valid");
-                echo '<script>redirection("?uc=admin&action=voirInscriptionCL")</script>';
+                echo '<script>document.location.href ="?uc=admin&action=voirInscriptionCL"</script>';
             } else {
 
                 $listChoix = MChoix::getChoixByIns($_GET['ins']);
@@ -528,7 +528,7 @@ switch ($action) {
             MInscription::rmInscription($inscription);
 
             Main::setFlashMessage("La suppression de l'inscription a été faite", "valid");
-            echo '<script>redirection("?uc=admin&action=voirInscriptionCL")</script>';
+            echo '<script>document.location.href ="?uc=admin&action=voirInscriptionCL"</script>';
 
         } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
@@ -564,7 +564,7 @@ switch ($action) {
                 MInscription::editInscription($inscription);
 
                 Main::setFlashMessage("La modification de l'inscription a réussi", "valid");
-                echo '<script>redirection("?uc=admin&action=voirInscriptionCL")</script>';
+                echo '<script>document.location.href ="?uc=admin&action=voirInscriptionCL")</script>';
             } else {
                 $listIns = MInscription::getInscriptionByIdInscription($_GET['ins']);
                 $listSpec = MSpectacle::getSpectacles();
@@ -586,7 +586,7 @@ switch ($action) {
             MInscription::editInscription($inscription);
 
             Main::setFlashMessage("La suppression du planning a été faite", "valid");
-            echo '<script>redirection("?uc=admin&action=voirInscriptionCL")</script>';
+            echo '<script>document.location.href ="?uc=admin&action=voirInscriptionCL"</script>';
 
         } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
@@ -602,7 +602,7 @@ switch ($action) {
                 $seance = new Seance(1, $spectacle, $date, $lieu);
                 MSeance::addSeance($seance);
                 Main::setFlashMessage("L'ajout de la séance a été faite", "valid");
-                echo '<script>redirection("?uc=admin&action=voirInscriptionCL")</script>';
+                echo '<script>document.location.href ="?uc=admin&action=voirInscriptionCL"</script>';
             } else {
                 $listLieu = MLieu::getLieux() ;
                 $listSpec = MSpectacle::getSpectacles();
@@ -619,7 +619,7 @@ switch ($action) {
             MSeance::rmSeance($seance);
 
             Main::setFlashMessage("La suppression de la séance a été faite", "valid");
-            echo '<script>redirection("?uc=admin&action=voirInscriptionCL")</script>';
+            echo '<script>document.location.href ="?uc=admin&action=voirInscriptionCL"</script>';
         } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
@@ -674,12 +674,12 @@ switch ($action) {
                     <table>
                         <thead>
                         <tr>
-                            <th style="width: 50%">Inscription</th>
-                            <th style="width: 10%">Classe</th>
-                            <th style="width: 10%">Téléphone</th>
-                            <th style="width: 10%">Enfants</th>
-                            <th style="width: 10%">Adultes</th>
-                            <th style="width: 10%">Présence</th>
+                            <th>Inscription</th>
+                            <th>Classe</th>
+                            <th>Téléphone</th>
+                            <th>Enfants</th>
+                            <th>Adultes</th>
+                            <th>Présence</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -704,7 +704,7 @@ switch ($action) {
                 <?php $content = ob_get_clean();
 
                 // convert in PDF
-                require_once ROOT.'html2pdf/html2pdf.class.php';
+                require_once ROOT.'vendor/spipu/html2pdf/html2pdf.class.php';
                 try {
                     $pdf = new HTML2PDF('L', 'A4', 'fr');
                     $pdf->writeHTML($content);
@@ -793,7 +793,7 @@ switch ($action) {
                 <?php $content = ob_get_clean();
 
                 // convert in PDF
-                require_once ROOT.'html2pdf/html2pdf.class.php';
+                require_once ROOT.'vendor/spipu/html2pdf/html2pdf.class.php';
                 try {
                     $pdf = new HTML2PDF('L', 'A4', 'fr');
                     $pdf->writeHTML($content);
@@ -889,7 +889,7 @@ switch ($action) {
                 <?php $content = ob_get_clean();
 
                 // convert in PDF
-                require_once ROOT.'html2pdf/html2pdf.class.php';
+                require_once ROOT.'vendor/spipu/html2pdf/html2pdf.class.php';
                 try {
                     $pdf = new HTML2PDF('L', 'A4', 'fr');
                     $pdf->writeHTML($content);
@@ -956,7 +956,7 @@ switch ($action) {
                 <?php $content = ob_get_clean();
 
                 // convert in PDF
-                require_once ROOT.'html2pdf/html2pdf.class.php';
+                require_once ROOT.'vendor/spipu/html2pdf/html2pdf.class.php';
                 try {
                     $pdf = new HTML2PDF('L', 'A4', 'fr');
                     $pdf->writeHTML($content);

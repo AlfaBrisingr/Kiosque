@@ -5,7 +5,7 @@ use Kiosque\Classes\Utilisateur;
 
 /**
  * Created by PhpStorm.
- * User: Océane
+ * User: OcÃ©ane
  * Date: 03/02/2016
  * Time: 13:59
  */
@@ -25,19 +25,19 @@ switch ($action) {
         try {
 
             if (Main::connexionExistantePublic()) {
-                echo '<script>redirection("?uc=cl&action=choisirTypeEcole")</script>';
+                echo '<script>document.location.href ="?uc=cl&action=choisirTypeEcole"</script>';
             }if (isset($_POST['login'])) {
                 $pwd = sha1($_POST['password']);
-                if (strtolower($_POST['login']) == "collegelycee" && $pwd == "120525d1a28d39f78ef479b07011de199c5c2e92") {
-                    $_SESSION['utilisateur'] = new Utilisateur(4,"collegelycee","120525d1a28d39f78ef479b07011de199c5c2e92");
-                    Main::setFlashMessage("Connecté avec succès", "valid");
-                    echo '<script>redirection("uc=cl&action=choisirTypeEcole")</script>';
+                if (strtolower($_POST['login']) == "jeunepublic" && $pwd == "120525d1a28d39f78ef479b07011de199c5c2e92") {
+                    $_SESSION['utilisateur'] = new Utilisateur(3,"jeunePublic","120525d1a28d39f78ef479b07011de199c5c2e92");
+                    Main::setFlashMessage("ConnectÃ© avec succÃ¨s", "valid");
+                    echo '<script>document.location.href ="?uc=cl&action=choisirTypeEcole"</script>';
                 } else {
                     Main::launchWrongUserPwd();
-                    echo '<script>redirection("?uc=connexionCL")</script>';
+                    echo '<script>document.location.href ="?uc=connexionCL"</script>';
                 }
             } else {
-                echo '<script>redirection("?uc=index")</script>';
+                echo '<script>document.location.href ="?uc=index"</script>';
             }
         } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
@@ -45,11 +45,11 @@ switch ($action) {
         break;
     case 'logout':
         session_destroy();
-        Main::setFlashMessage("Déconnecté avec succès", "valid");
-        echo '<script>redirection("?uc=index")</script>';
+        Main::setFlashMessage("DÃ©connectÃ© avec succÃ¨s", "valid");
+        echo '<script>document.location.href ="?uc=index"</script>';
         break;
 
     default:
-        echo '<script>redirection("?uc=index")</script>';
+        echo '<script>document.location.href ="?uc=index"</script>';
         break;
 }

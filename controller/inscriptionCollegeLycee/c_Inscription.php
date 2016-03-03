@@ -24,7 +24,7 @@ if (isset($_GET['action'])) {
 }
 switch ($action) {
     case 'login':
-        echo '<script>redirection("?uc=connexionCL&action=login")</script>';
+        echo '<script>document.location.href ="?uc=connexionCL&action=login"</script>';
         break;
 
     case 'choisirTypeEcole':
@@ -40,7 +40,7 @@ switch ($action) {
         try {
             $saisonCourante = MSaison::getSaisonCourante();
             if (!isset($_POST['typeEcole'])) {
-                echo '<script>redirection("?uc=cl&action=choisirTypeEcole")</script>';
+                echo '<script>document.location.href ="?uc=cl&action=choisirTypeEcole"</script>';
             }
             if ($_POST['typeEcole'] == '3') {
                 $listEcole = MEcole::getColleges();
@@ -59,7 +59,7 @@ switch ($action) {
                 $ecole = MEcole::getEcoleById($_POST['choix']);
                 $_SESSION['ecole'] = $ecole;
             } else {
-                echo '<script>redirection("?uc=cl&action=choisirTypeEcole")</script>';
+                echo '<script>document.location.href ="?uc=cl&action=choisirTypeEcole"</script>';
             }
             require_once ROOT.'views/inscriptionCollegeLycee/v_Etape1.php';
         } catch (\Exception $e) {
@@ -220,7 +220,7 @@ switch ($action) {
             if ($_SESSION['choix2'] == $_SESSION['choix1']) {
                 $_SESSION['choix2'] = 'non';
             }
-            $Ent = array($_SESSION['ecole']->getType(), $_SESSION['ecole']->getNom(), 'Adresse 1' => $_SESSION['ecole']->getAdresse(), $_SESSION['ecole']->getAdresse2(),
+            $Ent = array( $_SESSION['ecole']->getNom(), 'Adresse 1' => $_SESSION['ecole']->getAdresse(),
                 $_SESSION['ecole']->getCp(), $_SESSION['ecole']->getVille(), $_SESSION['ecole']->getDirecteur()->getTel(), $_SESSION['ecole']->getDirecteur()->getMail()
             );
             $Resp = array(
@@ -228,7 +228,7 @@ switch ($action) {
                 'Nom' => $_SESSION['directeur']->getNom(),
                 'Prénom' => $_SESSION['directeur']->getPrenom());
             $Divers1 = array(
-                'Facture libell�e �' => $_SESSION['facture'],
+                'Facture libellée à' => $_SESSION['facture'],
                 'Infos diverses sur l\'Etablissement' => $_SESSION['divers']
             );
             $Ens1 = array($_SESSION['enseignant']->getCivilite(), $_SESSION['enseignant']->getNom(), ucfirst(strtolower($_SESSION['enseignant']->getPrenom())));

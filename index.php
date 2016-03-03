@@ -16,6 +16,7 @@ session_start(); ?>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <meta charset="utf-8">
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <title>Kiosque</title>
 </head>
 <body>
@@ -108,7 +109,6 @@ session_start(); ?>
 <footer>
     <!-- Version 2.0 &copy Le Kiosque by TURMEL Kévin -->
 </footer>
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
 <script src="js/main.js"></script>

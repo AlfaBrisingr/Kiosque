@@ -32,7 +32,7 @@ switch ($action) {
                 MEcole::editEcole($ecole, $directeur);
 
                 Main::setFlashMessage("L'écolé a bien été modifiée", "valid");
-                echo '<script>redirection("?uc=ecole")</script>';
+                echo '<script>document.location.href ="?uc=ecole"</script>';
 
             } else {
                 throw new \Exception ("Impossible de modifier l'école (mauvais formats entrés)");
@@ -64,11 +64,11 @@ switch ($action) {
                 MEcole::editEcole($ecole, $directeur);
 
                 Main::setFlashMessage("L'école a bien été ajoutée", "valid");
-                echo '<script>redirection("?uc=ecole")</script>';
+                echo '<script>document.location.href ="?uc=ecole"</script>';
 
 
             } else {
-                echo '<script>redirection("?uc=ecole")</script>';
+                echo '<script>document.location.href ="?uc=ecole"</script>';
                 throw new \Exception ("Impossible d'ajouter l'école (mauvais formats entrés)");
 
             }
@@ -84,7 +84,7 @@ switch ($action) {
             MEcole::rmEcole($ecole);
 
             Main::setFlashMessage("L'école : " .$ecole->getNom(). " a bien été supprimée", "valid");
-            echo '<script>redirection("?uc=ecole")</script>';
+            echo '<script>document.location.href ="?uc=ecole"</script>';
         } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }

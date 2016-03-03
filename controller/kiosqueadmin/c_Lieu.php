@@ -28,7 +28,7 @@ switch ($action) {
                 MLieu::editLieu($lieu);
 
                 Main::setFlashMessage("Le lieu a bien été modifié", "valid");
-                echo '<script>redirection("?uc=lieu")</script>';
+                echo '<script>document.location.href ="?uc=lieu"</script>';
             } else {
                 throw new \Exception ("Impossible de modifier le lieu (mauvais formats entrés)");
             }
@@ -48,7 +48,7 @@ switch ($action) {
                 MLieu::addLieu($lieu);
 
                 Main::setFlashMessage("Le lieu a bien été ajouté", "valid");
-                echo '<script>redirection("?uc=lieu")</script>';
+                echo '<script>document.location.href ="?uc=lieu"</script>';
             } else {
                 throw new \Exception ("Impossible d'ajouter le lieu (mauvais formats entrés)");
             }
@@ -63,7 +63,7 @@ switch ($action) {
             MLieu::rmLieu($lieu);
 
             Main::setFlashMessage("Le lieu : " .$lieu->getNom(). " a bien été supprimé", "valid");
-            echo '<script>redirection("?uc=lieu")</script>';
+            echo '<script>document.location.href ="?uc=lieu"</script>';
         } catch (\Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
 
