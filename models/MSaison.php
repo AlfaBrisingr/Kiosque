@@ -153,7 +153,12 @@ class MSaison
     {
         try {
             $conn = Main::bdd();
-            $reqPrepare = $conn->prepare("SELECT s.idSaison, s.nomSaison, s.courante FROM saison s INNER JOIN saison_spectacle ss ON ss.idSaison = s.idSaison INNER JOIN spectacle sp ON sp.idSpectacle = ss.idSpectacle WHERE sp.idSpectacle = ?");
+            $reqPrepare = $conn->prepare(
+                "SELECT s.idSaison, s.nomSaison, s.courante
+                FROM saison s
+                INNER JOIN saison_spectacle ss ON ss.idSaison = s.idSaison
+                INNER JOIN spectacle sp ON sp.idSpectacle = ss.idSpectacle
+                WHERE sp.idSpectacle = ?");
             $reqPrepare->execute(array($id));
             $tab = $reqPrepare->fetch();
             $saison = new Saison(

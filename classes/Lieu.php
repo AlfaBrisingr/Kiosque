@@ -1,4 +1,5 @@
-<?php namespace Kiosque\Classes;
+<?php
+namespace Kiosque\Classes;
 
 /**
  * Created by PhpStorm.
@@ -41,7 +42,7 @@ class Lieu
      * @param string $cp
      * @param string $ville
      */
-    public function __construct($id, $nom, $adresse, $cp, $ville)
+    public function __construct($id = 0, $nom = '', $adresse = '', $cp = '', $ville = '')
     {
         $this->id = (int) $id;
         $this->nom = $nom;

@@ -1,5 +1,5 @@
-<?php namespace Kiosque\Classes;
-
+<?php
+namespace Kiosque\Classes;
 /**
  * Created by PhpStorm.
  * User: Kiyoz
@@ -14,20 +14,20 @@ class Utilisateur
      */
     private $id;
     /**
-     * @var String
+     * @var string
      */
     private $username;
     /**
-     * @var String
+     * @var string
      */
     private $password;
 
     /**
      * @param int $id
-     * @param String $username
-     * @param String $password
+     * @param string $username
+     * @param string $password
      */
-    public function __construct($id, $username, $password)
+    public function __construct($id = 0, $username = '', $password = '')
     {
         $this->id = (int) $id;
         $this->username = $username;
@@ -53,7 +53,7 @@ class Utilisateur
     }
 
     /**
-     * @return String
+     * @return string
      */
     public function getUsername()
     {
@@ -61,7 +61,7 @@ class Utilisateur
     }
 
     /**
-     * @param String $username
+     * @param string $username
      * @return Utilisateur
      */
     public function setUsername($username)
@@ -71,7 +71,7 @@ class Utilisateur
     }
 
     /**
-     * @return String
+     * @return string
      */
     public function getPassword()
     {
@@ -79,7 +79,7 @@ class Utilisateur
     }
 
     /**
-     * @param String $password
+     * @param string $password
      * @return Utilisateur
      */
     public function setPassword($password)

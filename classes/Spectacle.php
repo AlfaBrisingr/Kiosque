@@ -1,4 +1,5 @@
-<?php namespace Kiosque\Classes;
+<?php
+namespace Kiosque\Classes;
 
 /**
  * Created by PhpStorm.
@@ -45,8 +46,9 @@ class Spectacle
      * @param int $nbPlace
      * @param string $typeClasse
      * @param Saison $saison
+     * @param int $type
      */
-    public function __construct($id, $nom, $nbPlace, $typeClasse, Saison $saison, $type)
+    public function __construct($id = 0, $nom = '', $nbPlace = 0, $typeClasse = '', Saison $saison = null, $type = 0)
     {
         $this->id = (int) $id;
         $this->nom = $nom;
@@ -54,7 +56,7 @@ class Spectacle
         $this->typeClasse = $typeClasse;
         $this->lesSeances = new Collection();
         $this->saison = $saison;
-        $this->typeSpectacle = $type;
+        $this->typeSpectacle = (int) $type;
     }
     /**
      * @return int

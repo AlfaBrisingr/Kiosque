@@ -1,4 +1,5 @@
-<?php namespace Kiosque\Classes;
+<?php
+namespace Kiosque\Classes;
 
 /**
  * Created by PhpStorm.
@@ -37,15 +38,17 @@ class Jauge
      * Jauge constructor.
      * @param int $utilise
      * @param int $restante
+     * @param int $enfants
+     * @param int $adultes
      * @param int $max
      * @param Seance $seance
      */
-    public function __construct($utilise, $restante, $enfants, $adultes, $max, Seance $seance)
+    public function __construct($utilise = 0, $restante = 0, $enfants = 0, $adultes = 0, $max = 0, Seance $seance = null)
     {
         $this->utilise = (int) $utilise;
         $this->restante = (int) $restante;
-        $this->nbEnfants = $enfants;
-        $this->nbAdultes = $adultes;
+        $this->nbEnfants = (int) $enfants;
+        $this->nbAdultes = (int) $adultes;
         $this->max = (int) $max;
         $this->seance = $seance;
     }
