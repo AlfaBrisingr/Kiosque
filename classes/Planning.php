@@ -1,4 +1,5 @@
-<?php namespace Kiosque\Classes;
+<?php
+namespace Kiosque\Classes;
 
 /**
  * Created by PhpStorm.
@@ -33,7 +34,7 @@ class Planning
      * @param Seance $seance
      * @param Inscription $inscription
      */
-    public function __construct(Seance $seance, Inscription $inscription)
+    public function __construct(Seance $seance = null, Inscription $inscription = null)
     {
         $this->seance = $seance;
         $this->inscription = $inscription;

@@ -1,4 +1,5 @@
-<?php namespace Kiosque\Classes;
+<?php
+namespace Kiosque\Classes;
 
 /**
  * Created by PhpStorm.
@@ -31,7 +32,7 @@ class Saison
      * @param string $nom
      * @param bool $courante
      */
-    public function __construct($id, $nom, $courante)
+    public function __construct($id = 0, $nom = '', $courante = 0)
     {
         $this->id = (int) $id;
         $this->nom = $nom;

@@ -1,4 +1,5 @@
-<?php namespace Kiosque\Classes;
+<?php
+namespace Kiosque\Classes;
 
 /**
  * Created by PhpStorm.
@@ -56,10 +57,10 @@ class Ecole
      * @param string     $mail
      * @param Enseignant $directeur
      */
-    public function __construct($id, $type, $nom, $adresse, $adresse2, $cp, $ville, $mail, Enseignant $directeur)
+    public function __construct($id = 0, $type = 0, $nom = '', $adresse = '', $adresse2 = '', $cp = 0, $ville = '', $mail = '', Enseignant $directeur = null)
     {
         $this->id =            (int) $id;
-        $this->type =          $type;
+        $this->type =          (int) $type;
         $this->nom =           $nom;
         $this->adresse =       $adresse;
         $this->adresse2 =      $adresse2;

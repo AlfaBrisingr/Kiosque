@@ -1,4 +1,5 @@
-<?php namespace Kiosque\Classes;
+<?php
+namespace Kiosque\Classes;
 
 /**
  * Created by PhpStorm.
@@ -32,7 +33,7 @@ class Seance
      * @param \DateTime $date
      * @param Lieu $lieu
      */
-    public function __construct($id, Spectacle $spectacle, \DateTime $date, Lieu $lieu)
+    public function __construct($id = 0, Spectacle $spectacle = null, \DateTime $date = null, Lieu $lieu = null)
     {
         $this->id = (int) $id;
         $this->spectacle = $spectacle;
