@@ -1,5 +1,8 @@
 <?php
 
+use Kiosque\Models\Main;
+use Kiosque\Classes\Utilisateur;
+
 if (isset($_GET['action'])) {
     $action = $_GET['action'];
 } else {
@@ -39,7 +42,9 @@ switch ($action) {
         session_destroy();
         Main::setFlashMessage("Déconnecté avec succès", "valid");
         header("Location:?uc=index");
-
         break;
-    default : header("Location:?uc=index"); break;
+
+    default:
+        header("Location:?uc=index");
+        break;
 }

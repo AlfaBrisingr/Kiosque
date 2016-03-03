@@ -1,11 +1,14 @@
+<?php
+use Kiosque\Models\Main;
+?>
 <!-- Alerte valid -->
-<?php if(isset($_SESSION['valid'])) { ?>
+<?php if (isset($_SESSION['valid'])) { ?>
     <div class="alert alert-success" role="alert">
         <?= $_SESSION['valid'] ?>
     </div>
 <?php } ?>
 <!-- Alerte error -->
-<?php if(isset($_SESSION['error'])) { ?>
+<?php if (isset($_SESSION['error'])) { ?>
     <div class="alert alert-danger" role="alert">
         <?= $_SESSION['error'] ?>
     </div>
@@ -19,11 +22,11 @@
 
 
 <?php
-if(isset($_SESSION['error']))
+if (isset($_SESSION['error']))
     unset($_SESSION['error']);
-if(isset($_SESSION['valid']))
+if (isset($_SESSION['valid']))
     unset($_SESSION['valid']);
-if(Main::connexionExistantePublic())
+if (Main::connexionExistantePublic())
 {
     session_destroy();
 }

@@ -1,4 +1,8 @@
 <?php
+
+use Kiosque\Models\Main;
+use Kiosque\Classes\Utilisateur;
+
 /**
  * Created by PhpStorm.
  * User: Océane
@@ -37,11 +41,15 @@ switch ($action) {
             }
         } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
-        } break;
+        }
+        break;
     case 'logout':
         session_destroy();
         Main::setFlashMessage("Déconnecté avec succès", "valid");
-        header("Location:?uc=index"); break;
+        header("Location:?uc=index");
+        break;
 
-    default: header("Location:?uc=index"); break;
+    default:
+        header("Location:?uc=index");
+        break;
 }

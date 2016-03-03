@@ -1,4 +1,15 @@
 <?php
+
+use Kiosque\Models\Main;
+use Kiosque\Models\MSaison;
+use Kiosque\Models\MEcole;
+use Kiosque\Models\MEnseignant;
+use Kiosque\Models\MInscription;
+use Kiosque\Models\MSpectacle;
+use Kiosque\Classes\Inscription;
+use Kiosque\Models\MChoix;
+use Kiosque\Classes\Choix;
+
 /**
  * Created by PhpStorm.
  * User: Oc�ane

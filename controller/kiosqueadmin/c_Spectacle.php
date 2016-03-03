@@ -1,5 +1,10 @@
 <?php
 
+use Kiosque\Models\Main;
+use Kiosque\Models\MSpectacle;
+use Kiosque\Models\MSaison;
+use Kiosque\Classes\Spectacle;
+
 if (isset($_GET['action'])) {
     $action = $_GET['action'];
 } else {

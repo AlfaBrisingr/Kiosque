@@ -1,5 +1,19 @@
 <?php
 
+use Kiosque\Models\Main;
+use Kiosque\Models\MSaison;
+use Kiosque\Models\MInscription;
+use Kiosque\Models\MPlanning;
+use Kiosque\Models\MLieu;
+use Kiosque\Models\MEcole;
+use Kiosque\Models\MSpectacle;
+use Kiosque\Models\MSeance;
+use Kiosque\Models\MChoix;
+use Kiosque\Models\MAdmin;
+use Kiosque\Classes\Planning;
+use Kiosque\Classes\Choix;
+use Kiosque\Classes\Seance;
+
 if (isset($_GET['action'])) {
     $action = $_GET['action'];
 } else {
@@ -18,7 +32,7 @@ switch ($action) {
             } else {
                 if (isset($_POST['login']) && $_POST['login'] != 'jeunepublic') {
                     $mdp = sha1($_POST['password']);
-                    $_SESSION['utilisateur'] = Admin::getUserByName($_POST['login']);
+                    $_SESSION['utilisateur'] = MAdmin::getUserByName($_POST['login']);
                     if (isset($_POST['password']) == $_SESSION['utilisateur']->getPassword()) {
                         Main::setFlashMessage("Connecté avec succès", "valid");
                         header("Location:?uc=admin&action=voirAdmin");
@@ -283,11 +297,11 @@ switch ($action) {
                 <?php $content = ob_get_clean();
 
                 // convert in PDF
-                require("html2pdf/html2pdf.class.php");
+                require_once ROOT.'html2pdf/html2pdf.class.php';
                 try {
-                    ob_end_clean();
                     $pdf = new HTML2PDF('L', 'A4', 'fr');
                     $pdf->writeHTML($content);
+                    ob_end_clean();
                     $pdf->Output('Planning.pdf');
                 } catch (HTML2PDF_exception $e) {
                     echo $e;
@@ -372,11 +386,11 @@ switch ($action) {
                 <?php $content = ob_get_clean();
 
                 // convert in PDF
-                require("html2pdf/html2pdf.class.php");
+                require_once ROOT.'html2pdf/html2pdf.class.php';
                 try {
-                    ob_end_clean();
                     $pdf = new HTML2PDF('L', 'A4', 'fr');
                     $pdf->writeHTML($content);
+                    ob_end_clean();
                     $pdf->Output('Planning.pdf');
                 } catch (HTML2PDF_exception $e) {
                     echo $e;
@@ -468,11 +482,11 @@ switch ($action) {
                 <?php $content = ob_get_clean();
 
                 // convert in PDF
-                require("html2pdf/html2pdf.class.php");
+                require_once ROOT.'html2pdf/html2pdf.class.php';
                 try {
-                    ob_end_clean();
                     $pdf = new HTML2PDF('L', 'A4', 'fr');
                     $pdf->writeHTML($content);
+                    ob_end_clean();
                     $pdf->Output('Planning.pdf');
                 } catch (HTML2PDF_exception $e) {
                     echo $e;
@@ -690,11 +704,11 @@ switch ($action) {
                 <?php $content = ob_get_clean();
 
                 // convert in PDF
-                require("html2pdf/html2pdf.class.php");
+                require_once ROOT.'html2pdf/html2pdf.class.php';
                 try {
-                    ob_end_clean();
                     $pdf = new HTML2PDF('L', 'A4', 'fr');
                     $pdf->writeHTML($content);
+                    ob_end_clean();
                     $pdf->Output('Planning.pdf');
                 } catch (HTML2PDF_exception $e) {
                     echo $e;
@@ -779,11 +793,11 @@ switch ($action) {
                 <?php $content = ob_get_clean();
 
                 // convert in PDF
-                require("html2pdf/html2pdf.class.php");
+                require_once ROOT.'html2pdf/html2pdf.class.php';
                 try {
-                    ob_end_clean();
                     $pdf = new HTML2PDF('L', 'A4', 'fr');
                     $pdf->writeHTML($content);
+                    ob_end_clean();
                     $pdf->Output('Planning.pdf');
                 } catch (HTML2PDF_exception $e) {
                     echo $e;
@@ -875,11 +889,11 @@ switch ($action) {
                 <?php $content = ob_get_clean();
 
                 // convert in PDF
-                require("html2pdf/html2pdf.class.php");
+                require_once ROOT.'html2pdf/html2pdf.class.php';
                 try {
-                    ob_end_clean();
                     $pdf = new HTML2PDF('L', 'A4', 'fr');
                     $pdf->writeHTML($content);
+                    ob_end_clean();
                     $pdf->Output('Planning.pdf');
                 } catch (HTML2PDF_exception $e) {
                     echo $e;
@@ -942,11 +956,11 @@ switch ($action) {
                 <?php $content = ob_get_clean();
 
                 // convert in PDF
-                require("html2pdf/html2pdf.class.php");
+                require_once ROOT.'html2pdf/html2pdf.class.php';
                 try {
-                    ob_end_clean();
                     $pdf = new HTML2PDF('L', 'A4', 'fr');
                     $pdf->writeHTML($content);
+                    ob_end_clean();
                     $pdf->Output('Planning.pdf');
                 } catch (HTML2PDF_exception $e) {
                     echo $e;

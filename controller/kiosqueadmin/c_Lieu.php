@@ -1,5 +1,9 @@
 <?php
 
+use Kiosque\Models\Main;
+use Kiosque\Models\MLieu;
+use Kiosque\Classes\Lieu;
+
 if (isset($_GET['action'])) {
     $action = $_GET['action'];
 } else {

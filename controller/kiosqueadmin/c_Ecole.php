@@ -1,5 +1,11 @@
 <?php
 
+use Kiosque\Models\MEcole;
+use Kiosque\Models\Main;
+use Kiosque\Models\MEnseignant;
+use Kiosque\Classes\Ecole;
+use Kiosque\Classes\Enseignant;
+
 if (isset($_GET['action'])) {
     $action = $_GET['action'];
 } else {
@@ -79,8 +85,7 @@ switch ($action) {
 
             Main::setFlashMessage("L'école : " .$ecole->getNom(). " a bien été supprimée", "valid");
             header("Location:?uc=ecole");
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             Main::setFlashMessage($e->getMessage(), "error");
         }
 
