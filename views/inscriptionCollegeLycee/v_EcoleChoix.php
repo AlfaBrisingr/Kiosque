@@ -30,9 +30,9 @@
             <?php if(!isset($_POST['prestart'])) { ?>
                 Merci de répondre avec précision à toutes les questions.
                 Si vous souhaitez être accompagné(e) dans cette inscription en ligne, sachez que l'équipe du Kiosque reste à votre disposition.
-                Le Kiosque traite les demandes par ordre d'arrivée.<br> <?php } ?>
-            Vous pouvez télécharger le programme de la saison <?= $saisonCourante->getNom(); ?> ici -> <a href="http://kiosque-mayenne.com/documents/plaquette.pdf" target="_blank">Plaquette</a> et le dossier Jeune Public ici -> <a target="_blank" href="http://kiosque-mayenne.com/telechargements.html">Dossier</a><br>
-            Vous pouvez joindre Valérie Martin de préférence par mail à v.martin@kiosque-mayenne.org ou par tél au 02 43 30 10 16.
+                <br> <?php } ?>
+            Vous pouvez télécharger le programme de la saison <?= $saisonCourante->getNom(); ?> ici -> <a href="http://kiosque-mayenne.com/documents/plaquette.pdf" target="_blank">Plaquette</a> et le dossier Parcours Artistique ici -> <a target="_blank" href="http://kiosque-mayenne.com/telechargements.html">Dossier</a><br>
+            Vous pouvez joindre Anne Pouteau de préférence par mail à a.pouteau@kiosque-mayenne.org ou par tél au 02 43 30 10 16.
         </p>
         <p class="text-justify">
             À bientôt.

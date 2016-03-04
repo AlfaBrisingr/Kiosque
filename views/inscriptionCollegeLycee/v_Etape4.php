@@ -12,7 +12,7 @@
 		</div>
 	</div>
 	<p class="text-justify">
-		Le Kiosque traite les inscription par ordre d'arrivée.
+		Le Kiosque traite les inscriptions.
 		Si votre choix N°1 n'est plus possible (spectacle complet),
 		votre classe sera automatiquement redirigée vers votre choix N°2, etc...
 	</p>
@@ -57,12 +57,6 @@
 					</label>
 				</div>
 			<?php endforeach; ?>
-			<div class="form-group">
-				<label>Vos impossibilités - choix 2</label>
-				<div class="form-group">
-					<textarea class="form-control" rows="6" cols="90" style="resize:none" name="impo2" placeholder="Merci nous signaler ici la ou les séances auxquelles vous savez déjà que vous ne pourrez pas vous rendre."><?php if(isset($_SESSION['impo2']) && $_SESSION['impo2'] != ""){ echo $_SESSION['impo2']; } ?></textarea>
-				</div>
-			</div>
 			<div class="form-group">
 				<input type="hidden" name="form">
 				<button type="submit" class="btn btn-primary">Continuer</button>

@@ -71,7 +71,6 @@ switch ($action) {
         try {
             if (isset($_SESSION['ecole']) && isset($_POST['facture'])) {
                 $_SESSION['facture'] = $_POST['facture'];
-                $_SESSION['divers'] = $_POST['divers'];
             }
 
             $_SESSION['directeur'] = MEnseignant::getDirecteur($_SESSION['ecole']);
@@ -159,6 +158,7 @@ switch ($action) {
                 $_SESSION['nbrEleve'] = $nbrEleve;
                 $_SESSION['nbrAccom'] = $nbrAccom;
                 $_SESSION['classe'] = $classe;
+                $_SESSION['divers'] = $_POST['divers'];
             }
             require_once ROOT.'views/inscriptionCollegeLycee/v_Etape3.php';
 
@@ -173,7 +173,6 @@ switch ($action) {
 
             if (isset($_POST['choix1'])) {
                 $_SESSION['choix1'] = $_POST['choix1'];
-                $_SESSION['impo1'] = $_POST['impo1'];
             }
             require_once ROOT.'views/inscriptionCollegeLycee/v_Etape4.php';
         } catch (\Exception $e) {
@@ -186,14 +185,12 @@ switch ($action) {
             $lesSpectacles = MSpectacle::getSpectaclesSaisonCouranteCollegeLycee();
             if (isset($_POST['choix2'])) {
                 $_SESSION['choix2'] = $_POST['choix2'];
-                $_SESSION['impo2'] = $_POST['impo2'];
             }
             if ($_SESSION['choix1'] == $_SESSION['choix2']) {
                 $_SESSION['choix2'] = 'non';
             }
             if ($_SESSION['choix2'] == 'non') {
                 $_SESSION['choix3'] = 'non';
-                $_SESSION['impo3'] = null;
             }
             require_once ROOT.'views/inscriptionCollegeLycee/v_Etape5.php';
         } catch (\Exception $e) {
@@ -201,15 +198,13 @@ switch ($action) {
         }
         break;
 
-    case 'etape6':
+    case 'recap':
         try {
             $lesSpectacles = MSpectacle::getSpectaclesSaisonCouranteCollegeLycee();
             if (!isset($_POST['choix3'])) {
                 $_SESSION['choix3'] = 'non';
-                $_SESSION['impo3'] = null;
             } else {
                 $_SESSION['choix3'] = $_POST['choix3'];
-                $_SESSION['impo3'] = $_POST['impo3'];
             }
             if ($_SESSION['choix3'] == $_SESSION['choix1']) {
                 $_SESSION['choix3'] = 'non';
@@ -239,16 +234,13 @@ switch ($action) {
                 'Accompagnateurs' => $_SESSION['nbrAccom'],
             );
             $Choix1 = array(
-                'Choisi' => $_SESSION['choix1'],
-                'Impossibilités' => $_SESSION['impo1']
+                'Choisi' => $_SESSION['choix1']
             );
             $Choix2 = array(
-                'Choisi' => $_SESSION['choix2'],
-                'Impossibilités' => $_SESSION['impo2']
+                'Choisi' => $_SESSION['choix2']
             );
             $Choix3 = array(
-                'Choisi' => $_SESSION['choix3'],
-                'Impossibilités' => $_SESSION['impo3']
+                'Choisi' => $_SESSION['choix3']
             );
             require_once ROOT.'views/inscriptionCollegeLycee/v_Recap.php';
         } catch (\Exception $e) {
@@ -266,16 +258,6 @@ switch ($action) {
             $divers = $_SESSION['divers'];
             if (empty($_SESSION['impo1']) && empty($_SESSION['impo2']) && empty($_SESSION['impo3'])) {
                 $impo = '<strong><em>Vide</em></strong>';
-            } else {
-                if (empty($_SESSION['impo1'])) {
-                    $_SESSION['impo1'] = '<strong><em>Vide</em></strong>';
-                }
-                if (empty($_SESSION['impo2'])) {
-                    $_SESSION['impo2'] = '<strong><em>Vide</em></strong>';
-                }
-                if (empty($_SESSION['impo3'])) {
-                    $_SESSION['impo3'] = '<strong><em>Vide</em></strong>';
-                }
                 $impo = '1 : ' . $_SESSION['impo1'] . '<br> 2 : ' . $_SESSION['impo2'] . '<br> 3 : ' . $_SESSION['impo3'];
             }
             $date = new DateTime();
@@ -313,19 +295,19 @@ switch ($action) {
             $classes = implode(", ", $_SESSION['classe']) ;
             $message_html = "<html><head><meta charset='UTF-8'></head><body>Bonjour,<br><br>
         Nous avons bien reçu l'inscription de votre classe pour la
-        saison spectacles jeune public.<br>
+        saison spectacles du Kiosque.<br>
         Nous vous remercions pour votre contribution
         et espérons vivement pouvoir vous donner entière satisfaction.<br>
         Valérie Martin reste à votre disposition pour tout complèment d'information.
         N'hésitez pas à la contacter, par mail de préférence à v.martin@kiosque-mayenne.org
         ou par téléphone au 02 43 30 10 16.<br>Voici le récapitulatif de votre demande : <br>
-        <br><strong>Ecole</strong> : <br>Type : ".$_SESSION['ecole']->getType()."<br>Nom : ".$_SESSION['ecole']->getNom()."<br>Adresse 1 : ".$_SESSION['ecole']->getAdresse()."<br>
-        Adresse 2 : ".$_SESSION['ecole']->getAdresse2()."<br>Code postal : ".$_SESSION['ecole']->getCp()."<br>Ville : ".$_SESSION['ecole']->getVille()."<br>T�l�phone : ".$_SESSION['ecole']->getDirecteur()->getTel()."<br>
-        Mail : ".$_SESSION['ecole']->getMailDirecteur()."<br><br><strong>Responsable</strong> : <br>
+        <br><strong>Etablissment</strong> :<br>Nom : ".$_SESSION['ecole']->getNom()."<br>Adresse 1 : ".$_SESSION['ecole']->getAdresse()."<br>
+        Code postal : ".$_SESSION['ecole']->getCp()."<br>Ville : ".$_SESSION['ecole']->getVille()."<br>T�l�phone : ".$_SESSION['ecole']->getDirecteur()->getTel()."<br>
+        Mail : ".$_SESSION['ecole']->getMailDirecteur()."<br><br><strong>Chef d'Etablissement</strong> : <br>
         Civilité : ".$_SESSION['enseignant']->getCivilite()."<br>Nom : ".$_SESSION['enseignant']->getNom()."<br>Prénom : ".$_SESSION['enseignant']->getPrenom()."<br>Facture libellée à : ".$_SESSION['facture']."<br>
-        <br><strong>Divers</strong> : <br>".$_SESSION['divers']."<br><br><strong>Enseignant</strong> : <br>
-        Civilité : ".$_SESSION['enseignant']->getCivilite()."<br>Nom : ".$_SESSION['enseignant']->getNom()."<br>Prénom : ".$_SESSION['enseignant']->getPrenom()."<br>T�l�phone : ".$_SESSION['enseignant']->getTel()."<br>
-        Mail : ".$_SESSION['enseignant']->getMail()."<br>Classe : ".$classes."<br>Elèves : ".$_SESSION['nbrEleve']."<br>Accompagnateurs : ".$_SESSION['nbrAccom']."<br>
+        <br><br><strong>Enseignant</strong> : <br>
+        Civilité : ".$_SESSION['enseignant']->getCivilite()."<br>Nom : ".$_SESSION['enseignant']->getNom()."<br>Prénom : ".$_SESSION['enseignant']->getPrenom()."<br>Téléphone : ".$_SESSION['enseignant']->getTel()."<br>
+        Mail : ".$_SESSION['enseignant']->getMail()."<br>Classe : ".$classes."<br>Divers : ".$_SESSION['divers']."<br>Elèves : ".$_SESSION['nbrEleve']."<br>Accompagnateurs : ".$_SESSION['nbrAccom']."<br>
         <br><strong>Choix : </strong><br>
         Premier choix : ".$_SESSION['choix1']."<br>Deuxième choix : ".$_SESSION['choix2']."<br>Troisième choix : ".$_SESSION['choix3']."<br>
         <br>A très bientôt.<br>
@@ -339,7 +321,7 @@ switch ($action) {
             // =======
             //=====Envoi de l'e-mail.
             mail($mail,$sujet,$message,$header);
-            mail('v.martin@kiosque-mayenne.org',$sujet,$message,$header);
+            mail('a.pouteau@kiosque-mayenne.org',$sujet,$message,$header);
             $bla = $_SESSION['enseignant']->getMail();
             // === Mail si difff�rent du mail de �tablissement de celui du responsable
 

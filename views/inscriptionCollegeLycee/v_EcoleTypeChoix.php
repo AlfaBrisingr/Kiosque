@@ -29,10 +29,9 @@
         <p class="text-justify">
             <?php if(!isset($_POST['prestart'])) { ?>
                 Merci de répondre avec précision à toutes les questions.
-                Si vous souhaitez être accompagné(e) dans cette inscription en ligne, sachez que l'équipe du Kiosque reste à votre disposition.
-                Le Kiosque traite les demandes par ordre d'arrivée.<br> <?php } ?>
-            Vous pouvez télécharger le programme de la saison <?= $saisonCourante->getNom(); ?> ici -> <a href="http://kiosque-mayenne.com/documents/plaquette.pdf" target="_blank">Plaquette</a> et le dossier Jeune Public ici -> <a target="_blank" href="http://kiosque-mayenne.com/telechargements.html">Dossier</a><br>
-            Vous pouvez joindre Valérie Martin de préférence par mail à v.martin@kiosque-mayenne.org ou par tél au 02 43 30 10 16.
+                Si vous souhaitez être accompagné(e) dans cette inscription en ligne, sachez que l'équipe du Kiosque reste à votre disposition.<br> <?php } ?>
+            Vous pouvez télécharger le programme de la saison <?= $saisonCourante->getNom(); ?> ici -> <a href="http://kiosque-mayenne.com/documents/plaquette.pdf" target="_blank">Plaquette</a> et le dossier Parcours artistique ici -> <a target="_blank" href="http://kiosque-mayenne.com/telechargements.html">Dossier</a><br>
+            Vous pouvez joindre Anne Pouteau de préférence par mail à a.pouteau@kiosque-mayenne.org ou par tél au 02 43 30 10 16.
         </p>
         <p class="text-justify">
             À bientôt.
@@ -41,7 +40,7 @@
 </div>
 <form action="?uc=cl&action=choisirEcole" method="POST">
     <div class="form-group">
-        <label for="ecoles">Votre école est-elle un collège ou un lycée ?</label>
+        <label for="ecoles">Votre établissement est-il un collège ou un lycée ?</label>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                 <select onchange="this.form.submit()" name="typeEcole" class="form-control">

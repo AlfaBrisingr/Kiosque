@@ -63,16 +63,9 @@
 					<div class="form-group">
 						<textarea rows="6" cols="90" required="" style="resize:none" name="facture" class="form-control"><?php if(isset($_SESSION['facture']) && $_SESSION['facture'] != ""){ echo $_SESSION['facture']; } ?></textarea>
 					</div>
-				</div>
-				<label for="divers" >Divers (Merci d'y préciser le type de classe (ex: BTS SIO, 1ereS ...))</label>
-				<div class="col-sm-12 col-xs-6 col-md-6 col-lg-6">
-					<div class="form-group">
-						<textarea rows="6" cols="90" style="resize:none" name="divers" class="form-control" placeholder="Mentionnez ici toute information qui vous semble importante de nous communiquer."><?php if(isset($_SESSION['divers']) && $_SESSION['divers'] != ""){ echo $_SESSION['divers']; } ?></textarea>
-					</div>
-				</div>
 			</div>
-			<input type="submit" class="btn btn-primary" value="Continuer">
 		</div>
+			<input type="submit" class="btn btn-primary" value="Continuer">
 	</form>
 	<script src="js/validate.js"></script>
 	<script type="text/javascript">$.noConflict();</script>

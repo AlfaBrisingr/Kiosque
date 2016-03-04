@@ -312,8 +312,8 @@ switch ($action) {
         Valérie Martin reste à votre disposition pour tout complément d'information.
         N'hésitez pas à la contacter, par mail de préférence à v.martin@kiosque-mayenne.org
         ou par téléphone au 02 43 30 10 16.<br>Voici le récapitulatif de votre demande : <br>
-        <br><strong>Ecole</strong> : <br>Type : ".$_SESSION['ecole']->getType()."<br>Nom : ".$_SESSION['ecole']->getNom()."<br>Adresse 1 : ".$_SESSION['ecole']->getAdresse()."<br>
-        Adresse 2 : ".$_SESSION['ecole']->getAdresse2()."<br>Code postal : ".$_SESSION['ecole']->getCp()."<br>Ville : ".$_SESSION['ecole']->getVille()."<br>Téléphone : ".$_SESSION['ecole']->getDirecteur()->getTel()."<br>
+        <br><strong>Ecole</strong> : <br>Nom : ".$_SESSION['ecole']->getNom()."<br>Adresse 1 : ".$_SESSION['ecole']->getAdresse()."<br>
+        Code postal : ".$_SESSION['ecole']->getCp()."<br>Ville : ".$_SESSION['ecole']->getVille()."<br>Téléphone : ".$_SESSION['ecole']->getDirecteur()->getTel()."<br>
         Mail : ".$_SESSION['ecole']->getMailDirecteur()."<br><br><strong>Responsable</strong> : <br>
         Civilité : ".$_SESSION['enseignant']->getCivilite()."<br>Nom : ".$_SESSION['enseignant']->getNom()."<br>Prénom : ".$_SESSION['enseignant']->getPrenom()."<br>Facture libellée à : ".$_SESSION['facture']."<br>
         <br><strong>Divers</strong> : <br>".$_SESSION['divers']."<br><br><strong>Enseignant</strong> : <br>

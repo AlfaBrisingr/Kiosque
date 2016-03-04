@@ -11,6 +11,9 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<p class="text-justify">Vous allez procéder ici aux pré-inscription qui concernent une même classe.</p>
+			<p class="text-justify">Si vous avez plus de 5 choix de spectacle, pour une même classe, vous devez renouveler la démarche autant de fois que nécessaire.</p>
+			<p class="text-justify">Pour d'autres classes à inscrire, réitérer l'opération.</p>
 			<p class="text-justify"><span class="require">*</span> : champs obligatoires</p>
 		</div>
 	</div>
@@ -97,9 +100,20 @@
 				</div>
 			</div>
 		</div>
+
+
+
 		<div class="form-group">
 			<div class="row">
-				<div class="col-xs-2 col-md-2 col-lg-2">
+				<div class="col-md-3 col-lg-3 col-xs-3">
+					<label for="divers" >Filière <span class="require">*</span></label>
+					<input required="" class="form-control" type="text" name="divers" placeholder="Filière de la classe">
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="row">
+				<div class="clear col-xs-2 col-md-2 col-lg-2">
 					<label>Nombre d'élèves <span class="require">*</span></label>
 					<input required class="form-control" type="text" <?php if(isset($_SESSION['nbrEleve']) && $_SESSION['nbrEleve'] != ""){ echo 'value='.$_SESSION['nbrEleve']; } ?>  placeholder="ex: 12" name="nbrEleve">
 				</div>
