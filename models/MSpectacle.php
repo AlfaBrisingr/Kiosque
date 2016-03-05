@@ -172,15 +172,15 @@ class MSpectacle
         try {
             $conn = Main::bdd();
             $reqPrepare = $conn->query(
-                "SELECT sp.idSpectacle, nomSpectacle, nbPlaceSpectacle, typeClasse, typeSpectacle
-                FROM spectacle sp 
+                "SELECT sp.idSpectacle, nomSpectacle, nbPlaceSpectacle, typeClasse, typeSpectacle, s.idSaison, nomSaison, courante
+                FROM spectacle sp
                 INNER JOIN saison_spectacle ss ON ss.idSpectacle = sp.idSpectacle
                 INNER JOIN saison s ON s.idSaison = ss.idSaison
                 WHERE courante = 0");
             $tabs = $reqPrepare->fetchAll();
             $coll = new Collection();
             foreach ($tabs as $tab) {
-                $saison = MSaison::getSaisonByIdSpectacle($tab['idSpectacle']);
+                $saison = new Saison($tab['idSaison'], $tab['nomSaison'], $tab['courante']);
                 $spectacle = new Spectacle(
                     $tab['idSpectacle'],
                     $tab['nomSpectacle'],
@@ -253,7 +253,7 @@ class MSpectacle
             Main::viewVar($tabs);
             $coll = new Collection();
             foreach ($tabs as $tab) {
-                $saison = MSaison::getSaisonById($tab['idSaison']);
+                $saison = new Saison($tab['idSaison'], $tab['nomSaison'], $tab['courante']);
                 $spectacle = new Spectacle(
                     $tab['idSpectacle'],
                     $tab['nomSpectacle'],
@@ -281,10 +281,15 @@ class MSpectacle
     {
         try {
             $conn = Main::bdd();
-            $reqPrepare = $conn->prepare("SELECT * FROM spectacle WHERE idSpectacle = ?");
+            $reqPrepare = $conn->prepare("
+                                SELECT sp.idSpectacle, nomSpectacle, nbPlaceSpectacle, typeClasse, typeSpectacle, s.idSaison, nomSaison, courante
+                                FROM spectacle sp
+                                INNER JOIN saison_spectacle ss ON ss.idSpectacle = sp.idSpectacle
+                                INNER JOIN saison s ON s.idSaison = ss.idSaison
+                                WHERE idSpectacle = ?");
             $reqPrepare->execute(array($id));
             $tab = $reqPrepare->fetch();
-            $saison = MSaison::getSaisonByIdSpectacle($tab['idSpectacle']);
+            $saison = new Saison($tab['idSaison'], $tab['nomSaison'], $tab['courante']);
             $spectacle = new Spectacle(
                 $tab['idSpectacle'],
                 $tab['nomSpectacle'],
@@ -311,10 +316,14 @@ class MSpectacle
     {
         try {
             $conn = Main::bdd();
-            $reqPrepare = $conn->prepare("SELECT * FROM spectacle WHERE nomSpectacle = ?");
+            $reqPrepare = $conn->prepare("SELECT sp.idSpectacle, nomSpectacle, nbPlaceSpectacle, typeClasse, typeSpectacle, s.idSaison, nomSaison, courante
+                                FROM spectacle sp
+                                INNER JOIN saison_spectacle ss ON ss.idSpectacle = sp.idSpectacle
+                                INNER JOIN saison s ON s.idSaison = ss.idSaison
+                                WHERE nomSpectacle = ?");
             $reqPrepare->execute(array($name));
             $tab = $reqPrepare->fetch();
-            $saison = MSaison::getSaisonByIdSpectacle($tab['idSpectacle']);
+            $saison = new Saison($tab['idSaison'], $tab['nomSaison'], $tab['courante']);
             $spectacle = new Spectacle(
                 $tab['idSpectacle'],
                 $tab['nomSpectacle'],
